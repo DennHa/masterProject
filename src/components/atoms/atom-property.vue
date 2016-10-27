@@ -1,12 +1,12 @@
-<template name="atomTiming">
+<template name="atomProperty">
 
-  <input :atom-duration="value" v-model="duration"  @input="$emit('input', $event.target.value)"  type="number" />
+        <input :atom-duration="value" v-model="duration"  @input="$emit('input', $event.target.value)"  type="number" />
 
 </template>
 
 <script>
 export default {
-  name: 'atomTiming',
+  name: 'atomProperty',
   props: ['value'],
   data () {
     return {
