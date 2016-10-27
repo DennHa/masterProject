@@ -1,0 +1,155 @@
+/**
+ * Base Variables
+ */
+
+
+
+
+
+$color-alpha: rgba(151, 151, 151,0.5);
+$color-alpha--light: #f5f3ef;
+
+$color-primary: #4A90E2;
+$color-black: #2A2E32;
+$color-grey: #e7e7e7;
+$color-white: #fff;
+
+$font-normal: 'Fira Mono', monospace;
+$font-heiglight: 'Fira Mono', monospace;
+
+$fontSize-double: 3em;
+$fontSize-standard: 1em;
+$fontSize-half: 0.75em;
+$fontSize-third: 0.5em;
+
+
+$spacing-double: 6em;
+$spacing-standard: 3em;
+$spacing-half: 1.5em;
+$spacing-third: 0.75em;
+
+$mq-xs: 20em;
+$mq-sm: 30em;
+$mq-md: 52em;
+$mq-lg: 64em;
+$mq-xl: 76.5em;
+$mq-xxl: 114em;
+
+/**
+ * Base Settings/Overwrite Normalize
+ */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-feature-settings: 'liga' 0;
+  font-size: 100%;
+  line-height: 1.6;
+  font-family: $font-normal;
+
+  @media (min-width: $mq-xs) {
+    font-size: 100%;
+  }
+
+  @media (min-width: $mq-sm) {
+    font-size: 105%;
+  }
+
+  @media (min-width: $mq-md) {
+    font-size: 107.5%;
+  }
+
+  @media (min-width: $mq-lg) {
+    font-size: 110%;
+  }
+
+  @media (min-width: $mq-xl) {
+    font-size: 115%;
+  }
+
+  @media (min-width: $mq-xxl) {
+    font-size: 125%;
+  }
+}
+
+h1, h2, h3 {
+  margin: 0;
+
+}
+
+h1 {
+  font-size: $fontSize-standard;
+
+}
+
+h3{
+  font-size: $fontSize-half;
+}
+
+p {
+  font-size: $fontSize-third;
+  margin: 0 0 0.75em;
+}
+
+a {
+  color: $color-black;
+  text-decoration: none;
+  transition: color 0.4s ease-in-out;
+  cursor: pointer;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: $color-alpha;
+  }
+}
+
+hr{
+  border-style: none;
+  padding: 0 0;
+  margin: 0;
+  height: 3px;
+  width: 100%;
+  background-color: $color-white;
+}
+
+figure {
+  margin: 0;
+}
+
+img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+ol, ul {
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
+}
+
+input{
+  border-style: none;
+  font-family: $font-normal;
+}
+
+form{
+  & > *{
+    &:focus{
+      background-color: $color-alpha;
+      outline: none;
+
+    }
+  }
+}
+/**
+ * Text Selection
+ */
+::selection {
+  color: $color-white;
+  background-color: $color-alpha;
+  text-shadow: none;
+}
