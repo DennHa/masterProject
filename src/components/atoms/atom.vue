@@ -21,11 +21,11 @@ easeFunction<template name="atom">
            v-for="option in options"
            v-bind:value="option.value"
            @click="changeCharacteristics"
-           >
-             {{ option.text }}
+          >
+            {{ option.text }}
            </option>
       </select>
-
+      <button type="button" name="button" @click="handelIt">click</button>
 
 
       <form class="atom__behavior">
@@ -44,7 +44,9 @@ easeFunction<template name="atom">
         <div class="atom__characteristics">
          <h3>characteristics</h3>
            <div v-for="charachteristic in characteristics">
-             <atomProperty v-model="charachteristic.value"  ></atomProperty>
+             {{charachteristic.name}}
+             <atomProperty v-model="charachteristic.value" :css="characteristics.css" :type="charachteristic.type" ></atomProperty>
+             {{charachteristic.unit}}
            </div>
         </div>
       </form>
@@ -66,10 +68,14 @@ import atomProperty from './atom-property.vue'
     data () {
       return{
         atomName: "",
-        atomWidth: "200",
-        atomHeight: "200",
+
         nukleolus: true,
 
+        //standard properties
+        atomSizeStandard: "10" ,
+        atomColorStandard: "#4A90E2",
+
+        //atomHeightStart: "5",
         //kind
         selectedKind: "atom__size",
         options: [
@@ -119,8 +125,6 @@ import atomProperty from './atom-property.vue'
         ],
 
         characteristics: [
-          {hallo: "1"},
-          {hallo: "2"}
         ]
       }
     },
@@ -130,56 +134,103 @@ import atomProperty from './atom-property.vue'
     },
     computed: {
 
-      //timing
-      atomDuration: function(){
-        for (var i = 0; i < this.timings.length; i++) {
-          if (this.timings[i].kind == "atomDuration"){
-            return this.timings[i].value
+        //timing
+        atomDuration: function(){
+          for (var i = 0; i < this.timings.length; i++) {
+            if (this.timings[i].kind == "atomDuration"){
+              return this.timings[i].value
+            }
           }
-        }
-      },
+        },
 
-      //charachteristic
-      changeCharacteristics: function(){
+        //charachteristic
+        changeCharacteristics: function(){
+          if (this.selectedKind == 'atom__size') {
+            return this.characteristics = [],
+            this.characteristics = Object.assign([
+              {name:"start width", css: "atomWidthStart",  value: "10", unit:"%", type: "number"},
+              {name:"start height", css: "atomHeightStart",  value: "10", unit:"%", type: "number" },
+              {name:"final width", css: "atomWidthFinal",  value: "50", unit:"%", type: "number" },
+              {name:"final height", css: "atomHeightFinal",  value: "50", unit:"%", type: "number" },
+            ])
+          }
+          else if (this.selectedKind == 'atom__color'){
+            return this.characteristics = [],
+            this.characteristics = Object.assign([
+              {name:"start color", css:"ne",   unit:"", type: "color"},
+              {name:"final color", css:"ne",   unit:"", type: "color" }
+            ])
+          } else {
 
-        if (this.selectedKind == 'atom__size') {
-          for (var i = 0; i  < this.characteristics.length ; i++) {
-            this.characteristics.pop()
           }
-          this.characteristics.pop() //kill the las entry
-          return this.characteristics.push(
-            {name: "Joe"}
-          )
-        }
-        else {
-          for (var i = 0; i  < this.characteristics.length ; i++) {
-            this.characteristics.pop()
-          }
-          this.characteristics.pop() //kill the las entry
-          return this.characteristics.push(
-            {name: "Joe"},
-            {name: "Joe"}
-          )
-        }
-      }
+        },
+
+
+
+
+// properties
+        //width
+        atomWidthStart: function(){
+          for (let word in this.characteristics)
+            if(this.characteristics[word].css == "atomWidthStart"){
+              return this.atomSizeStandard *  (this.characteristics[word].value / this.atomSizeStandard)
+            }
+          return this.atomSizeStandard
+        },
+
+        atomHeightStart: function(){
+          for (let word in this.characteristics)
+            if(this.characteristics[word].css == "atomHeightStart"){
+              return this.atomSizeStandard *  (this.characteristics[word].value / this.atomSizeStandard)
+            }
+          return this.atomSizeStandard
+        },
+
+        atomWidthFinal: function(){
+          for (let word in this.characteristics)
+            if(this.characteristics[word].css == "atomWidthFinal"){
+              return this.atomSizeStandard *  (this.characteristics[word].value / this.atomSizeStandard)
+            }
+          return this.atomSizeStandard
+        },
+
+        atomHeightFinal: function(){
+          for (let word in this.characteristics)
+            if(this.characteristics[word].css == "atomHeightFinal"){
+              return this.atomSizeStandard *  (this.characteristics[word].value / this.atomSizeStandard)
+            }
+          return this.atomSizeStandard
+        },
+
+
+        //color
 
     },
-    methods: {
 
-      //animation
+    methods: {
+      handelIt: function(){
+        this.atomStartColor =  this.characteristics[0].value
+      },
+      //before animation
       beforeEnter: function (el) {
-        el.style.width = '2vw'
-        el.style.height = '2vw'
+        //el.style.backgroundColor = this.atomStartColor,
+        el.style.width = this.atomWidthStart + "%",
+        el.style.height = this.atomHeightStart + "%"
         },
+
+      //animation enter
       enter: function (el, done) {
         var vm = this
+
+
         Velocity(el,
-          { width: this.atomWidth,
-           height: this.atomHeight ,
+          {
+            width: this.atomWidthFinal + "%",
+            height: this.atomHeightFinal + "%"
            //translateX: "200px"
           },
           {
-            delay:"2000",
+            delay: "2000",
             easing: this.selectedEaseing,
             duration: this.atomDuration,
             complete: function () {
@@ -189,14 +240,16 @@ import atomProperty from './atom-property.vue'
           }
         )
       },
+
+      //animation leave - just for restart
       leave: function (el, done) {
         var vm = this
         Velocity(el,
-          { width: this.atomWidth,
-            height: this.atomHeight },
           {
-            easing: this.selectedEaseing,
-            duration: this.atomDuration,
+            backgroundColor: '#ffffff',
+          },
+          {
+            duration: 1,
             delay: "2000",
             complete: function () {
               done()

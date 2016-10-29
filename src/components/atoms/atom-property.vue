@@ -1,6 +1,6 @@
 <template name="atomProperty">
 
-        <input :atom-duration="value" v-model="duration"  @input="$emit('input', $event.target.value)"  type="number" />
+        <input :atom-duration="value" v-model="proptery"  @input="$emit('input', $event.target.value)"  />
 
 </template>
 
@@ -10,12 +10,13 @@ export default {
   props: ['value'],
   data () {
     return {
-      duration: ""
+      proptery: "",
     }
   },
   created: function() {
-      this.duration = this.value
-  }
+      this.proptery = this.value
+  },
+
 
 }
 </script>
