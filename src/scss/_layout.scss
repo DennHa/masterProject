@@ -5,3 +5,37 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.molecules{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-flow: wrap;
+  min-height: 100vh;
+  min-width: 200vw;
+  padding-left: 50vw;
+
+
+}
+
+.atoms{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-flow: wrap;
+  min-height: 100vh;
+  min-width: 200vw;
+  padding-left: 50vw;
+  //overflow:scroll;
+  & > *{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    flex-flow: wrap;
+    max-width: 750px;
+  }
+
+}

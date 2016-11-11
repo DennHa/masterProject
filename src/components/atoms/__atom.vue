@@ -424,6 +424,7 @@ export default {
 
 
     methods: {
+
         clickRemove: function() {
 
             this.$emit('clickRemove', true)
@@ -432,12 +433,12 @@ export default {
         beforeEnter: function(el) {
             //el.style.backgroundColor = this.atomStartColor,
             el.style.width = this.atomWidthStart + "%",
-                el.style.height = this.atomHeightStart + "%",
-                el.style.rotateZ = this.atomRotationStart + "deg",
-                el.style.translateX = this.atomXPosStart + "vw",
-                el.style.translateY = this.atomYPosStart + "vw",
-                el.style.opacity = this.atomOpacityStart,
-                el.style.backgroundColor = this.atomColorStart
+            el.style.height = this.atomHeightStart + "%",
+            el.style.rotateZ = this.atomRotationStart + "deg",
+            el.style.translateX = this.atomXPosStart + "vw",
+            el.style.translateY = this.atomYPosStart + "vw",
+            el.style.opacity = this.atomOpacityStart,
+            el.style.backgroundColor = this.atomColorStart
 
         },
 
@@ -461,6 +462,7 @@ export default {
                 complete: function() {
                     done()
                     if (!vm.stop) vm.nukleolus = false
+                    vm.forceUpdate()
                 }
             })
         },

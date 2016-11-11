@@ -11,7 +11,9 @@ $color-alpha-light: rgba(250, 250, 250,0.5);
 
 $color-primary: #4A90E2;
 $color-black: #2A2E32;
-$color-grey: #e7e7e7;
+$color-background: #FAFAFA;
+$color-inactive: #E9E9E9;
+$color-grey: #9B9B9B;
 $color-white: #fff;
 
 $font-normal: 'Fira Mono', monospace;
@@ -82,9 +84,14 @@ h1 {
   font-size: $fontSize-standard;
 
 }
-
+h2{
+  color: $color-primary;
+}
 h3{
+  color: $color-grey;
   font-size: $fontSize-half;
+  padding: 0;
+  margin: 0;
 }
 
 p {
@@ -132,17 +139,20 @@ ol, ul {
 }
 
 input{
+  color: $color-primary;
+  border-radius: 5px;
   border-style: none;
   font-family: $font-normal;
-  background-color: $color-alpha-light;
+  background-color: $color-white;
   text-align: right;
   width: 75px;
 }
 
 form{
+
   & > *{
     &:focus{
-      background-color: $color-alpha;
+      background-color: $color-white;
       outline: none;
 
     }
@@ -158,11 +168,12 @@ form{
 }
 
 select{
+  color: $color-primary;
   -webkit-appearance: none;
   -moz-appearance:    none;
   appearance: none;
   font-family: $font-normal;
-  background: $color-alpha-light;
+  background: $color-white;
   border: none;
   border-radius: 0px;
   padding-left: 5px;
