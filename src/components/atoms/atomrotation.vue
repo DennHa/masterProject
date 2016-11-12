@@ -1,7 +1,7 @@
 <template name="atomrotation">
 <div class="atom__shell">
     <div class="atom__viewer">
-        <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
+        <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave"  v-bind:css="false">
             <div class="atom__nukleolus" v-if="nukleolus"></div>
         </transition>
     </div>
@@ -170,10 +170,10 @@ export default {
         //before animation
         beforeEnter: function(el) {
             el.style.width = this.atomSizeStandard + "%",
-            el.style.height = this.atomSizeStandard + "%"
-            el.style.rotateX = this.atomRotationXFinal,
-            el.style.rotateY = this.atomRotationYFinal,
-            el.style.rotateZ = this.atomRotationZFinal
+            el.style.height = this.atomSizeStandard + "%",
+            el.style.transform = "rotateX("+ this.atomRotationXStart +"deg)",
+            el.style.transform = "rotateY("+ this.atomRotationYStart +"deg)",
+            el.style.transform = "rotateZ("+ this.atomRotationZStart +"deg)"//this.atomRotationZStart + "deg"
         },
 
         //animation enter

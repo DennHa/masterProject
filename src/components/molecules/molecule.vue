@@ -7,12 +7,12 @@
     </div>
 
     <div class="molecule__properties">
-      <form class="" action="index.html" method="post">
-        <input name="name" value=""  class="atom__name">
+      <form class="" action="index.html" method="post" >
+        <input name="name"   class="atom__name">
       </form>
       <div>
-        <select  class="atom__kind" v-model="firstSelection">
-           <option v-for="atom in atoms" >
+        <select class="atom__kind" v-model="selected">
+           <option v-for="atom in atoms" value="atom.atomid" >
              {{ atom.name }}
            </option>
         </select>
@@ -56,8 +56,8 @@ export default {
     data() {
         return {
             nukleolus: true,
-            selected: [{name: ""}],
-            firstSelection: "",
+            selected: "",
+            value: ""
         }
     },
     mounted: function() {
@@ -80,10 +80,8 @@ export default {
           0
         })
       },
-      firstId (){
-        return this.firstSelection.portotype.toString = function(){
-          return this.atomid
-        }
+      currentid(){
+        return this.selected
       }
     },
 
