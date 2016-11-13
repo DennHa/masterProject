@@ -1,9 +1,11 @@
 .universe{
+  width: 100vw;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+
 }
 
 .molecules{
@@ -13,12 +15,16 @@
   flex-direction: row;
   flex-flow: wrap;
   min-height: 100vh;
-  min-width: 200vw;
-  padding-left: 50vw;
+  //min-width: 200vw;
+  //padding-left: 50vw;
 
 
 }
 
+.atoms__wrapper{
+  width: 100vw;
+  overflow-x: auto;
+}
 .atoms{
   display: flex;
   align-items: flex-start;
@@ -26,9 +32,8 @@
   flex-direction: row;
   flex-flow: wrap;
   min-height: 100vh;
-  min-width: 200vw;
-  padding-left: 50vw;
-  //overflow:scroll;
+  width: 200vw;
+
   & > *{
     display: flex;
     align-items: flex-start;

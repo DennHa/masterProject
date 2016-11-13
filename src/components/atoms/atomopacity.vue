@@ -1,13 +1,13 @@
-<template name="atomrotation">
+<template name="atomopacity">
 <div class="atom__shell">
     <div class="atom__viewer">
-        <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave"  v-bind:css="false">
+        <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
             <div class="atom__nukleolus" v-if="nukleolus"></div>
         </transition>
     </div>
 
     <div class="atom__properties">
-      <h3>rotation</h3>
+      <h3>size</h3>
       <form class="" action="index.html" method="post">
         <input name="name" value="" v-model="value[id].name" class="atom__name">
       </form>
@@ -15,11 +15,11 @@
         <div class="atom__timing">
             <h3>timing</h3>
             <form>
-                <input name="time" v-model="value[id].timing" value="" type="number">
-                <select v-model="value[id].spacing" class="atom__kind">
-                   <option v-for="ease in easings" v-bind:value="ease.easeFunction"  >
-                     {{ ease.easeFunction }}
-                   </option>
+              <input name="time" v-model="value[id].timing" value="" type="number">
+              <select v-model="value[id].spacing" class="atom__kind">
+                 <option v-for="ease in easings" v-bind:value="ease.easeFunction">
+                   {{ ease.easeFunction }}
+                 </option>
               </select>
             </form>
         </div>
@@ -28,13 +28,7 @@
 
             <h3>animation</h3>
             <form>
-              rotationX(°) <input name="width" v-model="value[id].rotationxstart" type="number"> --> <input name="width" v-model="value[id].rotationxfinal" type="number">
-            </form>
-            <form>
-              rotationY(°) <input name="width" v-model="value[id].rotationystart" type="number"> --> <input name="width" v-model="value[id].rotationyfinal" type="number">
-            </form>
-            <form>
-              rotationZ(°) <input name="width" v-model="value[id].rotationzstart" type="number"> --> <input name="width" v-model="value[id].rotationzfinal" type="number">
+              opacity (%)<input name="width" v-model="value[id].opacitystart" type="number"> --> <input name="width" v-model="value[id].opacityfinal" type="number">
             </form>
         </div>
     </div>
@@ -44,7 +38,8 @@
 
 <script>
 export default {
-    name: "atomrotation",
+    name: "atomopcaity",
+
     props: ['value', 'atomsizeid'],
     data() {
         return {
@@ -120,7 +115,8 @@ export default {
         }
     },
     mounted: function() {
-      this.nukleolus = false
+      this.nukleolus = false,
+      this.atomName = this.randomElements[Math.floor((Math.random() * 11) + 1)] + "-" + this.randomElements[Math.floor((Math.random() * 11) + 1)] + "ide"
 
     },
     computed: {
@@ -135,45 +131,20 @@ export default {
         },
         // properties
         //width
-        atomRotationXStart: function() {
-            return this.value[this.atomsizeid].rotationxstart
+        atomOpacityStart: function() {
+            return this.value[this.atomsizeid].opacitystart / 100
 
         },
-
-        atomRotationXFinal: function() {
-            return this.value[this.atomsizeid].rotationxfinal
-        },
-
-        atomRotationYStart: function() {
-            return this.value[this.atomsizeid].rotationystart
-        },
-
-        atomRotationYFinal: function() {
-            return this.value[this.atomsizeid].rotationyfinal
-        },
-        atomRotationZStart: function() {
-            return this.value[this.atomsizeid].rotationzstart
-        },
-
-        atomRotationZFinal: function() {
-            return this.value[this.atomsizeid].rotationzfinal
+        atomOpacityFinal(){
+          return this.value[this.atomsizeid].opacityfinal / 100
         }
     },
 
 
     methods: {
-
-        clickRemove: function() {
-
-            this.$emit('clickRemove', true)
-        },
         //before animation
         beforeEnter: function(el) {
-            el.style.width = this.atomSizeStandard + "%",
-            el.style.height = this.atomSizeStandard + "%",
-            el.style.transform = "rotateX("+ this.atomRotationXStart +"deg)",
-            el.style.transform = "rotateY("+ this.atomRotationYStart +"deg)",
-            el.style.transform = "rotateZ("+ this.atomRotationZStart +"deg)"
+            el.style.opacity = this.atomOpacityStart
         },
 
         //animation enter
@@ -182,9 +153,7 @@ export default {
 
 
             Velocity(el, {
-                rotateX: this.atomRotationXFinal,
-                rotateY: this.atomRotationYFinal,
-                rotateZ: this.atomRotationZFinal
+                opacity: this.atomOpacityFinal
             }, {
                 delay: "2000",
                 easing: this.spacing,

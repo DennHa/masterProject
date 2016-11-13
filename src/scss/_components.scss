@@ -126,4 +126,23 @@
             width: auto;
         }
     }
+
+}
+
+.atoms{
+  &__addAtom{
+    opacity: 0.75;
+    width: 700px;
+    height: 300px;
+    background-color: $color-background;
+    border: none;
+    color: $color-grey;
+    font-size: 2em;
+    &:active{
+      border: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+  }
 }

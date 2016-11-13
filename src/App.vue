@@ -5,6 +5,7 @@
     </molecule>
   </div>
 
+  <div class="atoms__wrapper">
   <div class="atoms">
     <div class="atoms__size">
       <h2>Size</h2>
@@ -12,7 +13,7 @@
         <atomsize v-model="atomSize" v-bind:atomsizeid="atomsize.id">
         </atomsize>
       </div>
-      <button type="button" name="button" @click="addatomsize">Add Size</button>
+      <button type="button" name="button" @click="addatomsize" class="atoms__addAtom">+</button>
     </div>
 
     <div class="atoms__rotation">
@@ -21,9 +22,21 @@
         <atomrotation v-model="atomRotation" v-bind:atomsizeid="atomrotation.id">
         </atomrotation>
       </div>
-      <button type="button" name="button" @click="addatomrotation">Add Size</button>
+      <button type="button" name="button" @click="addatomrotation" class="atoms__addAtom">+</button>
+    </div>
+
+    <div class="atoms__opacity">
+      <h2>Opacity</h2>
+      <div v-for="atomopacity in atomOpacity">
+        <atomopacity v-model="atomOpacity" v-bind:atomsizeid="atomopacity.id">
+        </atomopacity>
+      </div>
+      <button type="button" name="button" @click="addatomopacity" class="atoms__addAtom">+</button>
     </div>
   </div>
+  </div>
+
+</div>
 
 </section>
 </template>
@@ -32,34 +45,42 @@
 import molecule from './components/molecules/molecule.vue'
 import atomsize from './components/atoms/atomsize.vue'
 import atomrotation from './components/atoms/atomrotation.vue'
+import atomopacity from './components/atoms/atomopacity.vue'
 
 //let atomId = 1
 let currentIdSize = 0
 let currentIdRotation = 0
+let currentIdOpacity = 0
 
 export default {
   name: 'universe',
   components: {
     atomrotation,
     atomsize,
+    atomopacity,
     molecule
   },
   data () {
     return {
-      atomId: 1, //start bei 1 weil atomSize und atomRotation für den prototypen schon gesetzt sind
+      atomId: 3, //start bei 3 weil atomSize und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
 
       atomCollection:[],
       atomSize:[
-        {id: 0, name: "Size", timing: "250", spacing: "easeOutSine", widthstart: "50", widthfinal:"100", heightstart: "50", heightfinal: "100", atomid: 0}
+        {id: 0, name: "Size", timing: "250", spacing: "easeOutSine", widthstart: "50", widthfinal:"100", heightstart: "50", heightfinal: "100", atomid: 1}
       ],
       atomRotation:[
-        {id: 0, name: "Rotation", timing: "250", spacing: "easeOutSine", rotationxstart: "0", rotationxfinal:"0", rotationystart: "0", rotationyfinal: "0", rotationzstart: "0", rotationzfinal: "45", atomid: 1}
-      ]
+        {id: 0, name: "Rotation", timing: "250", spacing: "easeOutSine", rotationxstart: "0", rotationxfinal:"0", rotationystart: "0", rotationyfinal: "0", rotationzstart: "0", rotationzfinal: "45", atomid: 2}
+      ],
+      atomOpacity:[
+        {id: 0, name: "Opacity", timing: "250", spacing: "easeOutSine", opacitystart: "0", opacityfinal:"100", atomid: 3}
+      ],
+      atomNull:[{name: "-", atomid: 0}]
+
     }
   },
   computed:{
     combineAtomCollection(){
-      return this.atomCollection.concat(this.atomSize, this.atomRotation)
+      return this.atomCollection.concat(this.atomNull, this.atomSize, this.atomRotation, this.atomOpacity)
 
     }
   },
@@ -75,6 +96,11 @@ export default {
       this.atomId ++,
       currentIdRotation ++,
       this.atomRotation.push({id: currentIdRotation, name: "Rotation " + currentIdRotation, timing: "250", spacing: "easeOutSine", rotationxstart: "0", rotationxfinal:"0", rotationystart: "0", rotationyfinal: "0", rotationzstart: "0", rotationzfinal: "45", atomid: this.atomId})
+    },
+    addatomopacity(){
+      this.atomId ++,
+      currentIdOpacity ++,
+      this.atomOpacity.push({id: currentIdOpacity, name: "Opacity " + currentIdOpacity, timing: "250", spacing: "easeOutSine", opacitystart: "0", opacityfinal:"100", atomid: this.atomId})
     }
   },
 
