@@ -2,8 +2,8 @@
     &__bond {
         position: relative;
         display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
+        align-items: center;
+        justify-content: center;
         flex-direction: row;
         flex-flow: wrap;
         background-color: $color-background;
@@ -49,8 +49,8 @@
     &__shell {
         position: relative;
         display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
+        align-items: center;
+        justify-content: center;
         flex-direction: row;
         flex-flow: wrap;
         background-color: $color-background;
