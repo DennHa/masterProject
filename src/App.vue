@@ -62,7 +62,7 @@ export default {
   },
   data () {
     return {
-      atomId: 3, //start bei 3 weil atomSize und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
+      atomId: 3, //start bei 2 weil atomSize und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
 
       atomCollection:[],
       atomSize:[
@@ -74,7 +74,7 @@ export default {
       atomOpacity:[
         {id: 0, name: "Opacity", timing: "250", spacing: "easeOutSine", opacitystart: "0", opacityfinal:"100", atomid: 3}
       ],
-      atomNull:[{name: "-", atomid: 0}]
+      atomNull:[{name: "-", atomid: 0, opacitystart: 100, opacityfinal: 100, rotationzfinal: "0",widthstart:"20", heightstart:"20", widthfinal: "20", heightfinal:"20", atomid: 0, id: 0}]
 
     }
   },
