@@ -15,7 +15,7 @@
 }
 .molecules{
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   flex-direction: row;
   flex-flow: wrap;
@@ -40,7 +40,7 @@
 }
 .atoms{
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   flex-direction: row;
   flex-flow: wrap;
