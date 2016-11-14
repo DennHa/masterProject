@@ -1,6 +1,17 @@
 <template>
 <section class="universe">
     <div class="molecules__wrapper">
+      <div class="organisems">
+          <div>
+              <div>
+                  <h2>Organisem</h2>
+              </div>
+              <div class="molecules__categ1" v-for="thisorganisem in organisem">
+                  <molecule :atom-collection="combineMoleculeCollection" >
+                  </molecule>
+              </div>
+          </div>
+      </div>
         <div class="molecules">
             <div>
                 <div>
@@ -131,6 +142,7 @@ export default {
             }],
 
             //
+            moleculeCollection: [],
             molecule: [{
                 name: "Samarium-Molecule",
                 sizeId: 0,
@@ -140,6 +152,20 @@ export default {
                 opacityId: 0,
                 opacityDelay: 0,
                 id: 0
+            }],
+            moleculeNull: [{
+                name: "-",
+                sizeId: 0,
+                sizeDelay: 0,
+                rotationId: 0,
+                rotationDelay: 0,
+                opacityId: 0,
+                opacityDelay: 0,
+                id: 0
+            }],
+
+            organisem: [{
+              name: "hey"
             }],
 
             //
@@ -152,7 +178,11 @@ export default {
         combineAtomCollection() {
             return this.atomCollection.concat(this.atomNull, this.atomSize, this.atomRotation, this.atomOpacity)
 
-        }
+        },
+        combineMoleculeCollection() {
+            return this.moleculeCollection.concat(this.moleculeNull, this.molecule)
+        },
+
     },
     methods: {
         addmoleculeCateg1() {
