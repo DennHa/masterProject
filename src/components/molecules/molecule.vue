@@ -7,6 +7,7 @@
         </transition>
     </div>
     <div class="molecule__properties">
+      <h3>molecule</h3>
       <form class="" action="index.html" method="post">
         <input name="name" class="atom__name" v-model="value[id].name" >
       </form>

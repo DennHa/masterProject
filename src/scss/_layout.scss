@@ -8,6 +8,11 @@
 
 }
 
+.molecules__wrapper{
+  width: 100vw;
+  overflow-x: auto;
+  padding:$spacing-double 0;
+}
 .molecules{
   display: flex;
   align-items: flex-start;
@@ -15,8 +20,16 @@
   flex-direction: row;
   flex-flow: wrap;
   min-height: 100vh;
-  //min-width: 200vw;
-  //padding-left: 50vw;
+  width: 200vw;
+
+  & > *{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    flex-flow: wrap;
+    max-width: 920px;
+  }
 
 
 }
@@ -24,6 +37,7 @@
 .atoms__wrapper{
   width: 100vw;
   overflow-x: auto;
+  padding:$spacing-double 0;
 }
 .atoms{
   display: flex;
@@ -40,7 +54,7 @@
     justify-content: center;
     flex-direction: column;
     flex-flow: wrap;
-    max-width: 750px;
+    max-width: 780px;
   }
 
 }
