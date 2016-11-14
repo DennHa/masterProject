@@ -11,17 +11,17 @@
         <input name="name" class="atom__name" v-model="value[id].name" >
       </form>
       <div>
-        <select  class="atom__kind" v-model="firstSelectedId">
+        <select  class="atom__kind" v-model="value[id].sizeId">
            <option v-if="atom.widthfinal" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
         </select>
-        <select  class="atom__kind" v-model="secondSelectedId">
+        <select  class="atom__kind" v-model="value[id].rotationId">
            <option v-if="atom.rotationzfinal" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
         </select>
-        <select  class="atom__kind" v-model="thirdSelectedId">
+        <select  class="atom__kind" v-model="value[id].opacityId">
            <option v-if="atom.opacityfinal" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
@@ -31,17 +31,17 @@
 
         <div class="molecule__timing">
 
-          <div class="molecule__sizeDelay" v-if="firstSelectedId >= 1">
-            <h3>size delay {{sizeDelay}}</h3>
-            <input type="range" v-model="sizeDelay" min="0" max="1000" step="10" defaultValue="0">
+          <div class="molecule__sizeDelay" v-if="value[id].sizeId >= 1">
+            <h3>size delay {{value[id].sizeDelay}}</h3>
+            <input type="range" v-model="value[id].sizeDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
-          <div class="molecules__rotationDelay" v-if="secondSelectedId >= 1">
-            <h3>rotation delay {{rotationDelay}}</h3>
-            <input type="range" v-model="rotationDelay" min="0" max="1000" step="10" defaultValue="0">
+          <div class="molecules__rotationDelay" v-if="value[id].rotationId >= 1">
+            <h3>rotation delay {{value[id].rotationDelay}}</h3>
+            <input type="range" v-model="value[id].rotationDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
-          <div class="molecules__opacityDelay" v-if="thirdSelectedId >= 1">
-            <h3>opacity delay {{opacityDelay}}</h3>
-            <input  type="range" v-model="opacityDelay" min="0" max="1000" step="10" defaultValue="0">
+          <div class="molecules__opacityDelay" v-if="value[id].opacityId >= 1">
+            <h3>opacity delay {{value[id].opacityDelay}}</h3>
+            <input  type="range" v-model="value[id].opacityDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
 
 
@@ -71,13 +71,6 @@ export default {
           thirdSelectedId: 0,
           fourthSelectedId: 0,
 
-          //
-          currentRotateX: 0,
-          currentRotateY: 0,
-          currentRotateZ: 0,
-          currentWidth: "20%",
-          currentHeight: "20%",
-          currentOpacity:"1",
 
           //
           nukleolus: true,
@@ -89,11 +82,6 @@ export default {
           isSelectedSecond: false,
           isSelectedThird: false,
           isSelectedFourth: false,
-
-          //delay
-          sizeDelay: 0,
-          rotationDelay: 0,
-          opacityDelay: 0
         }
     },
     mounted: function() {
@@ -117,21 +105,20 @@ export default {
       },
 
       firstSelected(){
-        let id = this.firstSelectedId
-        return !id ? null : this.atomCollection.find(atom => atom.atomid === id),
-        this.atomCollection[id]
-
+        let d = this.value[this.id].sizeId
+        return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
+        this.atomCollection[d]
 
       },
       secondSelected(){
-        let id = this.secondSelectedId
-        return !id ? null : this.atomCollection.find(atom => atom.atomid === id),
-        this.atomCollection[id]
+        let d = this.value[this.id].rotationId
+        return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
+        this.atomCollection[d]
       },
       thirdSelected(){
-        let id = this.thirdSelectedId
-        return !id ? null : this.atomCollection.find(atom => atom.atomid === id),
-        this.atomCollection[id]
+        let d = this.value[this.id].opacityId
+        return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
+        this.atomCollection[d]
       },
 
 
@@ -158,7 +145,7 @@ export default {
               height: this.firstSelected.heightfinal + "%"
 
             }, {
-                delay: 2000 + +this.sizeDelay,
+                delay: 2000 + +this.value[this.id].sizeDelay,
                 easing: this.firstSelected.spacing,
                 duration: this.firstSelected.timing,
                 complete: function() {
@@ -172,7 +159,7 @@ export default {
               rotateY: this.secondSelected.rotationyfinal + "deg",
               rotateZ: this.secondSelected.rotationzfinal + "deg"
             }, {
-                delay: 2000 + +this.rotationDelay,
+                delay: 2000 + +this.value[this.id].rotationDelay,
                 easing: this.secondSelected.spacing,
                 duration: this.secondSelected.timing,
                 queue: false,
@@ -184,7 +171,7 @@ export default {
             Velocity(el, {
               opacity: this.thirdSelected.opacityfinal / 100,
             }, {
-                delay: 2000 + +this.opacityDelay,
+                delay: 2000 + +this.value[this.id].opacityDelay,
                 easing: this.thirdSelected.spacing,
                 duration: this.thirdSelected.timing,
                 queue: false,

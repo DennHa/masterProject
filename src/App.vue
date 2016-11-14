@@ -80,7 +80,7 @@ export default {
       atomNull:[{name: "-", atomid: 0, opacitystart: 100, opacityfinal: 100, rotationzfinal: "0",widthstart:"20", heightstart:"20", widthfinal: "20", heightfinal:"20", atomid: 0, id: 0}],
 
       //
-      molecule:[{name: "Samarium-Molecule", sizeId: "", sizeDelay: "", rotationId: "", rotationDelay: "", opacityId: "", opacityDelay:"", id: 0}],
+      molecule:[{name: "Samarium-Molecule", sizeId: 0, sizeDelay: 0, rotationId: 0, rotationDelay: 0, opacityId: 0, opacityDelay:0, id: 0}],
 
       //
       randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium'],
