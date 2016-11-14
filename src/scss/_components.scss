@@ -1,9 +1,12 @@
 .molecule {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
     &__bond {
         position: relative;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-start;
+        justify-content: flex-start;
         flex-direction: row;
         flex-flow: wrap;
         background-color: $color-background;
@@ -46,11 +49,14 @@
 }
 
 .atom {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
     &__shell {
         position: relative;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-start;
+        justify-content: flex-start;
         flex-direction: row;
         flex-flow: wrap;
         background-color: $color-background;
