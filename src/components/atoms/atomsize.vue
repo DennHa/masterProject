@@ -118,8 +118,8 @@ export default {
         }
     },
     mounted: function() {
-      this.nukleolus = false,
-      this.atomName = this.randomElements[Math.floor((Math.random() * 11) + 1)] + "-" + this.randomElements[Math.floor((Math.random() * 11) + 1)] + "ide"
+      this.nukleolus = false
+
 
     },
     computed: {

@@ -1,8 +1,11 @@
 <template>
 <section class="universe">
   <div class="molecules">
-    <molecule :atom-collection="combineAtomCollection">
-    </molecule>
+    <div class="molecules__categ1" v-for="thismolecule in molecule">
+      <molecule :atom-collection="combineAtomCollection" v-model="molecule" :moleculeid="thismolecule.id">
+      </molecule>
+    </div>
+
   </div>
 
   <div class="atoms__wrapper">
@@ -66,19 +69,26 @@ export default {
 
       atomCollection:[],
       atomSize:[
-        {id: 0, name: "Size", timing: "250", spacing: "easeOutSine", widthstart: "50", widthfinal:"100", heightstart: "50", heightfinal: "100", atomid: 1}
+        {id: 0, name: "Bromine-Size", timing: "250", spacing: "easeOutSine", widthstart: "50", widthfinal:"100", heightstart: "50", heightfinal: "100", atomid: 1}
       ],
       atomRotation:[
-        {id: 0, name: "Rotation", timing: "250", spacing: "easeOutSine", rotationxstart: "0", rotationxfinal:"0", rotationystart: "0", rotationyfinal: "0", rotationzstart: "0", rotationzfinal: "45", atomid: 2}
+        {id: 0, name: "Yttrium-Rotation", timing: "250", spacing: "easeOutSine", rotationxstart: "0", rotationxfinal:"0", rotationystart: "0", rotationyfinal: "0", rotationzstart: "0", rotationzfinal: "45", atomid: 2}
       ],
       atomOpacity:[
-        {id: 0, name: "Opacity", timing: "250", spacing: "easeOutSine", opacitystart: "0", opacityfinal:"100", atomid: 3}
+        {id: 0, name: "Indium-Opacity", timing: "250", spacing: "easeOutSine", opacitystart: "0", opacityfinal:"100", atomid: 3}
       ],
-      atomNull:[{name: "-", atomid: 0, opacitystart: 100, opacityfinal: 100, rotationzfinal: "0",widthstart:"20", heightstart:"20", widthfinal: "20", heightfinal:"20", atomid: 0, id: 0}]
+      atomNull:[{name: "-", atomid: 0, opacitystart: 100, opacityfinal: 100, rotationzfinal: "0",widthstart:"20", heightstart:"20", widthfinal: "20", heightfinal:"20", atomid: 0, id: 0}],
+
+      //
+      molecule:[{name: "Samarium-Molecule", sizeId: "", sizeDelay: "", rotationId: "", rotationDelay: "", opacityId: "", opacityDelay:"", id: 0}],
+
+      //
+      randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium'],
 
     }
   },
   computed:{
+
     combineAtomCollection(){
       return this.atomCollection.concat(this.atomNull, this.atomSize, this.atomRotation, this.atomOpacity)
 
@@ -90,17 +100,17 @@ export default {
     addatomsize(){
       this.atomId ++,
       currentIdSize ++,
-      this.atomSize.push({id: currentIdSize, name: "Size " + currentIdSize, timing: "250", spacing: "easeOutSine", widthstart: "50", widthfinal:"100", heightstart: "50", heightfinal: "100", atomid: this.atomId})
+      this.atomSize.push({id: currentIdSize, name: this.randomElements[Math.floor((Math.random() * 11) + 1)]+"-Size", timing: "250", spacing: "easeOutSine", widthstart: "50", widthfinal:"100", heightstart: "50", heightfinal: "100", atomid: this.atomId})
     },
     addatomrotation(){
       this.atomId ++,
       currentIdRotation ++,
-      this.atomRotation.push({id: currentIdRotation, name: "Rotation " + currentIdRotation, timing: "250", spacing: "easeOutSine", rotationxstart: "0", rotationxfinal:"0", rotationystart: "0", rotationyfinal: "0", rotationzstart: "0", rotationzfinal: "45", atomid: this.atomId})
+      this.atomRotation.push({id: currentIdRotation, name: this.randomElements[Math.floor((Math.random() * 11) + 1)]+"-Rotation", timing: "250", spacing: "easeOutSine", rotationxstart: "0", rotationxfinal:"0", rotationystart: "0", rotationyfinal: "0", rotationzstart: "0", rotationzfinal: "45", atomid: this.atomId})
     },
     addatomopacity(){
       this.atomId ++,
       currentIdOpacity ++,
-      this.atomOpacity.push({id: currentIdOpacity, name: "Opacity " + currentIdOpacity, timing: "250", spacing: "easeOutSine", opacitystart: "0", opacityfinal:"100", atomid: this.atomId})
+      this.atomOpacity.push({id: currentIdOpacity, name: this.randomElements[Math.floor((Math.random() * 11) + 1)]+"-Opacity", timing: "250", spacing: "easeOutSine", opacitystart: "0", opacityfinal:"100", atomid: this.atomId})
     }
   },
 

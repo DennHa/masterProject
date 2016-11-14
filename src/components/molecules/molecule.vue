@@ -8,7 +8,7 @@
     </div>
     <div class="molecule__properties">
       <form class="" action="index.html" method="post">
-        <input name="name" class="atom__name">
+        <input name="name" class="atom__name" v-model="value[id].name" >
       </form>
       <div>
         <select  class="atom__kind" v-model="firstSelectedId">
@@ -30,14 +30,19 @@
 
 
         <div class="molecule__timing">
-          <!-- <label for="firstDelay">first delay</label>
-          <input type="checkbox" id="firstDelay" value="firstDelay" v-model="checkedDelays"><br> -->
-          <!-- <label for="secondDelay"> second delay</label>
-          <input type="checkbox" id="secondDelay" value="secondDelay" v-model="isSelectedSecond"><br>
-          <label for="thirdDelay">third delay</label>
-          <input type="checkbox" id="thirdDelay" value="thirdDelay" v-model="isSelectedThird"><br>
-          <label for="fourthDelay">fourth delay</label>
-          <input type="checkbox" id="fourthDelay" value="fourthDelay" v-model="isSelectedFourth"> -->
+
+          <div class="molecule__sizeDelay" v-if="firstSelectedId >= 1">
+            <h3>size delay {{sizeDelay}}</h3>
+            <input type="range" v-model="sizeDelay" min="0" max="1000" step="10" defaultValue="0">
+          </div>
+          <div class="molecules__rotationDelay" v-if="secondSelectedId >= 1">
+            <h3>rotation delay {{rotationDelay}}</h3>
+            <input type="range" v-model="rotationDelay" min="0" max="1000" step="10" defaultValue="0">
+          </div>
+          <div class="molecules__opacityDelay" v-if="thirdSelectedId >= 1">
+            <h3>opacity delay {{opacityDelay}}</h3>
+            <input  type="range" v-model="opacityDelay" min="0" max="1000" step="10" defaultValue="0">
+          </div>
 
 
             <!-- <form>
@@ -56,9 +61,9 @@
 
 
 export default {
-    name: "molecule",
+    name: "molecules",
 
-    props: ['atomCollection'],
+    props: ['value', 'atomCollection', 'molecule', 'moleculeid'],
     data() {
         return {
           firstSelectedId: 0,
@@ -77,19 +82,27 @@ export default {
           //
           nukleolus: true,
           selected: "",
-          value: "",
+
 
           //selection
           isSelectedFirst: false,
           isSelectedSecond: false,
           isSelectedThird: false,
-          isSelectedFourth: false
+          isSelectedFourth: false,
+
+          //delay
+          sizeDelay: 0,
+          rotationDelay: 0,
+          opacityDelay: 0
         }
     },
     mounted: function() {
       this.nukleolus = false
     },
     computed: {
+      id(){
+        return this.moleculeid
+      },
       atoms(){
         return this.atomCollection.sort(function (a, b) {
           if (a.atomid > b.atomid) {
@@ -108,6 +121,7 @@ export default {
         return !id ? null : this.atomCollection.find(atom => atom.atomid === id),
         this.atomCollection[id]
 
+
       },
       secondSelected(){
         let id = this.secondSelectedId
@@ -118,7 +132,7 @@ export default {
         let id = this.thirdSelectedId
         return !id ? null : this.atomCollection.find(atom => atom.atomid === id),
         this.atomCollection[id]
-      }
+      },
 
 
     },
@@ -144,7 +158,7 @@ export default {
               height: this.firstSelected.heightfinal + "%"
 
             }, {
-                delay: "2000",
+                delay: 2000 + +this.sizeDelay,
                 easing: this.firstSelected.spacing,
                 duration: this.firstSelected.timing,
                 complete: function() {
@@ -158,7 +172,7 @@ export default {
               rotateY: this.secondSelected.rotationyfinal + "deg",
               rotateZ: this.secondSelected.rotationzfinal + "deg"
             }, {
-                delay: "2000",
+                delay: 2000 + +this.rotationDelay,
                 easing: this.secondSelected.spacing,
                 duration: this.secondSelected.timing,
                 queue: false,
@@ -170,7 +184,7 @@ export default {
             Velocity(el, {
               opacity: this.thirdSelected.opacityfinal / 100,
             }, {
-                delay: "2000",
+                delay: 2000 + +this.opacityDelay,
                 easing: this.thirdSelected.spacing,
                 duration: this.thirdSelected.timing,
                 queue: false,
