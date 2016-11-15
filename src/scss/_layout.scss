@@ -15,17 +15,14 @@
 }
 .molecules{
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: row;
-  flex-flow: wrap;
+  flex-flow: no-wrap;
   min-height: 100vh;
   width: 200vw;
   & > *{
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     flex-flow: wrap;
     max-width: 920px;
   }
@@ -40,10 +37,7 @@
 }
 .atoms{
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: row;
-  flex-flow: wrap;
+  flex-flow: no-wrap;
   min-height: 100vh;
   width: 200vw;
 
@@ -51,7 +45,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     flex-flow: wrap;
     max-width: 780px;
   }

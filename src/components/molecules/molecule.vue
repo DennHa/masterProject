@@ -90,7 +90,7 @@ export default {
     },
     computed: {
       id(){
-        return this.moleculeid
+        return this.moleculeid  //weil wir "-" als erstes molekül haben
       },
       atoms(){
         return this.atomCollection.sort(function (a, b) {

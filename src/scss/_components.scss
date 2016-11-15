@@ -1,7 +1,4 @@
 .molecule {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
     &__bond {
         position: relative;
         display: flex;
@@ -49,9 +46,6 @@
 }
 
 .atom {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
     &__shell {
         position: relative;
         display: flex;

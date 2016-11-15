@@ -1,28 +1,33 @@
 <template>
 <section class="universe">
+    <div class="organisems_wrapper">
+        <div class="organisems">
+            <div class="organisem_catOne">
+                <div>
+                    <h2>Organism</h2>
+                </div>
+                <div class="molecules__categ1" v-for="thisorganism in organism">
+                    <organism :organismid="thisorganism.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" v-model="organism">
+                    </organism>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="molecules__wrapper">
-      <div class="organisems">
-          <div>
-              <div>
-                  <h2>Organisem</h2>
-              </div>
-              <div class="molecules__categ1" v-for="thisorganisem in organisem">
-                  <molecule :atom-collection="combineMoleculeCollection" >
-                  </molecule>
-              </div>
-          </div>
-      </div>
         <div class="molecules">
-            <div>
+            <div class="molecule_catOne">
                 <div>
                     <h2>Molecules</h2>
                 </div>
-                <div class="molecules__categ1" v-for="thismolecule in molecule">
+                <div class="" v-for="thismolecule in molecule">
                     <molecule :atom-collection="combineAtomCollection" v-model="molecule" :moleculeid="thismolecule.id">
                     </molecule>
                 </div>
                 <button type="button" name="button" @click="addmoleculeCateg1" class="molecules__addMolecule">+</button>
             </div>
+
+
         </div>
     </div>
 
@@ -69,6 +74,7 @@
 </template>
 
 <script>
+import organism from './components/organisms/organism.vue'
 import molecule from './components/molecules/molecule.vue'
 import atomsize from './components/atoms/atomsize.vue'
 import atomrotation from './components/atoms/atomrotation.vue'
@@ -85,7 +91,8 @@ export default {
         atomrotation,
         atomsize,
         atomopacity,
-        molecule
+        molecule,
+        organism
     },
     data() {
         return {
@@ -142,34 +149,39 @@ export default {
             }],
 
             //
+            moleculeid: 1,
             moleculeCollection: [],
             molecule: [{
-                name: "Samarium-Molecule",
+                name: "Maltol-Molecule",
                 sizeId: 0,
                 sizeDelay: 0,
                 rotationId: 0,
                 rotationDelay: 0,
                 opacityId: 0,
                 opacityDelay: 0,
-                id: 0
+                id: 0,
+                molid: 1
             }],
             moleculeNull: [{
-                name: "-",
-                sizeId: 0,
-                sizeDelay: 0,
-                rotationId: 0,
-                rotationDelay: 0,
-                opacityId: 0,
-                opacityDelay: 0,
-                id: 0
+              name: "-",
+              sizeId: 0,
+              sizeDelay: 0,
+              rotationId: 0,
+              rotationDelay: 0,
+              opacityId: 0,
+              opacityDelay: 0,
+              id: 0,
+              molid: 0
             }],
 
-            organisem: [{
-              name: "hey"
-            }],
+            organism: [
+              {name: "Dragonfly-Organism", id: "0", firstMoleculeId: 0, secondMoleculeId: 0, thirdMoleculeId: 0}
+            ],
 
             //
             randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium'],
+            randomMolecules: ['Acetone', 'Chromium ', 'Fluorite', 'Hexane', 'Jadeite', 'Niter', 'Picene', 'Tamoxifen', 'Topaz', 'Water', 'Zircon', 'Vanillin'],
+            randomOrganisms: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium'],
 
         }
     },
@@ -177,7 +189,6 @@ export default {
 
         combineAtomCollection() {
             return this.atomCollection.concat(this.atomNull, this.atomSize, this.atomRotation, this.atomOpacity)
-
         },
         combineMoleculeCollection() {
             return this.moleculeCollection.concat(this.moleculeNull, this.molecule)
@@ -187,15 +198,17 @@ export default {
     methods: {
         addmoleculeCateg1() {
             this.moleculeId++,
+            this.moleculeid ++,
                 this.molecule.push({
-                    name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "-Molecule",
+                    name: this.randomMolecules[Math.floor((Math.random() * 11) + 1)] + "-Molecule",
                     sizeId: 0,
                     sizeDelay: 0,
                     rotationId: 0,
                     rotationDelay: 0,
                     opacityId: 0,
                     opacityDelay: 0,
-                    id: this.moleculeId
+                    id: this.moleculeId,
+                    molid: this.moleculeid
                 })
         },
         // properties der atome
