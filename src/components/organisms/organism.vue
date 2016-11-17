@@ -1,24 +1,24 @@
 <template name="organism">
-<div class="molecule__bond">
+<div class="organism__bond">
 
-    <div class="molecule__viewer">
+    <div class="organism__viewer">
         <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
             <div class="molecule__nukleolus" v-if="nukleolus"></div>
         </transition>
     </div>
-    <div class="molecule__properties">
+    <div class="organism__properties">
       <h3>molecule</h3>
       <form class="" action="index.html" method="post">
         <input name="name" class="atom__name" v-model="value[id].name" >
       </form>
       <div>
-        <select  class="atom__kind" v-model="value[id].firstMoleculeId">
+        <select  class="organism__kind" v-model="value[id].firstMoleculeId">
            <option  v-for="molecule in moleculeCollection" :value="molecule.molid">
              {{ molecule.name }}
            </option>
         </select>
         <span class="connectedIt">+</span>
-        <select  class="atom__kind" v-model="value[id].secondMoleculeId">
+        <select  class="organism__kind" v-model="value[id].secondMoleculeId">
            <option  v-for="molecule in moleculeCollection" :value="molecule.molid">
              {{ molecule.name }}
            </option>
@@ -34,19 +34,19 @@
 
         <div class="organism__timing">
 
-          <div class="molecule__sizeDelay" v-if="this.firstSelectedSizeId >= 1 || this.firstSelectedRotationId >= 1 || this.firstSelectedOpacityId >= 1">
+          <div class="organism__sizeDelay" v-if="this.firstSelectedSizeId >= 1 || this.firstSelectedRotationId >= 1 || this.firstSelectedOpacityId >= 1">
             <h3>first delay {{value[id].firstDelay}}</h3>
             <input type="range" v-model="value[id].firstDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
         </div>
         <div class="organism__timing">
-          <div class="molecules__rotationDelay" v-if="this.secondSelectedSizeId >= 1 || this.secondSelectedRotationId >= 1 || this.secondSelectedOpacityId >= 1">
+          <div class="organism__rotationDelay" v-if="this.secondSelectedSizeId >= 1 || this.secondSelectedRotationId >= 1 || this.secondSelectedOpacityId >= 1">
             <h3>second delay {{value[id].secondDelay}}</h3>
             <input type="range" v-model="value[id].secondDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
         </div>
         <div class="organism__timing">
-          <div class="molecules__opacityDelay" v-if="this.thirdSelectedSizeId >= 1 || this.thirdSelectedRotationId >= 1 || this.thirdSelectedOpacityId >= 1">
+          <div class="organism__opacityDelay" v-if="this.thirdSelectedSizeId >= 1 || this.thirdSelectedRotationId >= 1 || this.thirdSelectedOpacityId >= 1">
             <h3>third delay {{value[id].thirdDelay}}</h3>
             <input  type="range" v-model="value[id].thirdDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
@@ -78,7 +78,7 @@ export default {
         return this.organismid
       },
       firstSelected(){
-        let d = this.value[0].firstMoleculeId
+        let d = this.value[this.id].firstMoleculeId
         return !d ? null : this.moleculeCollection.find(molecule => molecule.molid === d),
         this.moleculeCollection[d]
 
@@ -190,7 +190,7 @@ export default {
               rotateY: this.atomCollection[this.firstSelectedRotationId].rotationyfinal + "deg",
               rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzfinal + "deg",
             }, {
-                delay: 2000 + +this.firstSelected.sizeDelay +
+                delay: 2000 + +this.firstSelected.rotationDelay +
                  +this.value[this.id].firstDelay,
                 easing: this.atomCollection[this.firstSelectedRotationId].spacing,
                 queue: false,
@@ -204,7 +204,7 @@ export default {
               opacity: this.atomCollection[this.firstSelectedOpacityId].opacityfinal / 100
 
             }, {
-                delay: 2000 + +this.firstSelected.sizeDelay +
+                delay: 2000 + +this.firstSelected.opacityDelay +
                  +this.value[this.id].firstDelay,
                 easing: this.atomCollection[this.firstSelectedOpacityId].spacing,
                 queue: false,
@@ -339,7 +339,7 @@ export default {
                 rotateY: this.atomCollection[this.secondSelectedRotationId].rotationyfinal + "deg",
                 rotateZ: this.atomCollection[this.secondSelectedRotationId].rotationzfinal + "deg",
               }, {
-                  delay: +this.secondSelected.sizeDelay +
+                  delay: +this.secondSelected.rotationDelay +
                    +this.value[this.id].secondDelay,
                   easing: this.atomCollection[this.secondSelectedRotationId].spacing,
                   queue: false,
@@ -353,7 +353,7 @@ export default {
                 opacity: this.atomCollection[this.secondSelectedOpacityId].opacityfinal / 100
 
               }, {
-                  delay: +this.secondSelected.sizeDelay +
+                  delay: +this.secondSelected.opacityDelay +
                    +this.value[this.id].secondDelay,
                   easing: this.atomCollection[this.secondSelectedOpacityId].spacing,
                   queue: false,

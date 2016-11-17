@@ -1,75 +1,81 @@
 <template>
-<section class="universe">
-    <div class="organisems_wrapper">
-        <div class="organisems">
-            <div class="organisem_catOne">
-                <div>
-                    <h2>Organism</h2>
-                </div>
-                <div class="molecules__categ1" v-for="thisorganism in organism">
-                    <organism :organismid="thisorganism.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" v-model="organism">
-                    </organism>
-                </div>
-            </div>
-        </div>
-    </div>
+<section class="app">
+  <section class="menu">
+      menue
+  </section>
+  <section class="universe">
+      <div class="organisms__wrapper">
+          <div class="organisms">
+              <div class="organism_catOne">
+                  <div>
+                      <h2>Organism</h2>
+                  </div>
+                  <div class="molecules__categ1" v-for="thisorganism in organism">
+                      <organism :organismid="thisorganism.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" v-model="organism">
+                      </organism>
+                  </div>
+                  <button type="button" name="button" @click="addOrganismCatOne" class="organisms__addOrganism">+</button>
+              </div>
+          </div>
+      </div>
 
-    <div class="molecules__wrapper">
-        <div class="molecules">
-            <div class="molecule_catOne">
-                <div>
-                    <h2>Molecules</h2>
-                </div>
-                <div class="" v-for="thismolecule in molecule">
-                    <molecule :atom-collection="combineAtomCollection" v-model="molecule" :moleculeid="thismolecule.id">
-                    </molecule>
-                </div>
-                <button type="button" name="button" @click="addmoleculeCateg1" class="molecules__addMolecule">+</button>
-            </div>
+      <div class="molecules__wrapper">
+          <div class="molecules">
+              <div class="molecule_catOne">
+                  <div>
+                      <h2>Molecules</h2>
+                  </div>
+                  <div class="" v-for="thismolecule in molecule">
+                      <molecule :atom-collection="combineAtomCollection" v-model="molecule" :moleculeid="thismolecule.id">
+                      </molecule>
+                  </div>
+                  <button type="button" name="button" @click="addMoleculeCatOne" class="molecules__addMolecule">+</button>
+              </div>
 
 
-        </div>
-    </div>
+          </div>
+      </div>
 
-    <div class="atoms__wrapper">
-        <div class="atoms">
-            <div class="atoms__size">
-                <div class="">
-                    <h2>Size</h2>
-                </div>
-                <div v-for="atomsize in atomSize">
-                    <atomsize v-model="atomSize" v-bind:atomsizeid="atomsize.id">
-                    </atomsize>
-                </div>
-                <button type="button" name="button" @click="addatomsize" class="atoms__addAtom">+</button>
-            </div>
+      <div class="atoms__wrapper">
+          <div class="atoms">
+              <div class="atoms__size">
+                  <div class="">
+                      <h2>Size</h2>
+                  </div>
+                  <div v-for="atomsize in atomSize">
+                      <atomsize v-model="atomSize" v-bind:atomsizeid="atomsize.id">
+                      </atomsize>
+                  </div>
+                  <button type="button" name="button" @click="addatomsize" class="atoms__addAtom">+</button>
+              </div>
 
-            <div class="atoms__rotation">
-                <div class="">
-                    <h2>Rotation</h2>
-                </div>
-                <div v-for="atomrotation in atomRotation">
-                    <atomrotation v-model="atomRotation" v-bind:atomsizeid="atomrotation.id">
-                    </atomrotation>
-                </div>
-                <button type="button" name="button" @click="addatomrotation" class="atoms__addAtom">+</button>
-            </div>
+              <div class="atoms__rotation">
+                  <div class="">
+                      <h2>Rotation</h2>
+                  </div>
+                  <div v-for="atomrotation in atomRotation">
+                      <atomrotation v-model="atomRotation" v-bind:atomsizeid="atomrotation.id">
+                      </atomrotation>
+                  </div>
+                  <button type="button" name="button" @click="addatomrotation" class="atoms__addAtom">+</button>
+              </div>
 
-            <div class="atoms__opacity">
-                <div class="">
-                    <h2>Opacity</h2>
-                </div>
-                <div v-for="atomopacity in atomOpacity">
-                    <atomopacity v-model="atomOpacity" v-bind:atomsizeid="atomopacity.id">
-                    </atomopacity>
-                </div>
-                <button type="button" name="button" @click="addatomopacity" class="atoms__addAtom">+</button>
-            </div>
-        </div>
-    </div>
+              <div class="atoms__opacity">
+                  <div class="">
+                      <h2>Opacity</h2>
+                  </div>
+                  <div v-for="atomopacity in atomOpacity">
+                      <atomopacity v-model="atomOpacity" v-bind:atomsizeid="atomopacity.id">
+                      </atomopacity>
+                  </div>
+                  <button type="button" name="button" @click="addatomopacity" class="atoms__addAtom">+</button>
+              </div>
+          </div>
+      </div>
 
-    </div>
+      </div>
 
+  </section>
 </section>
 </template>
 
@@ -97,8 +103,6 @@ export default {
     data() {
         return {
             atomId: 3, //start bei 2 weil atomSize und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
-
-            moleculeId: 0,
 
             atomCollection: [],
             atomSize: [{
@@ -149,6 +153,7 @@ export default {
             }],
 
             //
+            moleculeId: 0,
             moleculeid: 1,
             moleculeCollection: [],
             molecule: [{
@@ -174,14 +179,21 @@ export default {
               molid: 0
             }],
 
+            //
+            organismId: 0,
+            orgid: 1,
+            organismCollection: [],
             organism: [
-              {name: "Dragonfly-Organism", id: "0", firstMoleculeId: 0, firstDelay: 0, secondMoleculeId: 0, secondDelay: 0, thirdMoleculeId: 0, thridDelay: 0}
+              {name: "Sarkodina-Organism", id: 0, firstMoleculeId: 0, firstDelay: 0, secondMoleculeId: 0, secondDelay: 0, thirdMoleculeId: 0, thridDelay: 0, orgid: 1}
             ],
+            organismNull: [{
+              name: "-", id: 0, firstMoleculeId: 0, firstDelay: 0, secondMoleculeId: 0, secondDelay: 0, thirdMoleculeId: 0, thridDelay: 0, orgid: 0
+            }],
 
             //
             randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium'],
             randomMolecules: ['Acetone', 'Chromium ', 'Fluorite', 'Hexane', 'Jadeite', 'Niter', 'Picene', 'Tamoxifen', 'Topaz', 'Water', 'Zircon', 'Vanillin'],
-            randomOrganisms: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium'],
+            randomOrganisms: ['Cupulata', 'Mucorina', 'Astoma', 'Sporoza', 'Floridea', 'Diatomea', 'Bangialea', 'Fuciodea', 'Fungi', 'Exosporea', 'Heliozoa', 'Nuda'],
 
         }
     },
@@ -193,10 +205,21 @@ export default {
         combineMoleculeCollection() {
             return this.moleculeCollection.concat(this.moleculeNull, this.molecule)
         },
+        combineOrganismCollection() {
+            return this.moleculeCollection.concat(this.organismNull, this.organism)
+        },
 
     },
     methods: {
-        addmoleculeCateg1() {
+      addOrganismCatOne() {
+          this.organismId++,
+          this.orgid ++,
+              this.organism.push({
+                  name: this.randomMolecules[Math.floor((Math.random() * 11) + 1)] + "-Organism",
+                  id: this.organismId, firstMoleculeId: 0, firstDelay: 0, secondMoleculeId: 0, secondDelay: 0, thirdMoleculeId: 0, thridDelay: 0, orgid: this.orgid,
+              })
+      },
+        addMoleculeCatOne() {
             this.moleculeId++,
             this.moleculeid ++,
                 this.molecule.push({
