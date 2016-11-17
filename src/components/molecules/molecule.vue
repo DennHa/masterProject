@@ -13,17 +13,19 @@
       </form>
       <div>
         <select  class="atom__kind" v-model="value[id].sizeId">
-           <option v-if="atom.widthfinal" v-for="atom in atoms" :value="atom.atomid">
+           <option v-if="atom.widthfinal >= 0" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
         </select>
+        <span class="connectedIt">&</span>
         <select  class="atom__kind" v-model="value[id].rotationId">
-           <option v-if="atom.rotationzfinal" v-for="atom in atoms" :value="atom.atomid">
+           <option v-if="atom.rotationzfinal >= 0" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
         </select>
+        <span class="connectedIt">&</span>
         <select  class="atom__kind" v-model="value[id].opacityId">
-           <option v-if="atom.opacityfinal" v-for="atom in atoms" :value="atom.atomid">
+           <option v-if="atom.opacityfinal >= 0" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
         </select>

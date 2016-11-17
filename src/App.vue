@@ -175,7 +175,7 @@ export default {
             }],
 
             organism: [
-              {name: "Dragonfly-Organism", id: "0", firstMoleculeId: 0, secondMoleculeId: 0, thirdMoleculeId: 0}
+              {name: "Dragonfly-Organism", id: "0", firstMoleculeId: 0, firstDelay: 0, secondMoleculeId: 0, secondDelay: 0, thirdMoleculeId: 0, thridDelay: 0}
             ],
 
             //
