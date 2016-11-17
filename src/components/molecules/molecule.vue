@@ -134,7 +134,17 @@ export default {
             el.style.transform = "rotateX("+ this.secondSelected.rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.secondSelected.rotationystart  +"deg)",
             el.style.transform = "rotateZ("+ this.secondSelected.rotationzstart  +"deg)",
-            el.style.opacity = this.thirdSelected.opacitystart / 100
+            el.style.opacity = this.thirdSelected.opacitystart / 100,
+            Velocity(el, {
+                rotateX: this.secondSelected.rotationxstart,
+                rotateY: this.secondSelected.rotationystart,
+                rotateZ: this.secondSelected.rotationzstart
+            }, {
+                duration: 0,
+                delay: "0",
+                queue: false
+
+            })
 
         },
 

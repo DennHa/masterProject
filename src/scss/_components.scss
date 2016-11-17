@@ -5,7 +5,7 @@
         align-items: flex-start;
         justify-content: flex-start;
         flex-direction: row;
-        flex-flow: wrap;
+        flex-flow: no-wrap;
         background-color: $color-background;
         margin: $spacing-half;
         height: 300px;
@@ -32,7 +32,7 @@
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
-        flex-wrap: wrap;
+        flex-wrap: no-wrap;
         padding: 0 $spacing-third $spacing-third;
     }
 
@@ -52,7 +52,7 @@
         align-items: flex-start;
         justify-content: flex-start;
         flex-direction: row;
-        flex-flow: wrap;
+        flex-flow: no-wrap;
         background-color: $color-background;
         margin: $spacing-half;
         height: 300px;
@@ -113,13 +113,7 @@
                 padding-top: $spacing-third;
             }
         }
-        @media (max-width: $mq-md) {
-            padding: 0;
-
-            & > * {
-                padding-top: $spacing-half;
-            }
-        }
+        
     };
 
     &__characteristics {

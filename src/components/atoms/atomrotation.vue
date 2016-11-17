@@ -171,9 +171,19 @@ export default {
         beforeEnter: function(el) {
             el.style.width = this.atomSizeStandard + "%",
             el.style.height = this.atomSizeStandard + "%",
-            el.style.transform = "rotateX("+ this.atomRotationXStart +"deg)",
-            el.style.transform = "rotateY("+ this.atomRotationYStart +"deg)",
-            el.style.transform = "rotateZ("+ this.atomRotationZStart +"deg)"
+            el.style.transform = "rotateX("+ +this.atomRotationXStart +"deg)",
+            el.style.transform = "rotateY("+ +this.atomRotationYStart +"deg)",
+            el.style.transform = "rotateZ("+ +this.atomRotationZStart +"deg)",
+            Velocity(el, {
+                rotateX: this.atomRotationXStart,
+                rotateY: this.atomRotationYStart,
+                rotateZ: this.atomRotationZStart
+            }, {
+                duration: 0,
+                delay: "0",
+                queue: false
+
+            })
         },
 
         //animation enter

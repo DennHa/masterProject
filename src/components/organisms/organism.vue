@@ -2,9 +2,9 @@
 <div class="molecule__bond">
 
     <div class="molecule__viewer">
-        <!-- <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
+        <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
             <div class="molecule__nukleolus" v-if="nukleolus"></div>
-        </transition> -->
+        </transition>
     </div>
     <div class="molecule__properties">
       <h3>molecule</h3>
@@ -69,6 +69,7 @@ export default {
     },
     mounted: function() {
       this.nukleolus = false
+
     },
     computed: {
       id(){
@@ -78,7 +79,6 @@ export default {
         let d = this.value[0].firstMoleculeId
         return !d ? null : this.moleculeCollection.find(molecule => molecule.molid === d),
         this.moleculeCollection[d]
-
 
       },
       secondSelected(){
@@ -92,83 +92,191 @@ export default {
         this.moleculeCollection[d]
       },
 
+      firstSelectedSizeId(){
+        return this.firstSelected.sizeId
+      },
+      firstSelectedRotationId(){
+        return this.firstSelected.rotationId
+      },
+      firstSelectedOpacityId(){
+        return this.firstSelected.opacityId
+      },
+      secondSelectedSizeId(){
+        return this.secondSelected.sizeId
+      },
+      secondSelectedRotationId(){
+        return this.secondSelected.rotationId
+      },
+      secondSelectedOpacityId(){
+        return this.secondSelected.opacityId
+      },
+      thirdSelectedSizeId(){
+        return this.thirdSelected.sizeId
+      },
+      thirdSelectedRotationId(){
+        return this.thirdSelected.rotationId
+      },
+      thirdSelectedOpacityId(){
+        return this.thirdSelected.opacityId
+      }
 
     },
+    methods: {
 
-    // methods: {
-    //
-    //     //before animation
-    //     beforeEnter: function(el) {
-    //         el.style.width = this.firstSelected.widthstart + "%",
-    //         el.style.height = this.firstSelected.heightstart + "%",
-    //         el.style.transform = "rotateX("+ this.secondSelected.rotationxstart +"deg)",
-    //         el.style.transform = "rotateY("+ this.secondSelected.rotationystart  +"deg)",
-    //         el.style.transform = "rotateZ("+ this.secondSelected.rotationzstart  +"deg)",
-    //         el.style.opacity = this.thirdSelected.opacitystart / 100
-    //
-    //     },
-    //
-    //     //animation enter
-    //     enter: function(el, done) {
-    //         var vm = this
-    //         Velocity(el, {
-    //           width: this.firstSelected.widthfinal + "%",
-    //           height: this.firstSelected.heightfinal + "%"
-    //
-    //         }, {
-    //             delay: 2000 + +this.value[this.id].sizeDelay,
-    //             easing: this.firstSelected.spacing,
-    //             duration: this.firstSelected.timing,
-    //             complete: function() {
-    //                done()
-    //                if (!vm.stop) vm.nukleolus = false
-    //             }
-    //         })
-    //         Velocity(el, {
-    //
-    //           rotateX: this.secondSelected.rotationxfinal + "deg",
-    //           rotateY: this.secondSelected.rotationyfinal + "deg",
-    //           rotateZ: this.secondSelected.rotationzfinal + "deg"
-    //         }, {
-    //             delay: 2000 + +this.value[this.id].rotationDelay,
-    //             easing: this.secondSelected.spacing,
-    //             duration: this.secondSelected.timing,
-    //             queue: false,
-    //             complete: function() {
-    //                done()
-    //                if (!vm.stop) vm.nukleolus = false
-    //             }
-    //         })
-    //         Velocity(el, {
-    //           opacity: this.thirdSelected.opacityfinal / 100,
-    //         }, {
-    //             delay: 2000 + +this.value[this.id].opacityDelay,
-    //             easing: this.thirdSelected.spacing,
-    //             duration: this.thirdSelected.timing,
-    //             queue: false,
-    //             complete: function() {
-    //                done()
-    //                if (!vm.stop) vm.nukleolus = false
-    //             }
-    //         })
-    //
-    //     },
-    //
-    //     //animation leave - just for restart
-    //     leave: function(el, done) {
-    //         var vm = this
-    //         Velocity(el, {
-    //             backgroundColor: '#ffffff',
-    //         }, {
-    //             duration: 1,
-    //             delay: "2000",
-    //             complete: function() {
-    //                 done()
-    //                 vm.nukleolus = true
-    //             }
-    //         })
-    //     }
-    // },
+        //before animation
+        beforeEnter: function(el) {
+            el.style.width = this.atomCollection[this.firstSelectedSizeId].widthstart + "%",
+            el.style.height = this.atomCollection[this.firstSelectedSizeId].heightstart + "%",
+            el.style.transform = "rotateX("+ this.atomCollection[this.firstSelectedRotationId].rotationxstart +"deg)",
+            el.style.transform = "rotateY("+ this.atomCollection[this.firstSelectedRotationId].rotationystart  +"deg)",
+            el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)",
+            el.style.opacity = this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
+            Velocity(el, {
+                rotateX: atomCollection[this.firstSelectedRotationId].rotationxstart,
+                rotateY: atomCollection[this.firstSelectedRotationId].rotationystart,
+                rotateZ: atomCollection[this.firstSelectedRotationId].rotationzstart
+            }, {
+                duration: 0,
+                delay: "0",
+                queue: false
+
+            })
+
+        },
+
+        //animation enter
+        enter: function(el, done) {
+            var vm = this
+            //width
+            Velocity(el, {
+              width: this.atomCollection[this.firstSelectedSizeId].widthfinal + "%",
+              height: this.atomCollection[this.firstSelectedSizeId].heightfinal + "%"
+
+            }, {
+                delay: 2000 + +this.firstSelected.sizeDelay,
+                easing: this.atomCollection[this.firstSelectedSizeId].spacing,
+                duration: this.atomCollection[this.firstSelectedSizeId].timing,
+                complete: function() {
+                   done()
+                   if (!vm.stop) vm.nukleolus = false
+                }
+            })
+
+
+            //height
+
+
+          //rotationx
+          //rotationY
+          //rotation/
+          //opacity
+
+
+
+            Velocity(el, {
+
+              rotateX: this.atomCollection[this.firstSelectedRotationId].rotationxfinal + "deg",
+              rotateY: this.atomCollection[this.firstSelectedRotationId].rotationyfinal + "deg",
+              rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzfinal + "deg"
+            }, {
+                delay: 2000 + +this.firstSelected.rotationDelay,
+                easing: this.atomCollection[this.firstSelectedRotationId].spacing,
+                duration: this.atomCollection[this.firstSelectedRotationId].timing,
+                queue: false,
+                complete: function() {
+                   done()
+                   if (!vm.stop) vm.nukleolus = false
+                }
+            })
+            Velocity(el, {
+              opacity: this.atomCollection[this.firstSelectedOpacityId].opacityfinal / 100,
+            }, {
+                delay: 2000 + +this.firstSelected.opacityDelay,
+                easing: this.atomCollection[this.firstSelectedOpacityId].spacing,
+                duration: this.atomCollection[this.firstSelectedOpacityId].timing,
+                queue: false,
+                complete: function() {
+                   done()
+                   if (!vm.stop) vm.nukleolus = false
+                }
+            })
+
+            //secondSelected
+            // Velocity(el, {
+            //   width: this.atomCollection[this.secondSelectedSizeId].widthstart + "%",
+            //   height: this.atomCollection[this.secondSelectedSizeId].heightstart + "%",
+            //   rotateX: this.atomCollection[this.secondSelectedRotationId].rotationxstart + "deg",
+            //   rotateY: this.atomCollection[this.secondSelectedRotationId].rotationystart + "deg",
+            //   rotateZ: this.atomCollection[this.secondSelectedRotationId].rotationzstart + "deg",
+            //   opacity: this.atomCollection[this.secondSelectedOpacityId].opacitystart / 100,
+            // }, {
+            //     delay: 2000 + +this.secondSelected.opacityDelay,
+            //     queue: null,
+            //     complete: function() {
+            //        done()
+            //        if (!vm.stop) vm.nukleolus = false
+            //     }
+            // })
+            Velocity(el, {
+              width: this.atomCollection[this.secondSelectedSizeId].widthfinal + "%",
+              height: this.atomCollection[this.secondSelectedSizeId].heightfinal + "%"
+
+            }, {
+                delay: 2000 + +this.secondSelected.sizeDelay,
+                easing: this.atomCollection[this.secondSelectedSizeId].spacing,
+                duration: this.atomCollection[this.secondSelectedSizeId].timing,
+                complete: function() {
+                   done()
+                   if (!vm.stop) vm.nukleolus = false
+                }
+            })
+            Velocity(el, {
+
+              rotateX: this.atomCollection[this.secondSelectedRotationId].rotationxfinal + "deg",
+              rotateY: this.atomCollection[this.secondSelectedRotationId].rotationyfinal + "deg",
+              rotateZ: this.atomCollection[this.secondSelectedRotationId].rotationzfinal + "deg"
+            }, {
+                delay: 2000 + +this.secondSelected.rotationDelay,
+                easing: this.atomCollection[this.secondSelectedRotationId].spacing,
+                duration: this.atomCollection[this.secondSelectedRotationId].timing,
+                queue: false,
+                complete: function() {
+                   done()
+                   if (!vm.stop) vm.nukleolus = false
+                }
+            })
+            Velocity(el, {
+              opacity: this.atomCollection[this.secondSelectedOpacityId].opacityfinal / 100,
+            }, {
+                delay: 2000 + +this.secondSelected.opacityDelay,
+                easing: this.atomCollection[this.secondSelectedOpacityId].spacing,
+                duration: this.atomCollection[this.secondSelectedOpacityId].timing,
+                queue: false,
+                complete: function() {
+                   done()
+                   if (!vm.stop) vm.nukleolus = false
+                }
+            })
+
+
+
+        },
+
+        //animation leave - just for restart
+        leave: function(el, done) {
+            var vm = this
+            Velocity(el, {
+                backgroundColor: '#ffffff',
+            }, {
+                duration: 1,
+                delay: "2000",
+                complete: function() {
+                    done()
+                    vm.nukleolus = true
+                }
+            })
+        }
+    },
 
 }
 
