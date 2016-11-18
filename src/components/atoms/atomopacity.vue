@@ -31,7 +31,29 @@
               opacity (%)<input name="width" v-model="value[id].opacitystart" type="number"> --> <input name="width" v-model="value[id].opacityfinal" type="number">
             </form>
         </div>
-    </div>
+        <div class="subMenu">
+          <div class="subMenu__copied" v-show="copied">copied</div>
+          <div v-bind:id="value[id].atomscaleid + value[id].name" v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
+
+        </div>
+
+        <div v-bind:class="copyThisValue" class="copy">
+          //css Animation Specs - {{value[id].name}}  <br>
+          .{{value[id].name}} { <br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_animation {{this.atomDuration}} {{this.spacing}};<br>
+          &nbsp;  }<br>
+          &nbsp;  <br>
+          &nbsp;  @keyframes {{value[id].name}}_animation {<br>
+          &nbsp;  &nbsp;  0% {<br>
+          &nbsp; &nbsp;  opacity: {{+value[id].opacitystart / 100}};<br>
+
+          &nbsp;  }<br>
+          &nbsp;  100% {<br>
+          &nbsp; &nbsp;  opacity: {{+value[id].opacityfinal / 100 }}; <br>
+
+          &nbsp;  }<br>
+          }
+        </div>
 
 </div>
 </template>
@@ -40,18 +62,18 @@
 export default {
     name: "atomopcaity",
 
-    props: ['value', 'atomsizeid'],
+    props: ['value', 'atomscaleid'],
     data() {
         return {
             nukleolus: true,
-
+            copied: false,
             //standard properties
-            atomSizeStandard: "20",
+            atomscaleStandard: "20",
             atomColorStandard: "#4A90E2",
             color: "",
             //atomHeightStart: "5",
             //kind
-            selectedKind: "atom__size",
+            selectedKind: "atom__scale",
             selectedEaseing: 'easeOutSine',
             easings: [{
                 easeFunction: 'linear'
@@ -120,28 +142,37 @@ export default {
 
     },
     computed: {
+
+      copyThisValue(){
+        return this.value[this.id].atomscaleid + this.value[this.id].name + "_id"
+      },
+
         id(){
-          return this.atomsizeid
+          return this.atomscaleid
         },
         atomDuration(){
-          return this.value[this.atomsizeid].timing
+          return this.value[this.atomscaleid].timing
         },
         spacing(){
-          return  this.value[this.atomsizeid].spacing
+          return  this.value[this.atomscaleid].spacing
         },
         // properties
         //width
         atomOpacityStart: function() {
-            return this.value[this.atomsizeid].opacitystart / 100
+            return this.value[this.atomscaleid].opacitystart / 100
 
         },
         atomOpacityFinal(){
-          return this.value[this.atomsizeid].opacityfinal / 100
+          return this.value[this.atomscaleid].opacityfinal / 100
         }
     },
 
 
     methods: {
+      copyThis(){
+        var clipboard = new Clipboard('#' + this.value[this.id].atomscaleid + this.value[this.id].name)
+      },
+
         //before animation
         beforeEnter: function(el) {
             el.style.opacity = this.atomOpacityStart

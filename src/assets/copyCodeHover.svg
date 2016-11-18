@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="9px" viewBox="0 0 13 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_code_black_48px</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Pure-Atom-" transform="translate(-1104.000000, -357.000000)">
+            <g id="Rotation" transform="translate(650.000000, 45.000000)">
+                <g id="Atom-1-Copy" transform="translate(0.000000, 78.000000)">
+                    <g id="Atom">
+                        <g id="ic_code_black_48px" transform="translate(453.000000, 231.000000)">
+                            <g id="Group">
+                                <polygon id="Shape" points="0 0 15 0 15 15 0 15"></polygon>
+                                <path d="M5.875,10.375 L3,7.5 L5.875,4.625 L5,3.75 L1.25,7.5 L5,11.25 L5.875,10.375 Z M9.125,10.375 L12,7.5 L9.125,4.625 L10,3.75 L13.75,7.5 L10,11.25 L9.125,10.375 L9.125,10.375 Z" id="Shape" fill="#FFC400"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -2,9 +2,12 @@
 <div class="molecule__bond">
 
     <div class="molecule__viewer">
+      <div class="molecule__nukleolusWrapper">
         <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
             <div class="molecule__nukleolus" v-if="nukleolus"></div>
         </transition>
+      </div>
+
     </div>
     <div class="molecule__properties">
       <h3>molecule</h3>
@@ -12,7 +15,7 @@
         <input name="name" class="atom__name" v-model="value[id].name" >
       </form>
       <div>
-        <select  class="atom__kind" v-model="value[id].sizeId">
+        <select  class="atom__kind" v-model="value[id].scaleId">
            <option v-if="atom.widthfinal >= 0" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
@@ -34,9 +37,9 @@
 
         <div class="molecule__timing">
 
-          <div class="molecule__sizeDelay" v-if="value[id].sizeId >= 1">
-            <h3>size delay {{value[id].sizeDelay}}</h3>
-            <input type="range" v-model="value[id].sizeDelay" min="0" max="1000" step="10" defaultValue="0">
+          <div class="molecule__scaleDelay" v-if="value[id].scaleId >= 1">
+            <h3>scale delay {{value[id].scaleDelay}}</h3>
+            <input type="range" v-model="value[id].scaleDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
           <div class="molecules__rotationDelay" v-if="value[id].rotationId >= 1">
             <h3>rotation delay {{value[id].rotationDelay}}</h3>
@@ -108,7 +111,7 @@ export default {
       },
 
       firstSelected(){
-        let d = this.value[this.id].sizeId
+        let d = this.value[this.id].scaleId
         return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
         this.atomCollection[d]
 
@@ -131,8 +134,8 @@ export default {
 
         //before animation
         beforeEnter: function(el) {
-            el.style.width = this.firstSelected.widthstart + "%",
-            el.style.height = this.firstSelected.heightstart + "%",
+            el.style.width = this.firstSelected.widthstart * this.value[this.id].viewPortScaleX  + "px",
+            el.style.height = this.firstSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
             el.style.transform = "rotateX("+ this.secondSelected.rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.secondSelected.rotationystart  +"deg)",
             el.style.transform = "rotateZ("+ this.secondSelected.rotationzstart  +"deg)",
@@ -154,11 +157,11 @@ export default {
         enter: function(el, done) {
             var vm = this
             Velocity(el, {
-              width: this.firstSelected.widthfinal + "%",
-              height: this.firstSelected.heightfinal + "%"
+              width: +this.firstSelected.widthfinal * this.value[this.id].viewPortScaleX + "px",
+              height: +this.firstSelected.heightfinal * this.value[this.id].viewPortScaleY +   "px"
 
             }, {
-                delay: 2000 + +this.value[this.id].sizeDelay,
+                delay: 2000 + +this.value[this.id].scaleDelay,
                 easing: this.firstSelected.spacing,
                 duration: this.firstSelected.timing,
                 complete: function() {

@@ -1,4 +1,4 @@
-<template name="atomsize">
+<template name="atomscale">
 <div class="atom__shell">
     <div class="atom__viewer">
         <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
@@ -7,7 +7,7 @@
     </div>
 
     <div class="atom__properties">
-      <h3>size</h3>
+      <h3>scale</h3>
       <form class="" action="index.html" method="post">
         <input name="name" value="" v-model="value[id].name" class="atom__name">
       </form>
@@ -28,33 +28,57 @@
 
             <h3>animation</h3>
             <form>
-              width(%)&nbsp; <input name="width" v-model="value[id].widthstart" type="number"> --> <input name="width" v-model="value[id].widthfinal" type="number">
+              width(pt)&nbsp; <input name="width" v-model="value[id].widthstart" type="number"> --> <input name="width" v-model="value[id].widthfinal" type="number">
             </form>
             <form>
-              height(%) <input name="width" v-model="value[id].heightstart" type="number"> --> <input name="width" v-model="value[id].heightfinal" type="number">
+              height(pt) <input name="width" v-model="value[id].heightstart" type="number"> --> <input name="width" v-model="value[id].heightfinal" type="number">
             </form>
         </div>
     </div>
+    <div class="subMenu">
+      <div class="subMenu__copied" v-show="copied">copied</div>
+      <div v-bind:id="value[id].atomscaleid + value[id].name" v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
+
+    </div>
+
+    <div v-bind:class="copyThisValue" class="copy">
+      //css Animation Specs - {{value[id].name}}  <br>
+      .{{value[id].name}} { <br>
+      &nbsp;  &nbsp;  animation: {{value[id].name}}_animation {{this.atomDuration}}ms {{this.spacing}};<br>
+      &nbsp;  }<br>
+      &nbsp;  <br>
+      &nbsp;  @keyframes {{value[id].name}}_animation {<br>
+      &nbsp;  &nbsp;  0% {<br>
+      &nbsp; &nbsp;  width: {{value[id].widthstart}}px; //in pixel!<br>
+      &nbsp; &nbsp;  height: {{value[id].heightstart}}px; //in pixel!<br>
+      &nbsp;  }<br>
+      &nbsp;  100% {<br>
+      &nbsp; &nbsp;  width: {{value[id].widthfinal}}px; //in pixel!<br>
+      &nbsp; &nbsp;  height: {{value[id].heightfinal}}px; //in pixel!<br>
+      &nbsp;  }<br>
+      }
+    </div>
+
 
 </div>
+
 </template>
 
 <script>
 export default {
-    name: "atomsize",
-
-    props: ['value', 'atomsizeid'],
+    name: "atomscale",
+    props: ['value', 'atomscaleid'],
     data() {
         return {
+            copied: false,
             nukleolus: true,
-
             //standard properties
-            atomSizeStandard: "20",
+            //atomscaleStandard: "50",
             atomColorStandard: "#4A90E2",
             color: "",
             //atomHeightStart: "5",
             //kind
-            selectedKind: "atom__size",
+            selectedKind: "atom__scale",
             selectedEaseing: 'easeOutSine',
             easings: [{
                 easeFunction: 'linear'
@@ -112,9 +136,7 @@ export default {
                 easeFunction: 'easeInOutElastic'
             }, {
                 easeFunction: 'spring'
-            }, ],
-
-            randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium'],
+            }, ]
         }
     },
     mounted: function() {
@@ -123,41 +145,59 @@ export default {
 
     },
     computed: {
+
         id(){
-          return this.atomsizeid
+          return this.atomscaleid
         },
+        //
+        copyThisValue(){
+          return this.value[this.id].atomscaleid + this.value[this.id].name + "_id"
+        },
+        //
         atomDuration(){
-          return this.value[this.atomsizeid].timing
+          return this.value[this.atomscaleid].timing
         },
         spacing(){
-          return  this.value[this.atomsizeid].spacing
+          return  this.value[this.atomscaleid].spacing
         },
         // properties
         //width
         atomWidthStart: function() {
-            return this.atomSizeStandard * (this.value[this.atomsizeid].widthstart / this.atomSizeStandard)
+            return +this.value[this.atomscaleid].widthstart * this.value[this.atomscaleid].viewPortScaleX
 
         },
 
         atomHeightStart: function() {
-            return this.atomSizeStandard * (this.value[this.atomsizeid].heightstart / this.atomSizeStandard)
+            return +this.value[this.atomscaleid].heightstart * this.value[this.atomscaleid].viewPortScaleY
         },
 
         atomWidthFinal: function() {
-            return this.atomSizeStandard * (this.value[this.atomsizeid].widthfinal / this.atomSizeStandard)
+            return  +this.value[this.atomscaleid].widthfinal  * this.value[this.atomscaleid].viewPortScaleX
         },
 
         atomHeightFinal: function() {
-            return this.atomSizeStandard * (this.value[this.atomsizeid].heightfinal / this.atomSizeStandard)
+            return  +this.value[this.atomscaleid].heightfinal * this.value[this.atomscaleid].viewPortScaleY
+        },
+        atomScaleXinPT(){
+          return this.atomWidthStart * this.atomWidthFinal
+        },
+        atomScaleYinPT(){
+          return this.atomHeightStart * this.atomHeightFinal
         }
+
     },
 
 
     methods: {
+        //copyThis
+        copyThis(){
+          var clipboard = new Clipboard('#' + this.value[this.id].atomscaleid + this.value[this.id].name)
+        },
+
         //before animation
         beforeEnter: function(el) {
-            el.style.width = this.atomWidthStart + "%",
-            el.style.height = this.atomHeightStart + "%"
+            el.style.width = this.atomWidthStart  + "px",
+            el.style.height = this.atomHeightStart + "px"
         },
 
         //animation enter
@@ -166,8 +206,8 @@ export default {
 
 
             Velocity(el, {
-                width: this.atomWidthFinal + "%",
-                height: this.atomHeightFinal + "%"
+                width: +this.atomWidthFinal + "px",
+                height: +this.atomHeightFinal + "px"
             }, {
                 delay: "2000",
                 easing: this.spacing,

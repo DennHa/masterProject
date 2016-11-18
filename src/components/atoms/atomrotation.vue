@@ -37,7 +37,31 @@
               rotationZ(°) <input name="width" v-model="value[id].rotationzstart" type="number"> --> <input name="width" v-model="value[id].rotationzfinal" type="number">
             </form>
         </div>
-    </div>
+        <div class="subMenu">
+          <div class="subMenu__copied" v-show="copied">copied</div>
+          <div v-bind:id="value[id].atomscaleid + value[id].name" v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
+
+        </div>
+
+        <div v-bind:class="copyThisValue" class="copy">
+          //css Animation Specs - {{value[id].name}}  <br>
+          .{{value[id].name}} { <br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_animation {{this.atomDuration}}ms {{this.spacing}};<br>
+          &nbsp;  }<br>
+          &nbsp;  <br>
+          &nbsp;  @keyframes {{value[id].name}}_animation {<br>
+          &nbsp;  &nbsp;  0% {<br>
+          &nbsp;  &nbsp;  transform: rotatX(){{value[id].rotationxstart}});<br>
+          &nbsp;  &nbsp;  transform: rotatY(){{value[id].rotationystart}});<br>
+          &nbsp;  &nbsp;  transform: rotatZ(){{value[id].rotationzstart}});<br>
+          &nbsp;  }<br>
+          &nbsp;  100% {<br>
+          &nbsp;  &nbsp;  transform: rotatX(){{value[id].rotationxfinal}});<br>
+          &nbsp;  &nbsp;  transform: rotatY(){{value[id].rotationyfinal}});<br>
+          &nbsp; &nbsp;  transform: rotatZ(){{value[id].rotationzfinal}});<br>
+          &nbsp;  }<br>
+          }
+        </div>
 
 </div>
 </template>
@@ -45,18 +69,18 @@
 <script>
 export default {
     name: "atomrotation",
-    props: ['value', 'atomsizeid'],
+    props: ['value', 'atomscaleid'],
     data() {
         return {
             nukleolus: true,
-
+            copied: false,
             //standard properties
-            atomSizeStandard: "20",
+            atomscaleStandard: "50",
             atomColorStandard: "#4A90E2",
             color: "",
             //atomHeightStart: "5",
             //kind
-            selectedKind: "atom__size",
+            selectedKind: "atom__scale",
             selectedEaseing: 'easeOutSine',
             easings: [{
                 easeFunction: 'linear'
@@ -125,52 +149,54 @@ export default {
     },
     computed: {
         id(){
-          return this.atomsizeid
+          return this.atomscaleid
+        },
+        copyThisValue(){
+          return this.value[this.id].atomscaleid + this.value[this.id].name + "_id"
         },
         atomDuration(){
-          return this.value[this.atomsizeid].timing
+          return this.value[this.atomscaleid].timing
         },
         spacing(){
-          return  this.value[this.atomsizeid].spacing
+          return  this.value[this.atomscaleid].spacing
         },
         // properties
         //width
         atomRotationXStart: function() {
-            return this.value[this.atomsizeid].rotationxstart
+            return this.value[this.atomscaleid].rotationxstart
 
         },
 
         atomRotationXFinal: function() {
-            return this.value[this.atomsizeid].rotationxfinal
+            return this.value[this.atomscaleid].rotationxfinal
         },
 
         atomRotationYStart: function() {
-            return this.value[this.atomsizeid].rotationystart
+            return this.value[this.atomscaleid].rotationystart
         },
 
         atomRotationYFinal: function() {
-            return this.value[this.atomsizeid].rotationyfinal
+            return this.value[this.atomscaleid].rotationyfinal
         },
         atomRotationZStart: function() {
-            return this.value[this.atomsizeid].rotationzstart
+            return this.value[this.atomscaleid].rotationzstart
         },
 
         atomRotationZFinal: function() {
-            return this.value[this.atomsizeid].rotationzfinal
+            return this.value[this.atomscaleid].rotationzfinal
         }
     },
 
 
     methods: {
+      copyThis(){
+        var clipboard = new Clipboard('#' + this.value[this.id].atomscaleid + this.value[this.id].name)
+      },
 
-        clickRemove: function() {
-
-            this.$emit('clickRemove', true)
-        },
         //before animation
         beforeEnter: function(el) {
-            el.style.width = this.atomSizeStandard + "%",
-            el.style.height = this.atomSizeStandard + "%",
+            el.style.width = this.atomscaleStandard + "px",
+            el.style.height = this.atomscaleStandard + "px",
             el.style.transform = "rotateX("+ +this.atomRotationXStart +"deg)",
             el.style.transform = "rotateY("+ +this.atomRotationYStart +"deg)",
             el.style.transform = "rotateZ("+ +this.atomRotationZStart +"deg)",
