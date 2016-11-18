@@ -1,14 +1,34 @@
 <template>
 <section class="app">
-  <section class="menu">
-      menue
-  </section>
+  <nav class="menu">
+    <div class="menu__principles">
+      <img src="./assets/principles.svg" alt="" />
+    </div>
+    <div class="menu__bestpractices">
+      <img src="./assets/bestpractices.svg" alt="" />
+    </div>
+    <div class="menu__template">
+      <img src="./assets/templates.svg" alt="" />
+    </div>
+    <div class="menu__organisms">
+      <img src="./assets/organisms.svg" alt="" />
+    </div>
+    <div class="menu__molecules">
+      <img src="./assets/molecules.svg" alt="" />
+    </div>
+    <div class="menu__atoms">
+      <img src="./assets/atoms.svg" alt="" />
+    </div>
+  </nav>
   <section class="universe">
       <div class="organisms__wrapper">
+          <div class="anchor" id="anchor__organism">
+            <h3>organisms</h3>
+          </div>
           <div class="organisms">
               <div class="organism_catOne">
                   <div>
-                      <h2>Organism</h2>
+                      <!-- <h2>Organism</h2> -->
                   </div>
                   <div class="molecules__categ1" v-for="thisorganism in organism">
                       <organism :organismid="thisorganism.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" v-model="organism">
@@ -20,10 +40,13 @@
       </div>
 
       <div class="molecules__wrapper">
+        <div class="anchor" id="anchor__molecule">
+          <h3>molecules</h3>
+        </div>
           <div class="molecules">
               <div class="molecule_catOne">
                   <div>
-                      <h2>Molecules</h2>
+                      <!-- <h2>Molecules</h2> -->
                   </div>
                   <div class="" v-for="thismolecule in molecule">
                       <molecule :atom-collection="combineAtomCollection" v-model="molecule" :moleculeid="thismolecule.id">
@@ -37,10 +60,13 @@
       </div>
 
       <div class="atoms__wrapper">
+        <div class="anchor" id="anchor__atom">
+          <h3>atoms</h3>
+        </div>
           <div class="atoms">
               <div class="atoms__size">
                   <div class="">
-                      <h2>Size</h2>
+                      <!-- <h2>Size</h2> -->
                   </div>
                   <div v-for="atomsize in atomSize">
                       <atomsize v-model="atomSize" v-bind:atomsizeid="atomsize.id">
@@ -51,7 +77,7 @@
 
               <div class="atoms__rotation">
                   <div class="">
-                      <h2>Rotation</h2>
+                      <!-- <h2>Rotation</h2> -->
                   </div>
                   <div v-for="atomrotation in atomRotation">
                       <atomrotation v-model="atomRotation" v-bind:atomsizeid="atomrotation.id">
@@ -62,7 +88,7 @@
 
               <div class="atoms__opacity">
                   <div class="">
-                      <h2>Opacity</h2>
+                      <!-- <h2>Opacity</h2> -->
                   </div>
                   <div v-for="atomopacity in atomOpacity">
                       <atomopacity v-model="atomOpacity" v-bind:atomsizeid="atomopacity.id">
@@ -80,6 +106,7 @@
 </template>
 
 <script>
+
 import organism from './components/organisms/organism.vue'
 import molecule from './components/molecules/molecule.vue'
 import atomsize from './components/atoms/atomsize.vue'

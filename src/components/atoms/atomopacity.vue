@@ -7,7 +7,7 @@
     </div>
 
     <div class="atom__properties">
-      <h3>size</h3>
+      <h3>opacity</h3>
       <form class="" action="index.html" method="post">
         <input name="name" value="" v-model="value[id].name" class="atom__name">
       </form>

@@ -7,7 +7,7 @@
         </transition>
     </div>
     <div class="organism__properties">
-      <h3>molecule</h3>
+      <h3>organism</h3>
       <form class="" action="index.html" method="post">
         <input name="name" class="atom__name" v-model="value[id].name" >
       </form>
@@ -180,7 +180,6 @@ export default {
                 easing: this.atomCollection[this.firstSelectedSizeId].spacing,
                 duration: this.atomCollection[this.firstSelectedSizeId].timing,
                 complete: function() {
-                   done()
                    if (!vm.stop) vm.nukleolus = false
                 }
             })
@@ -196,7 +195,6 @@ export default {
                 queue: false,
                 duration: this.atomCollection[this.firstSelectedRotationId].timing,
                 complete: function() {
-                   done()
                    if (!vm.stop) vm.nukleolus = false
                 }
             })
@@ -210,7 +208,6 @@ export default {
                 queue: false,
                 duration: this.atomCollection[this.firstSelectedOpacityId].timing,
                 complete: function() {
-                   done()
                    if (!vm.stop) vm.nukleolus = false
 
                 }
@@ -329,8 +326,10 @@ export default {
                   easing: this.atomCollection[this.secondSelectedSizeId].spacing,
                   duration: this.atomCollection[this.secondSelectedSizeId].timing,
                   complete: function() {
-                     done()
-                     if (!vm.stop) vm.nukleolus = true
+
+                    setTimeout(function(){
+                      vm.nukleolus = true
+                      }, 2000);
                   }
               })
 
@@ -345,8 +344,10 @@ export default {
                   queue: false,
                   duration: this.atomCollection[this.secondSelectedRotationId].timing,
                   complete: function() {
-                     done()
-                     if (!vm.stop) vm.nukleolus = true
+
+                    setTimeout(function(){
+                      vm.nukleolus = true
+                      }, 2000);
                   }
               })
               Velocity(el, {
@@ -359,8 +360,10 @@ export default {
                   queue: false,
                   duration: this.atomCollection[this.secondSelectedOpacityId].timing,
                   complete: function() {
-                     done()
-                     if (!vm.stop) vm.nukleolus = true
+
+                    setTimeout(function(){
+                      vm.nukleolus = true
+                      }, 2000);
 
                   }
               })
@@ -371,13 +374,16 @@ export default {
                 duration: 1,
                 delay: "2000",
                 complete: function() {
-                    done()
+                  setTimeout(function(){
                     vm.nukleolus = true
+                    }, 2000);
+
                 }
             })
           }
         }
-    },
+
+    }
 
 }
 
