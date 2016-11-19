@@ -46,11 +46,9 @@
           &nbsp;  @keyframes {{value[id].name}}_animation {<br>
           &nbsp;  &nbsp;  0% {<br>
           &nbsp; &nbsp;  opacity: {{+value[id].opacitystart / 100}};<br>
-
           &nbsp;  }<br>
           &nbsp;  100% {<br>
           &nbsp; &nbsp;  opacity: {{+value[id].opacityfinal / 100 }}; <br>
-
           &nbsp;  }<br>
           }
         </div>

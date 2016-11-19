@@ -1,25 +1,39 @@
 <template>
 <section class="app">
-    <nav class="menu">
-        <div class="menu__principles">
-            <img src="./assets/principles.svg" alt="" />
-        </div>
-        <div class="menu__bestpractices">
-            <img src="./assets/bestpractices.svg" alt="" />
-        </div>
-        <div class="menu__organisms">
-            <img src="./assets/organisms.svg" alt="" />
-        </div>
-        <div class="menu__molecules">
-            <img src="./assets/molecules.svg" alt="" />
-        </div>
-        <div class="menu__atoms">
-            <img src="./assets/atoms.svg" alt="" />
-        </div>
+
+    <nav class="menu" data-gumshoe >
+
+
+            <a class="menu__principles">
+                <img src="./assets/principles.svg" alt="" />
+            </a>
+
+
+            <a class="menu__bestpractices" data-scroll href="#anchor__bestpractices">
+                <img src="./assets/bestpractices.svg" alt="" />
+            </a>
+
+
+            <a class="menu__organisms" data-scroll href="#anchor__organism">
+                <img src="./assets/organisms.svg" alt="" />
+            </a>
+
+
+            <a class="menu__molecules" data-scroll href="#anchor__molecule">
+                <img src="./assets/molecules.svg" alt="" />
+            </a>
+
+
+            <a class="menu__atoms" data-scroll href="#anchor__atom">
+                <img src="./assets/atoms.svg" alt="" />
+            </a>
+
+
     </nav>
     <section class="universe">
-        <div class="organisms__wrapper">
-            <div class="anchor" id="anchor__organism">
+
+        <div class="organisms__wrapper" id="anchor__organism">
+            <div class="anchor">
                 <h3>organisms</h3>
             </div>
             <div class="organisms">
@@ -36,8 +50,8 @@
             </div>
         </div>
 
-        <div class="molecules__wrapper">
-            <div class="anchor" id="anchor__molecule">
+        <div class="molecules__wrapper" id="anchor__molecule">
+            <div class="anchor" >
                 <h3>molecules</h3>
             </div>
             <div class="molecules">
@@ -56,8 +70,8 @@
             </div>
         </div>
 
-        <div class="atoms__wrapper">
-            <div class="anchor" id="anchor__atom">
+        <div class="atoms__wrapper" id="anchor__atom">
+            <div class="anchor" >
                 <h3>atoms</h3>
             </div>
             <div class="atoms">
@@ -95,9 +109,6 @@
                 </div>
             </div>
         </div>
-
-        </div>
-
     </section>
 </section>
 </template>
@@ -113,6 +124,7 @@ import atomopacity from './components/atoms/atomopacity.vue'
 let currentIdscale = 0
 let currentIdRotation = 0
 let currentIdOpacity = 0
+
 
 export default {
     name: 'universe',
@@ -139,38 +151,38 @@ export default {
             atomCollection: [],
             atomscale: [{
                 id: 0,
-                name: "Bromine-Scale",
-                timing: "250",
+                name: "BromineScale",
+                timing: 250,
                 spacing: "easeOutSine",
-                widthstart: "50",
-                widthfinal: "200",
-                heightstart: "50",
-                heightfinal: "200",
+                widthstart: 50,
+                widthfinal: 200,
+                heightstart: 50,
+                heightfinal: 200,
                 atomid: 1,
                 viewPortScaleX: 0.46875,
                 viewPortScaleY: 0.46875
             }],
             atomRotation: [{
                 id: 0,
-                name: "Yttrium-Rotation",
+                name: "YttriumRotation",
                 timing: "250",
                 spacing: "easeOutSine",
-                rotationxstart: "0",
-                rotationxfinal: "0",
-                rotationystart: "0",
-                rotationyfinal: "0",
-                rotationzstart: "0",
-                rotationzfinal: "45",
+                rotationxstart: 0,
+                rotationxfinal: 0,
+                rotationystart: 0,
+                rotationyfinal: 0,
+                rotationzstart: 0,
+                rotationzfinal: 45,
                 atomid: 2,
                 viewPortScaleX: 0.46875,
                 viewPortScaleY: 0.46875
             }],
             atomOpacity: [{
                 id: 0,
-                name: "Indium-Opacity",
-                timing: "250",
+                name: "IndiumOpacity",
+                timing: 250,
                 spacing: "easeOutSine",
-                opacitystart: "0",
+                opacitystart: 0,
                 opacityfinal: "100",
                 atomid: 3,
                 viewPortScaleX: 0.46875,
@@ -181,11 +193,11 @@ export default {
                 atomid: 0,
                 opacitystart: 100,
                 opacityfinal: 100,
-                rotationzfinal: "0",
-                widthstart: "50",
-                heightstart: "50",
-                widthfinal: "50",
-                heightfinal: "50",
+                rotationzfinal: 0,
+                widthstart: 50,
+                heightstart: 50,
+                widthfinal: 50,
+                heightfinal: 50,
                 atomid: 0,
                 id: 0,
                 viewPortScaleX: 0.46875,
@@ -197,7 +209,7 @@ export default {
             moleculeid: 1,
             moleculeCollection: [],
             molecule: [{
-                name: "Maltol-Molecule",
+                name: "MaltolMolecule",
                 scaleId: 0,
                 scaleDelay: 0,
                 rotationId: 0,
@@ -228,7 +240,7 @@ export default {
             orgid: 1,
             organismCollection: [],
             organism: [{
-                name: "Sarkodina-Organism",
+                name: "SarkodinaOrganism",
                 id: 0,
                 firstMoleculeId: 0,
                 firstDelay: 0,
@@ -293,11 +305,12 @@ export default {
 
     },
     methods: {
+
         addOrganismCatOne() {
             this.organismId++,
                 this.orgid++,
                 this.organism.push({
-                    name: this.randomMolecules[Math.floor((Math.random() * 11) + 1)] + "-Organism",
+                    name: this.randomMolecules[Math.floor((Math.random() * 11) + 1)] + "Organism",
                     id: this.organismId,
                     firstMoleculeId: 0,
                     firstDelay: 0,
@@ -314,7 +327,7 @@ export default {
             this.moleculeId++,
                 this.moleculeid++,
                 this.molecule.push({
-                    name: this.randomMolecules[Math.floor((Math.random() * 11) + 1)] + "-Molecule",
+                    name: this.randomMolecules[Math.floor((Math.random() * 11) + 1)] + "Molecule",
                     scaleId: 0,
                     scaleDelay: 0,
                     rotationId: 0,
@@ -333,13 +346,13 @@ export default {
                 currentIdscale++,
                 this.atomscale.push({
                     id: currentIdscale,
-                    name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "-Scale",
-                    timing: "250",
+                    name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "Scale",
+                    timing: 250,
                     spacing: "easeOutSine",
-                    widthstart: "50",
-                    widthfinal: "200",
-                    heightstart: "50",
-                    heightfinal: "200",
+                    widthstart: 50,
+                    widthfinal: 200,
+                    heightstart: 50,
+                    heightfinal: 200,
                     atomid: this.atomId,
                     viewPortScaleX: this.atomViewPortScaleX,
                     viewPortScaleY: this.atomViewPortScaleY
@@ -350,15 +363,15 @@ export default {
                 currentIdRotation++,
                 this.atomRotation.push({
                     id: currentIdRotation,
-                    name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "-Rotation",
+                    name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "Rotation",
                     timing: "250",
                     spacing: "easeOutSine",
-                    rotationxstart: "0",
-                    rotationxfinal: "0",
-                    rotationystart: "0",
-                    rotationyfinal: "0",
-                    rotationzstart: "0",
-                    rotationzfinal: "45",
+                    rotationxstart: 0,
+                    rotationxfinal: 0,
+                    rotationystart: 0,
+                    rotationyfinal: 0,
+                    rotationzstart: 0,
+                    rotationzfinal: 45,
                     atomid: this.atomId,
                     viewPortScaleX: this.atomViewPortScaleX,
                     viewPortScaleY: this.atomViewPortScaleY
@@ -369,18 +382,17 @@ export default {
                 currentIdOpacity++,
                 this.atomOpacity.push({
                     id: currentIdOpacity,
-                    name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "-Opacity",
-                    timing: "250",
+                    name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "Opacity",
+                    timing: 250,
                     spacing: "easeOutSine",
-                    opacitystart: "0",
-                    opacityfinal: "100",
+                    opacitystart: 0,
+                    opacityfinal: 100,
                     atomid: this.atomId,
                     viewPortScaleX: this.atomViewPortScaleX,
                     viewPortScaleY: this.atomViewPortScaleY
                 })
         }
-    },
-
+    }
 }
 </script>
 

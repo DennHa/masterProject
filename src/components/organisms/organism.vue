@@ -47,7 +47,85 @@
             <input  type="range" v-model="value[id].thirdDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
         </div>
-    </div>
+        <div class="subMenu">
+              <div class="subMenu__copied" v-show="copied">copied</div>
+              <div v-bind:id="value[id].name + value[id].orgid " v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
+
+            </div>
+
+            <div v-bind:class="copyThisValue" class="copy">
+              //css Animation Specs - {{value[id].name}}  <br>
+              .{{value[id].name}} { <br>
+              &nbsp;  &nbsp;  animation: {{value[id].name}}_scale_one {{atomCollection[firstSelectedscaleId].timing}}ms  {{atomCollection[firstSelectedscaleId].spacing}} {{+firstSelected.scaleDelay +
+               +value[id].firstDelay}};<br>
+              &nbsp;  &nbsp;  animation: {{value[id].name}}_rotation_one {{atomCollection[firstSelectedRotationId].timing}}ms  {{atomCollection[firstSelectedRotationId].spacing}} {{+firstSelected.rotationDelay +
+               +value[id].firstDelay}};<br>
+              &nbsp;  &nbsp;  animation: {{value[id].name}}_opacity_one {{atomCollection[firstSelectedOpacityId].timing}}ms  {{atomCollection[firstSelectedOpacityId].spacing}} {{+firstSelected.opacityDelay +
+               +value[id].firstDelay}};<br>
+              &nbsp;  &nbsp;  animation: {{value[id].name}}_scale_second {{atomCollection[secondSelectedscaleId].timing}}ms  {{atomCollection[secondSelectedscaleId].spacing}} {{+secondSelected.scaleDelay +
+               +value[id].secondDelay}};<br>
+              &nbsp;  &nbsp;  animation: {{value[id].name}}_rotation_second {{atomCollection[secondSelectedRotationId].timing}}ms  {{atomCollection[secondSelectedRotationId].spacing}} {{+secondSelected.rotationDelay +
+               +value[id].secondDelay}};<br>
+              &nbsp;  &nbsp;  animation: {{value[id].name}}_opacity_second {{atomCollection[secondSelectedOpacityId].timing}}ms  {{atomCollection[secondSelectedOpacityId].spacing}} {{+secondSelected.opacityDelay +
+               +value[id].secondDelay}};<br>
+              &nbsp;  }<br>
+              &nbsp;  <br>
+              &nbsp;  @keyframes {{value[id].name}}_scale_one {<br>
+              &nbsp;  &nbsp;  0% {<br>
+              &nbsp; &nbsp;  width: {{atomCollection[firstSelectedscaleId].widthstart}}px; //in pixel!<br>
+              &nbsp; &nbsp;  height: {{atomCollection[firstSelectedscaleId].heightstart}}px; //in pixel!<br>
+              &nbsp;  }<br>
+              &nbsp;  100% {<br>
+              &nbsp; &nbsp;  width: {{atomCollection[firstSelectedscaleId].widthfinal}}px; //in pixel!<br>
+              &nbsp; &nbsp;  height: {{atomCollection[firstSelectedscaleId].heightfinal}}px; //in pixel!<br>
+              &nbsp;  }<br>
+              &nbsp;  @keyframes {{value[id].name}}_rotation_one {<br>
+              &nbsp;  &nbsp;  0% {<br>
+              &nbsp;  &nbsp;  transform: rotatX({{atomCollection[firstSelectedRotationId].rotationxstart}});<br>
+              &nbsp;  &nbsp;  transform: rotatY({{atomCollection[firstSelectedRotationId].rotationystart}});<br>
+              &nbsp;  &nbsp;  transform: rotatZ({{atomCollection[firstSelectedRotationId].rotationzstart}});<br>
+              &nbsp;  }<br>
+              &nbsp;  100% {<br>
+              &nbsp;  &nbsp;  transform: rotatX({{atomCollection[firstSelectedRotationId].rotationxfinal}});<br>
+              &nbsp;  &nbsp;  transform: rotatY({{atomCollection[firstSelectedRotationId].rotationyfinal}});<br>
+              &nbsp; &nbsp;  transform: rotatZ({{atomCollection[firstSelectedRotationId].rotationzfinal}});<br>
+              &nbsp;  }<br>
+              &nbsp;  @keyframes {{value[id].name}}_opacity_one {<br>
+              &nbsp;  &nbsp;  0% {<br>
+              &nbsp; &nbsp;  opacity: {{atomCollection[firstSelectedOpacityId].opacitystart / 100}};<br>
+              &nbsp;  }<br>
+              &nbsp;  100% {<br>
+              &nbsp; &nbsp;  opacity: {{atomCollection[firstSelectedOpacityId].opacityfinal / 100 }}; <br>
+              &nbsp;  }<br>
+              &nbsp;  @keyframes {{value[id].name}}_scale_second {<br>
+              &nbsp;  &nbsp;  0% {<br>
+              &nbsp; &nbsp;  width: {{atomCollection[secondSelectedscaleId].widthstart}}px; //in pixel!<br>
+              &nbsp; &nbsp;  height: {{atomCollection[secondSelectedscaleId].heightstart}}px; //in pixel!<br>
+              &nbsp;  }<br>
+              &nbsp;  100% {<br>
+              &nbsp; &nbsp;  width: {{atomCollection[secondSelectedscaleId].widthfinal}}px; //in pixel!<br>
+              &nbsp; &nbsp;  height: {{atomCollection[secondSelectedscaleId].heightfinal}}px; //in pixel!<br>
+              &nbsp;  }<br>
+              &nbsp;  @keyframes {{value[id].name}}_rotation_second {<br>
+              &nbsp;  &nbsp;  0% {<br>
+              &nbsp;  &nbsp;  transform: rotatX({{atomCollection[secondSelectedRotationId].rotationxstart}});<br>
+              &nbsp;  &nbsp;  transform: rotatY({{atomCollection[secondSelectedRotationId].rotationystart}});<br>
+              &nbsp;  &nbsp;  transform: rotatZ({{atomCollection[secondSelectedRotationId].rotationzstart}});<br>
+              &nbsp;  }<br>
+              &nbsp;  100% {<br>
+              &nbsp;  &nbsp;  transform: rotatX({{atomCollection[secondSelectedRotationId].rotationxfinal}});<br>
+              &nbsp;  &nbsp;  transform: rotatY({{atomCollection[secondSelectedRotationId].rotationyfinal}});<br>
+              &nbsp; &nbsp;  transform: rotatZ({{atomCollection[secondSelectedRotationId].rotationzfinal}});<br>
+              &nbsp;  }<br>
+              &nbsp;  @keyframes {{value[id].name}}_opacity_second {<br>
+              &nbsp;  &nbsp;  0% {<br>
+              &nbsp; &nbsp;  opacity: {{atomCollection[secondSelectedOpacityId].opacitystart / 100}};<br>
+              &nbsp;  }<br>
+              &nbsp;  100% {<br>
+              &nbsp; &nbsp;  opacity: {{atomCollection[secondSelectedOpacityId].opacityfinal / 100 }}; <br>
+              &nbsp;  }<br>
+              }
+            </div>
 </div>
 </template>
 <script>
@@ -60,6 +138,7 @@ export default {
     data() {
         return {
           //
+          copied: false,
           nukleolus: true,
           selected: ""
 
@@ -73,6 +152,9 @@ export default {
       id(){
         return this.organismid
       },
+      copyThisValue(){
+          return   this.value[this.id].name + this.value[this.id].orgid + "_id"
+        },
       firstSelected(){
         let d = this.value[this.id].firstMoleculeId
         return !d ? null : this.moleculeCollection.find(molecule => molecule.molid === d),
@@ -120,7 +202,9 @@ export default {
 
     },
     methods: {
-
+        copyThis(){
+          var clipboard = new Clipboard('#' + this.value[this.id].name + this.value[this.id].orgid)
+        },
         //before animation
         beforeEnter: function(el) {
             el.style.width = this.atomCollection[this.firstSelectedscaleId].widthstart * this.value[this.id].viewPortScaleX + "px",
@@ -208,7 +292,7 @@ export default {
                         vm.nukleolus = true
                         }, 2000);
                     }
-                }) 
+                })
               }
               if (this.secondSelectedRotationId >= 1){
                 Velocity(el, {

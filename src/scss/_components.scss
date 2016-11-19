@@ -252,6 +252,7 @@ margin: $spacing-standard;
   width: 0;
   height: 0;
   opacity: 0;
+  z-index: -100;
   //display: none;
 }
 .subMenu{
@@ -262,9 +263,7 @@ margin: $spacing-standard;
   position: absolute;
   right: 0;
   bottom: 0;
-
   & > *{
-
     cursor: pointer;
     padding: 0 $spacing-third;
     background-size: 25px;
@@ -283,10 +282,22 @@ margin: $spacing-standard;
 
   }
 
-  &__copied{  
+  &__copied{
     background-image: none !important;
     font-size: $fontSize-half;
     color: $color-secondary;
+
+
+  }
+}
+.active{
+  background-color: $color-primary;
+  transition: background 0.1s;
+  & > *{
+    opacity: 1;
+  }
+  &:hover{
+    background-color: $color-primary;
 
   }
 }

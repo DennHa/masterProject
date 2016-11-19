@@ -190,8 +190,8 @@ export default {
 
     methods: {
       copyThis(){
-        var clipboard = new Clipboard('#' + this.value[this.id].atomscaleid + this.value[this.id].name)
-      },
+          var clipboard = new Clipboard('#' + this.value[this.id].atomscaleid + this.value[this.id].name)
+        },
 
         //before animation
         beforeEnter: function(el) {

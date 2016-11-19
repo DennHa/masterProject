@@ -1,12 +1,15 @@
+
 .app{
   position: relative;
   display: flex;
   flex-direction: row;
   flex-flow: nowrap;
+  overflow-y: hidden;
 
 }
 
 .menu{
+  overflow: hidden;
   z-index: 90;
   position: fixed;
   width: 50px;
@@ -41,7 +44,7 @@
     }
     &:hover{
       background-color: $color-alpha-light;
-      transition: background 0.15s;
+      transition: background 0.1s;
       & > *{
         opacity: 1;
       }
@@ -54,7 +57,6 @@
 .universe{
   margin-left: 50px;
   width: 95vw;
-	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -72,7 +74,7 @@
   display: flex;
   align-items: flex-start;
   flex-flow: nowrap;
-  //min-height: 100vh;
+  min-height: 100vh;
   //width: 200vw;
   & > *{
     display: flex;
@@ -95,7 +97,7 @@
   display: flex;
   align-items: flex-start;
   flex-flow: nowrap;
-  //min-height: 100vh;
+  min-height: 100vh;
   //width: 200vw;
   & > *{
     display: flex;
@@ -110,14 +112,14 @@
 .atoms__wrapper{
   //width: 100vw;
   //overflow-x: scroll;
-  //padding:25vh 0;
+
 }
 .atoms{
   margin-left: $spacing-double;
   display: flex;
   align-items: flex-start;
   flex-flow: nowrap;
-  //min-height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 
   & > *{
