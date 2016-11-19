@@ -209,20 +209,21 @@ export default {
       },
         //before animation
         beforeEnter: function(el) {
-        let translateSelected = this.atomCollection[this.translateSelectedId].translate
-            el.style.alignSelf = "center",
-            el.style.width = this.scaleSelected.widthstart * this.value[this.id].viewPortScaleX  + "px",
-            el.style.height = this.scaleSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
+            el.style.width = +this.scaleSelected.widthstart * this.value[this.id].viewPortScaleX + "px",
+            el.style.height = +this.scaleSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
             el.style.transform = "rotateX("+ this.rotationSelected.rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.rotationSelected.rotationystart  +"deg)",
             el.style.transform = "rotateZ("+ this.rotationSelected.rotationzstart  +"deg)",
-            el.style.opacity = this.opacitySelected.opacitystart / 100,
+            el.style.opacity = 0, //gegen das flackern
             Velocity(el, {
+                opacity: this.opacitySelected.opacitystart / 100,
+                width: +this.scaleSelected.widthstart * this.value[this.id].viewPortScaleX + "px",
+                height: +this.scaleSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
                 rotateX: this.rotationSelected.rotationxstart,
                 rotateY: this.rotationSelected.rotationystart,
                 rotateZ: this.rotationSelected.rotationzstart,
                 translateX: +this.translateSelected.translateXstart   *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
-                translateY: +this.translateSelected.translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleX + "px"
+                translateY: +this.translateSelected.translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleY + "px"
             }, {
                 duration: 0,
                 delay: "0",
@@ -235,23 +236,23 @@ export default {
         //animation enter
         enter: function(el, done) {
             var vm = this
-            let translateSelected = this.atomCollection[this.translateSelectedId].translate
+
+            console.log(+this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleY )
+            // console.log(test))
             Velocity(el, {
               width: +this.scaleSelected.widthfinal * this.value[this.id].viewPortScaleX + "px",
-              height: +this.scaleSelected.heightfinal * this.value[this.id].viewPortScaleY +   "px"
+              height: +this.scaleSelected.heightfinal * this.value[this.id].viewPortScaleY + "px"
 
             }, {
                 delay: 2000 + +this.value[this.id].scaleDelay,
-                easing: this.scaleSelected.spacing,
-                duration: this.scaleSelected.timing,
+                easing: this.translateSelected.spacing,
+                duration: this.translateSelected.timing,
                 complete: function() {
                    done()
                    if (!vm.stop) vm.nukleolus = false
                 }
             })
             Velocity(el, {
-              transformOrignX: "center",
-              transformOrignY: "center",
               rotateX: this.rotationSelected.rotationxfinal + "deg",
               rotateY: this.rotationSelected.rotationyfinal + "deg",
               rotateZ: this.rotationSelected.rotationzfinal + "deg"
@@ -277,21 +278,24 @@ export default {
                    if (!vm.stop) vm.nukleolus = false
                 }
             })
-            if (translateSelected){
+
               Velocity(el, {
-                translateX: +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 180 *  this.value[this.id].viewPortScaleX + "px",
-                translateY: +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 320 *  this.value[this.id].viewPortScaleX + "px"
+
+                // let test = +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleY
+                // console.log(test)
+                translateX: +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleX + "px",
+                translateY: +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleY  + "px"
               }, {
                   delay: 2000 + +this.value[this.id].translateDelay,
-                  easing: this.opacitySelected.spacing,
-                  duration: this.opacitySelected.timing,
+                  easing: this.translateSelected.spacing,
+                  duration: this.translateSelected.timing,
                   queue: false,
                   complete: function() {
                      done()
                      if (!vm.stop) vm.nukleolus = false
                   }
               })
-            }
+
 
 
         },
@@ -300,9 +304,9 @@ export default {
         leave: function(el, done) {
             var vm = this
             Velocity(el, {
-                backgroundColor: '#ffffff',
+                backgroundColor: 'transparent',
             }, {
-                duration: 1,
+                duration: 0,
                 delay: "2000",
                 complete: function() {
                     done()

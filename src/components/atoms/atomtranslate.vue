@@ -197,7 +197,9 @@ export default {
 
         //before animation
         beforeEnter: function(el) {
+            el.style.opacity = 0, //gegen das flackern
           Velocity(el, {
+              opacity: 1,
               translateX: +this.atomtranslateXstart  + "px",
               translateY: +this.atomtranslateYstart  + "px"
           }, {

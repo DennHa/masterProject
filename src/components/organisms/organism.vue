@@ -36,21 +36,15 @@
 
         <div class="organism__timing">
 
-          <div class="organism__scaleDelay" v-if="this.firstSelectedscaleId >= 1 || this.firstSelectedRotationId >= 1 || this.firstSelectedOpacityId >= 1">
+          <div class="organism__scaleDelay" v-if="this.firstSelectedscaleId >= 1 || this.firstSelectedRotationId >= 1 || this.firstSelectedOpacityId >= 1 || this.firstSelectedTranslaId >= 1">
             <h3>first delay {{value[id].firstDelay}}</h3>
             <input type="range" v-model="value[id].firstDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
         </div>
         <div class="organism__timing">
-          <div class="organism__rotationDelay" v-if="this.secondSelectedscaleId >= 1 || this.secondSelectedRotationId >= 1 || this.secondSelectedOpacityId >= 1">
+          <div class="organism__rotationDelay" v-if="this.secondSelectedscaleId >= 1 || this.secondSelectedRotationId >= 1 || this.secondSelectedOpacityId >= 1 || this.secondSelectedTranslateId >= 1">
             <h3>second delay {{value[id].secondDelay}}</h3>
             <input type="range" v-model="value[id].secondDelay" min="0" max="1000" step="10" defaultValue="0">
-          </div>
-        </div>
-        <div class="organism__timing">
-          <div class="organism__opacityDelay" v-if="this.thirdSelectedscaleId >= 1 || this.thirdSelectedRotationId >= 1 || this.thirdSelectedOpacityId >= 1">
-            <h3>third delay {{value[id].thirdDelay}}</h3>
-            <input  type="range" v-model="value[id].thirdDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
         </div>
         <div class="subMenu">
@@ -174,11 +168,7 @@ export default {
         return !d ? null : this.moleculeCollection.find(molecule => molecule.molid === d),
         this.moleculeCollection[d]
       },
-      thirdSelected(){
-        let d = this.value[this.id].thirdMoleculeId
-        return !d ? null : this.moleculeCollection.find(molecule => molecule.molid === d),
-        this.moleculeCollection[d]
-      },
+
 
       firstSelectedscaleId(){
         return this.firstSelected.scaleId
@@ -189,6 +179,9 @@ export default {
       firstSelectedOpacityId(){
         return this.firstSelected.opacityId
       },
+      firstSelectedTranslateId(){
+        return this.firstSelected.translateId
+      },
       secondSelectedscaleId(){
         return this.secondSelected.scaleId
       },
@@ -198,15 +191,10 @@ export default {
       secondSelectedOpacityId(){
         return this.secondSelected.opacityId
       },
-      thirdSelectedscaleId(){
-        return this.thirdSelected.scaleId
-      },
-      thirdSelectedRotationId(){
-        return this.thirdSelected.rotationId
-      },
-      thirdSelectedOpacityId(){
-        return this.thirdSelected.opacityId
+      secondSelectedTranslateId(){
+        return this.secondSelected.translateId
       }
+
 
     },
     methods: {
@@ -225,11 +213,14 @@ export default {
             el.style.transform = "rotateX("+ this.atomCollection[this.firstSelectedRotationId].rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.atomCollection[this.firstSelectedRotationId].rotationystart  +"deg)",
             el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)",
-            el.style.opacity = this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
+            el.style.opacity = 0, //gegen das flackern
             Velocity(el, {
+                opacity: this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
                 rotateX: this.atomCollection[this.firstSelectedRotationId].rotationxstart,
                 rotateY: this.atomCollection[this.firstSelectedRotationId].rotationystart,
-                rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzstart
+                rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzstart,
+                translateX: +this.atomCollection[this.firstSelectedTranslateId].translateXstart   *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
+                translateY: +this.atomCollection[this.firstSelectedTranslateId].translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleX + "px"
             }, {
                 duration: 0,
                 delay: "0",
@@ -282,6 +273,19 @@ export default {
                 complete: function() {
                    if (!vm.stop) vm.nukleolus = false
 
+                }
+            })
+            Velocity(el, {
+              translateX: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 180 *  this.value[this.id].viewPortScaleX + "px",
+              translateY: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 320 *  this.value[this.id].viewPortScaleX + "px"
+            }, {
+              delay: 2000 + +this.firstSelected.translateDelay +
+               +this.value[this.id].firstDelay,
+              easing: this.atomCollection[this.firstSelectedTranslateId].spacing,
+              queue: false,
+              duration: this.atomCollection[this.firstSelectedTranslateId].timing,
+              complete: function() {
+                 if (!vm.stop) vm.nukleolus = false
                 }
             })
 
@@ -345,6 +349,22 @@ export default {
                     }
                 })
               }
+              if (this.secondSelectedTranslateId >= 1){
+                Velocity(el, {
+                  translateX: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 180 *  this.value[this.id].viewPortScaleX + "px",
+                  translateY: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 320 *  this.value[this.id].viewPortScaleX + "px"
+                }, {
+                  delay: 2000 + +this.secondSelected.translateDelay +
+                   +this.value[this.id].firstDelay,
+                  easing: this.atomCollection[this.secondSelectedTranslateId].spacing,
+                  queue: false,
+                  duration: this.atomCollection[this.secondSelectedTranslateId].timing,
+                  complete: function() {
+                     if (!vm.stop) vm.nukleolus = false
+                    }
+                })
+              }
+
           } else{
             Velocity(el, {
                 backgroundColor: '#ffffff',
