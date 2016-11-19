@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="115px" viewBox="0 0 52 115" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Overwiev--I---Pages-als-Best-Practice" transform="translate(-11.000000, -2319.000000)">
+            <g id="Group-2" transform="translate(-2.000000, 2307.000000)">
+                <g id="Group" transform="translate(12.000000, 67.000000)">
+                    <g id="Group-2-Copy" transform="translate(30.130484, 34.052727) rotate(-77.000000) translate(-30.130484, -34.052727) translate(7.130484, 9.052727)" fill="#FFCA00">
+                        <ellipse id="Oval-4-Copy" cx="9.12953041" cy="40.6125278" rx="8.55468011" ry="8.52264011"></ellipse>
+                        <ellipse id="Oval-4-Copy" cx="9.18625906" cy="8.52264011" rx="8.55468011" ry="8.52264011"></ellipse>
+                        <ellipse id="Oval-4-Copy" cx="36.9757327" cy="36.2080334" rx="8.55468011" ry="8.52264011"></ellipse>
+                    </g>
+                    <path d="M14.7168436,43.4382022 L40.6115804,50.3595506" id="Line" stroke="#FFCA00" stroke-linecap="square"></path>
+                    <path d="M40.6115804,50.3595506 L43.7694751,23.3033708" id="Line" stroke="#FFCA00" stroke-linecap="square"></path>
+                    <path d="M43.7694751,23.3033708 L10.2957909,42.8089888" id="Line" stroke="#FFCA00" stroke-linecap="square"></path>
+                    <path d="M31.5,0.5 L43.3157895,23.8202247" id="Line" stroke="#FFCA00" stroke-linecap="square"></path>
+                </g>
+                <g id="Group" transform="translate(42.000000, 41.500000) rotate(-225.000000) translate(-42.000000, -41.500000) translate(12.000000, 13.000000)">
+                    <g id="Group-2-Copy" transform="translate(30.130484, 28.052727) rotate(-77.000000) translate(-30.130484, -28.052727) translate(7.130484, 3.052727)" fill="#FFCA00">
+                        <ellipse id="Oval-4-Copy" cx="9.12953041" cy="40.6125278" rx="8.55468011" ry="8.52264011"></ellipse>
+                        <ellipse id="Oval-4-Copy" cx="9.18625906" cy="8.52264011" rx="8.55468011" ry="8.52264011"></ellipse>
+                        <ellipse id="Oval-4-Copy" cx="36.9757327" cy="36.2080334" rx="8.55468011" ry="8.52264011"></ellipse>
+                    </g>
+                    <path d="M14.7168436,37.4382022 L40.6115804,44.3595506" id="Line" stroke="#FFCA00" stroke-linecap="square"></path>
+                    <path d="M40.6115804,44.3595506 L43.7694751,17.3033708" id="Line" stroke="#FFCA00" stroke-linecap="square"></path>
+                    <path d="M43.7694751,17.3033708 L10.2957909,36.8089888" id="Line" stroke="#FFCA00" stroke-linecap="square"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
