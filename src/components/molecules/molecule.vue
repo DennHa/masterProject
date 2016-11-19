@@ -2,9 +2,12 @@
 <div class="molecule__bond">
 
     <div class="molecule__viewer">
+      <div class="molecule__nukleolusWrapper">
         <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
             <div class="molecule__nukleolus" v-if="nukleolus"></div>
         </transition>
+      </div>
+
     </div>
     <div class="molecule__properties">
       <h3>molecule</h3>
@@ -12,7 +15,7 @@
         <input name="name" class="atom__name" v-model="value[id].name" >
       </form>
       <div>
-        <select  class="atom__kind" v-model="value[id].sizeId">
+        <select  class="atom__kind" v-model="value[id].scaleId">
            <option v-if="atom.widthfinal >= 0" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
@@ -34,9 +37,9 @@
 
         <div class="molecule__timing">
 
-          <div class="molecule__sizeDelay" v-if="value[id].sizeId >= 1">
-            <h3>size delay {{value[id].sizeDelay}}</h3>
-            <input type="range" v-model="value[id].sizeDelay" min="0" max="1000" step="10" defaultValue="0">
+          <div class="molecule__scaleDelay" v-if="value[id].scaleId >= 1">
+            <h3>scale delay {{value[id].scaleDelay}}</h3>
+            <input type="range" v-model="value[id].scaleDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
           <div class="molecules__rotationDelay" v-if="value[id].rotationId >= 1">
             <h3>rotation delay {{value[id].rotationDelay}}</h3>
@@ -48,16 +51,50 @@
           </div>
 
 
-            <!-- <form>
-                <input name="time" v-model="value[id].timing" value="" type="number">
-                <select v-model="value[id].spacing" class="atom__kind">
-                   <option v-for="ease in easings" v-bind:value="ease.easeFunction"  >
-                     {{ ease.easeFunction }}
-                   </option>
-              </select>
-            </form> -->
         </div>
-    </div>
+        <div class="subMenu">
+          <div class="subMenu__copied" v-show="copied">copied</div>
+          <div v-bind:id="value[id].name + value[id].molid " v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
+
+        </div>
+
+        <div v-bind:class="copyThisValue" class="copy">
+          //css Animation Specs - {{value[id].name}}  <br>
+          .{{value[id].name}} { <br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_scale {{firstSelected.timing}}ms {{firstSelected.spacing}} {{value[id].scaleDelay}};<br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_rotation {{secondSelected.timing}}ms {{secondSelected.spacing}} {{value[id].rotationDelay}};<br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_opacity {{thirdSelected.timing}}ms {{thirdSelected.spacing}} {{value[id].opacityDelay}};<br>
+          &nbsp;  }<br>
+          &nbsp;  <br>
+          &nbsp;  @keyframes {{value[id].name}}_scale {<br>
+          &nbsp;  &nbsp;  0% {<br>
+          &nbsp; &nbsp;  width: {{firstSelected.widthstart}}px; //in pixel!<br>
+          &nbsp; &nbsp;  height: {{firstSelected.heightstart}}px; //in pixel!<br>
+          &nbsp;  }<br>
+          &nbsp;  100% {<br>
+          &nbsp; &nbsp;  width: {{firstSelected.widthfinal}}px; //in pixel!<br>
+          &nbsp; &nbsp;  height: {{firstSelected.heightfinal}}px; //in pixel!<br>
+          &nbsp;  }<br>
+          &nbsp;  @keyframes {{value[id].name}}_rotation {<br>
+          &nbsp;  &nbsp;  0% {<br>
+          &nbsp;  &nbsp;  transform: rotatX({{secondSelected.rotationxstart}});<br>
+          &nbsp;  &nbsp;  transform: rotatY({{secondSelected.rotationystart}});<br>
+          &nbsp;  &nbsp;  transform: rotatZ({{secondSelected.rotationzstart}});<br>
+          &nbsp;  }<br>
+          &nbsp;  100% {<br>
+          &nbsp;  &nbsp;  transform: rotatX({{secondSelected.rotationxfinal}});<br>
+          &nbsp;  &nbsp;  transform: rotatY({{secondSelected.rotationyfinal}});<br>
+          &nbsp; &nbsp;  transform: rotatZ({{secondSelected.rotationzfinal}});<br>
+          &nbsp;  }<br>
+          &nbsp;  @keyframes {{value[id].name}}_opacity {<br>
+          &nbsp;  &nbsp;  0% {<br>
+          &nbsp; &nbsp;  opacity: {{thirdSelected.opacitystart / 100}};<br>
+          &nbsp;  }<br>
+          &nbsp;  100% {<br>
+          &nbsp; &nbsp;  opacity: {{thirdSelected.opacityfinal / 100 }}; <br>
+          &nbsp;  }<br>
+          }
+        </div>
 </div>
 </template>
 <script>
@@ -69,6 +106,7 @@ export default {
     props: ['value', 'atomCollection', 'molecule', 'moleculeid'],
     data() {
         return {
+          copied: false,
           firstSelectedId: 0,
           secondSelectedId: 0,
           thirdSelectedId: 0,
@@ -91,9 +129,13 @@ export default {
       this.nukleolus = false
     },
     computed: {
+
       id(){
         return this.moleculeid  //weil wir "-" als erstes molekül haben
       },
+      copyThisValue(){
+          return   this.value[this.id].name + this.value[this.id].molid + "_id"
+        },
       atoms(){
         return this.atomCollection.sort(function (a, b) {
           if (a.atomid > b.atomid) {
@@ -108,7 +150,7 @@ export default {
       },
 
       firstSelected(){
-        let d = this.value[this.id].sizeId
+        let d = this.value[this.id].scaleId
         return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
         this.atomCollection[d]
 
@@ -128,11 +170,13 @@ export default {
     },
 
     methods: {
-
+      copyThis(){
+        var clipboard = new Clipboard('#' + this.value[this.id].name + this.value[this.id].molid)
+      },
         //before animation
         beforeEnter: function(el) {
-            el.style.width = this.firstSelected.widthstart + "%",
-            el.style.height = this.firstSelected.heightstart + "%",
+            el.style.width = this.firstSelected.widthstart * this.value[this.id].viewPortScaleX  + "px",
+            el.style.height = this.firstSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
             el.style.transform = "rotateX("+ this.secondSelected.rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.secondSelected.rotationystart  +"deg)",
             el.style.transform = "rotateZ("+ this.secondSelected.rotationzstart  +"deg)",
@@ -154,11 +198,11 @@ export default {
         enter: function(el, done) {
             var vm = this
             Velocity(el, {
-              width: this.firstSelected.widthfinal + "%",
-              height: this.firstSelected.heightfinal + "%"
+              width: +this.firstSelected.widthfinal * this.value[this.id].viewPortScaleX + "px",
+              height: +this.firstSelected.heightfinal * this.value[this.id].viewPortScaleY +   "px"
 
             }, {
-                delay: 2000 + +this.value[this.id].sizeDelay,
+                delay: 2000 + +this.value[this.id].scaleDelay,
                 easing: this.firstSelected.spacing,
                 duration: this.firstSelected.timing,
                 complete: function() {
