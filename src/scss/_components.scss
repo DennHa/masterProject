@@ -76,7 +76,7 @@
         background-color: $color-background;
         margin: $spacing-half 0;
         height: 350px;
-        min-width: 800px;
+        min-width: 900px;
         border-radius: 5px;
         box-shadow: 0 10px 24px 0 rgba(184,184,184,1);
     }
@@ -228,7 +228,7 @@
 .molecules{
   &__addMolecule{
     opacity: 0.75;
-    width: 850px;
+    width: 900px;
     height: 300px;
     background-color: $color-background;
     border: none;
@@ -316,4 +316,11 @@ margin: $spacing-standard;
 }
 .fade-enter, .fade-leave-active {
   opacity: 0
+}
+
+.warning{
+  text-align: center;
+  color: $color-white;
+  background-color: $color-warning;
+  border-radius: 5px;
 }

@@ -7,7 +7,7 @@
     </div>
 
     <div class="atom__properties">
-      <h3>scale</h3>
+      <h3>translate</h3>
       <form class="" action="index.html" method="post">
         <input name="name" value="" v-model="value[id].name" class="atom__name">
       </form>
@@ -162,21 +162,21 @@ export default {
         // properties
         //width
         atomtranslateXstart: function() {
-            return +this.value[this.atomtranslateid].translateXstart * this.value[this.atomtranslateid].viewPortScaleX
+            return +this.value[this.atomtranslateid].translateXstart * this.value[this.atomtranslateid].viewPortScaleX - 180 * this.value[this.atomtranslateid].viewPortScaleX
 
         },
 
         atomtranslateYstart: function() {
             return +this.value[this.atomtranslateid].translateYstart
-            * this.value[this.atomtranslateid].viewPortScaleY
+            * this.value[this.atomtranslateid].viewPortScaleY - 320 * this.value[this.atomtranslateid].viewPortScaleX
         },
 
         atomtranslateXfinal: function() {
-            return  +this.value[this.atomtranslateid].translateXfinal * this.value[this.atomtranslateid].viewPortScaleX
+            return  +this.value[this.atomtranslateid].translateXfinal * this.value[this.atomtranslateid].viewPortScaleX - 180 * this.value[this.atomtranslateid].viewPortScaleX
         },
 
         atomtranslateYfinal: function() {
-            return  +this.value[this.atomtranslateid].translateYfinal * this.value[this.atomtranslateid].viewPortScaleY
+            return  +this.value[this.atomtranslateid].translateYfinal * this.value[this.atomtranslateid].viewPortScaleY - 320 * this.value[this.atomtranslateid].viewPortScaleX
         },
 
 
@@ -197,9 +197,15 @@ export default {
 
         //before animation
         beforeEnter: function(el) {
-            el.style.position = "absolute",
-            el.style.left = +this.atomtranslateXstart + "px",
-            el.style.top = +this.atomtranslateYstart + "px"
+          Velocity(el, {
+              translateX: +this.atomtranslateXstart  + "px",
+              translateY: +this.atomtranslateYstart  + "px"
+          }, {
+              delay: 0,
+
+              duration: 0,
+
+          })
         },
 
         //animation enter
@@ -227,7 +233,7 @@ export default {
             Velocity(el, {
                 backgroundColor: '#ffffff',
             }, {
-                duration: 1,
+                duration: 0,
                 delay: "2000",
                 complete: function() {
                     done()
