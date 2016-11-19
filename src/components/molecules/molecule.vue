@@ -32,6 +32,12 @@
              {{ atom.name }}
            </option>
         </select>
+        <span class="connectedIt">&</span>
+        <select  class="atom__kind" v-model="value[id].translateId">
+           <option v-if="atom.translateYfinal >= 0" v-for="atom in atoms" :value="atom.atomid">
+             {{ atom.name }}
+           </option>
+        </select>
     </div>
 
 
@@ -53,7 +59,9 @@
 
         </div>
         <div class="subMenu">
-          <div class="subMenu__copied" v-show="copied">copied</div>
+          <transition name="fade">
+            <div class="subMenu__copied" v-show="copied">copied</div>
+          </transition>
           <div v-bind:id="value[id].name + value[id].molid " v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
 
         </div>
@@ -116,13 +124,6 @@ export default {
           //
           nukleolus: true,
           selected: "",
-
-
-          //selection
-          isSelectedFirst: false,
-          isSelectedSecond: false,
-          isSelectedThird: false,
-          isSelectedFourth: false,
         }
     },
     mounted: function() {
@@ -165,16 +166,27 @@ export default {
         return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
         this.atomCollection[d]
       },
-
+      fourthSelectedId(){
+        return this.fourthSelected.atomid
+      }
 
     },
 
     methods: {
       copyThis(){
         var clipboard = new Clipboard('#' + this.value[this.id].name + this.value[this.id].molid)
+        this.copied = true
+        var self = this
+          setTimeout(function(){
+              self.copied = false;
+          }, 1000);
       },
         //before animation
         beforeEnter: function(el) {
+          //console.log(this.value[this.fourthSelectedId].translateYfinal)
+            // if (this.value[id].translateYfinal > 0){
+            //   console.log("hey")
+            // } //el.style.position = "relative",
             el.style.width = this.firstSelected.widthstart * this.value[this.id].viewPortScaleX  + "px",
             el.style.height = this.firstSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
             el.style.transform = "rotateX("+ this.secondSelected.rotationxstart +"deg)",

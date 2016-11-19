@@ -9,7 +9,7 @@
             </a>
 
 
-            <a class="menu__bestpractices" data-scroll href="#anchor__bestpractices">
+            <a class="menu__bestpractices" data-scroll href="#anchor__bestpractice">
                 <img src="./assets/bestpractices.svg" alt="" />
             </a>
 
@@ -31,7 +31,23 @@
 
     </nav>
     <section class="universe">
-
+      <div class="bestpractices__wrapper" id="anchor__bestpractice">
+          <div class="anchor">
+              <h3>organisms</h3>
+          </div>
+          <div class="bestpractice">
+              <div class="bestpractice_catOne">
+                  <div>
+                      <!-- <h2>Organism</h2> -->
+                  </div>
+                  <div class="" v-for="thisbestpractice in bestpractice">
+                      <bestpractice :bestpracticeid="thisbestpractice.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" :organism-collection="combineOrganismCollection" v-model="bestpractice">
+                      </bestpractice>
+                  </div>
+                  <button type="button" name="button" @click="addBestPracticeCatOne" class="organisms__addOrganism">+</button>
+              </div>
+          </div>
+      </div>
         <div class="organisms__wrapper" id="anchor__organism">
             <div class="anchor">
                 <h3>organisms</h3>
@@ -85,6 +101,16 @@
                     </div>
                     <button type="button" name="button" @click="addatomscale" class="atoms__addAtom">+</button>
                 </div>
+                <div class="atoms__translate">
+                    <div class="">
+                        <!-- <h2>translate</h2> -->
+                    </div>
+                    <div v-for="atomtranslate in atomTranslate">
+                        <atomtranslate v-model="atomTranslate" v-bind:atomtranslateid="atomtranslate.id">
+                        </atomtranslate>
+                    </div>
+                    <button type="button" name="button" @click="addatomtranslate" class="atoms__addAtom">+</button>
+                </div>
 
                 <div class="atoms__rotation">
                     <div class="">
@@ -115,10 +141,12 @@
 
 <script>
 import organism from './components/organisms/organism.vue'
+import bestpractice from './components/bestpractices/bestpractice.vue'
 import molecule from './components/molecules/molecule.vue'
 import atomscale from './components/atoms/atomscale.vue'
 import atomrotation from './components/atoms/atomrotation.vue'
 import atomopacity from './components/atoms/atomopacity.vue'
+import atomtranslate from './components/atoms/atomtranslate.vue'
 
 //let atomId = 1
 let currentIdscale = 0
@@ -130,14 +158,16 @@ export default {
     name: 'universe',
     components: {
         atomrotation,
+        atomtranslate,
         atomscale,
         atomopacity,
         molecule,
         organism,
+        bestpractice
     },
     data() {
         return {
-            atomId: 3, //start bei 2 weil atomscale und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
+            atomId: 4, //start bei 2 weil atomscale undatomtranslate und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
             viewportX: 360,
             viewportY: 640,
             atomViewportX: 168.75,
@@ -159,6 +189,19 @@ export default {
                 heightstart: 50,
                 heightfinal: 200,
                 atomid: 1,
+                viewPortScaleX: 0.46875,
+                viewPortScaleY: 0.46875
+            }],
+            atomTranslate: [{
+                id: 0,
+                name: "CobaltTranslate",
+                timing: 250,
+                spacing: "easeOutSine",
+                translateXstart: 50,
+                translateXfinal: 200,
+                translateYstart: 50,
+                translateYfinal: 200,
+                atomid: 4,
                 viewPortScaleX: 0.46875,
                 viewPortScaleY: 0.46875
             }],
@@ -198,6 +241,7 @@ export default {
                 heightstart: 50,
                 widthfinal: 50,
                 heightfinal: 50,
+                translateYfinal: false,
                 atomid: 0,
                 id: 0,
                 viewPortScaleX: 0.46875,
@@ -211,6 +255,8 @@ export default {
             molecule: [{
                 name: "MaltolMolecule",
                 scaleId: 0,
+                translateId: 0,
+                translateDelay: 0,
                 scaleDelay: 0,
                 rotationId: 0,
                 rotationDelay: 0,
@@ -223,6 +269,8 @@ export default {
             }],
             moleculeNull: [{
                 name: "-",
+                translateId: 0,
+                translateDelay: 0,
                 scaleId: 0,
                 scaleDelay: 0,
                 rotationId: 0,
@@ -266,8 +314,19 @@ export default {
                 viewPortScaleY: 0.78125
             }],
 
+            bestpractice:[{
+              name: "FadeOut",
+              id: 0,
+              bestid: 1,
+              firstOrganism: 0,
+              secondOrganism: 0,
+              thirdOrganism: 0,
+              viewPortScaleX: 0.78125,
+              viewPortScaleY: 0.78125
+            }],
+
             //
-            randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium'],
+            randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium', 'Zinc', 'Krypton', 'Strontium', 'Niobium', 'Selenium'],
             randomMolecules: ['Acetone', 'Chromium ', 'Fluorite', 'Hexane', 'Jadeite', 'Niter', 'Picene', 'Tamoxifen', 'Topaz', 'Water', 'Zircon', 'Vanillin'],
             randomOrganisms: ['Cupulata', 'Mucorina', 'Astoma', 'Sporoza', 'Floridea', 'Diatomea', 'Bangialea', 'Fuciodea', 'Fungi', 'Exosporea', 'Heliozoa', 'Nuda'],
 
@@ -276,7 +335,7 @@ export default {
     computed: {
 
         combineAtomCollection() {
-            return this.atomCollection.concat(this.atomNull, this.atomscale, this.atomRotation, this.atomOpacity)
+            return this.atomCollection.concat(this.atomNull, this.atomTranslate, this.atomscale, this.atomRotation, this.atomOpacity)
         },
         combineMoleculeCollection() {
             return this.moleculeCollection.concat(this.moleculeNull, this.molecule)
@@ -305,7 +364,11 @@ export default {
 
     },
     methods: {
+      addBestPracticeCatOne() {
 
+              this.bestpractice.push({
+              })
+      },
         addOrganismCatOne() {
             this.organismId++,
                 this.orgid++,
@@ -328,6 +391,8 @@ export default {
                 this.moleculeid++,
                 this.molecule.push({
                     name: this.randomMolecules[Math.floor((Math.random() * 11) + 1)] + "Molecule",
+                    translateId: 0,
+                    translateDelay: 0,
                     scaleId: 0,
                     scaleDelay: 0,
                     rotationId: 0,
@@ -353,6 +418,23 @@ export default {
                     widthfinal: 200,
                     heightstart: 50,
                     heightfinal: 200,
+                    atomid: this.atomId,
+                    viewPortScaleX: this.atomViewPortScaleX,
+                    viewPortScaleY: this.atomViewPortScaleY
+                })
+        },
+        addatomtranslate() {
+            this.atomId++,
+                currentIdscale++,
+                this.atomTranslate.push({
+                    id: currentIdscale,
+                    name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "Translate",
+                    timing: 250,
+                    spacing: "easeOutSine",
+                    translateXstart: 50,
+                    translateXfinal: 200,
+                    translateYstart: 50,
+                    translateYfinal: 200,
                     atomid: this.atomId,
                     viewPortScaleX: this.atomViewPortScaleX,
                     viewPortScaleY: this.atomViewPortScaleY

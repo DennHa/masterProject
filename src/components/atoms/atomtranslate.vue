@@ -1,5 +1,4 @@
-
-<template name="atomscale">
+<template name="atomtranslate">
 <div class="atom__shell">
     <div class="atom__viewer">
         <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
@@ -29,10 +28,10 @@
 
             <h3>animation</h3>
             <form>
-              width(pt)&nbsp; <input name="width" v-model="value[id].widthstart" type="number"> --> <input name="width" v-model="value[id].widthfinal" type="number">
+              translateX(pt) <input name="width" v-model="value[id].translateXstart" type="number"> --> <input name="width" v-model="value[id].translateXfinal" type="number">
             </form>
             <form>
-              height(pt) <input name="width" v-model="value[id].heightstart" type="number"> --> <input name="width" v-model="value[id].heightfinal" type="number">
+              translateY(pt) <input name="width" v-model="value[id].translateYstart" type="number"> --> <input name="width" v-model="value[id].translateYfinal" type="number">
             </form>
         </div>
     </div>
@@ -40,7 +39,7 @@
       <transition name="fade">
         <div class="subMenu__copied" v-show="copied">copied</div>
       </transition>
-      <div v-bind:id="value[id].atomscaleid + value[id].name" v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
+      <div v-bind:id="value[id].atomtranslateid + value[id].name" v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
 
     </div>
 
@@ -52,12 +51,10 @@
       &nbsp;  <br>
       &nbsp;  @keyframes {{value[id].name}}_animation {<br>
       &nbsp;  &nbsp;  0% {<br>
-      &nbsp; &nbsp;  width: {{value[id].widthstart}}px; //in pixel!<br>
-      &nbsp; &nbsp;  height: {{value[id].heightstart}}px; //in pixel!<br>
+      &nbsp; &nbsp;  transform: translate({{value[id].translateXstart}}px  {{value[id].translateYstart}}px); //in pixel!<br>
       &nbsp;  }<br>
       &nbsp;  100% {<br>
-      &nbsp; &nbsp;  width: {{value[id].widthfinal}}px; //in pixel!<br>
-      &nbsp; &nbsp;  height: {{value[id].heightfinal}}px; //in pixel!<br>
+      &nbsp; &nbsp;  transform: translate({{value[id].translateXfinal}}px  {{value[id].translateYfinal}}px); //in pixel!<br>
       &nbsp;  }<br>
       }
     </div>
@@ -67,20 +64,20 @@
 
 <script>
 export default {
-    name: "atomscale",
-    props: ['value', 'atomscaleid'],
+    name: "atomtranslate",
+    props: ['value', 'atomtranslateid'],
     data() {
         return {
           show: false,
             copied: false,
             nukleolus: true,
             //standard properties
-            //atomscaleStandard: "50",
+            //atomtranslateStandard: "50",
             atomColorStandard: "#4A90E2",
             color: "",
-            //atomHeightStart: "5",
+            //atomtranslateYstart: "5",
             //kind
-            selectedKind: "atom__scale",
+
             selectedEaseing: 'easeOutSine',
             easings: [{
                 easeFunction: 'linear'
@@ -149,43 +146,39 @@ export default {
     computed: {
 
         id(){
-          return this.atomscaleid
+          return this.atomtranslateid
         },
         //
         copyThisValue(){
-          return this.value[this.id].atomscaleid + this.value[this.id].name + "_id"
+          return this.value[this.id].atomtranslateid + this.value[this.id].name + "_id"
         },
         //
         atomDuration(){
-          return this.value[this.atomscaleid].timing
+          return this.value[this.atomtranslateid].timing
         },
         spacing(){
-          return  this.value[this.atomscaleid].spacing
+          return  this.value[this.atomtranslateid].spacing
         },
         // properties
         //width
-        atomWidthStart: function() {
-            return +this.value[this.atomscaleid].widthstart * this.value[this.atomscaleid].viewPortScaleX
+        atomtranslateXstart: function() {
+            return +this.value[this.atomtranslateid].translateXstart * this.value[this.atomtranslateid].viewPortScaleX
 
         },
 
-        atomHeightStart: function() {
-            return +this.value[this.atomscaleid].heightstart * this.value[this.atomscaleid].viewPortScaleY
+        atomtranslateYstart: function() {
+            return +this.value[this.atomtranslateid].translateYstart
+            * this.value[this.atomtranslateid].viewPortScaleY
         },
 
-        atomWidthFinal: function() {
-            return  +this.value[this.atomscaleid].widthfinal  * this.value[this.atomscaleid].viewPortScaleX
+        atomtranslateXfinal: function() {
+            return  +this.value[this.atomtranslateid].translateXfinal * this.value[this.atomtranslateid].viewPortScaleX
         },
 
-        atomHeightFinal: function() {
-            return  +this.value[this.atomscaleid].heightfinal * this.value[this.atomscaleid].viewPortScaleY
+        atomtranslateYfinal: function() {
+            return  +this.value[this.atomtranslateid].translateYfinal * this.value[this.atomtranslateid].viewPortScaleY
         },
-        atomScaleXinPT(){
-          return this.atomWidthStart * this.atomWidthFinal
-        },
-        atomScaleYinPT(){
-          return this.atomHeightStart * this.atomHeightFinal
-        }
+
 
     },
 
@@ -193,7 +186,7 @@ export default {
     methods: {
         //copyThis
         copyThis(){
-          var clipboard = new Clipboard('#' + this.value[this.id].atomscaleid + this.value[this.id].name)
+          var clipboard = new Clipboard('#' + this.value[this.id].atomtranslateid + this.value[this.id].name)
 
           this.copied = true
           var self = this
@@ -204,8 +197,9 @@ export default {
 
         //before animation
         beforeEnter: function(el) {
-            el.style.width = this.atomWidthStart  + "px",
-            el.style.height = this.atomHeightStart + "px"
+            el.style.position = "absolute",
+            el.style.left = +this.atomtranslateXstart + "px",
+            el.style.top = +this.atomtranslateYstart + "px"
         },
 
         //animation enter
@@ -214,8 +208,8 @@ export default {
 
 
             Velocity(el, {
-                width: +this.atomWidthFinal + "px",
-                height: +this.atomHeightFinal + "px"
+                translateX: +this.atomtranslateXfinal + "px",
+                translateY: +this.atomtranslateYfinal + "px"
             }, {
                 delay: "2000",
                 easing: this.spacing,

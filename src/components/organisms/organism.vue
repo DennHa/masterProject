@@ -25,6 +25,12 @@
              {{ molecule.name }}
            </option>
         </select>
+        <span class="connectedIt">+</span>
+        <select  class="organism__kind">
+           <option>
+             -&nbsp;  &nbsp; &nbsp;  &nbsp;
+           </option>
+        </select>
     </div>
 
 
@@ -48,7 +54,9 @@
           </div>
         </div>
         <div class="subMenu">
-              <div class="subMenu__copied" v-show="copied">copied</div>
+          <transition name="fade">
+            <div class="subMenu__copied" v-show="copied">copied</div>
+          </transition>
               <div v-bind:id="value[id].name + value[id].orgid " v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
 
             </div>
@@ -204,6 +212,11 @@ export default {
     methods: {
         copyThis(){
           var clipboard = new Clipboard('#' + this.value[this.id].name + this.value[this.id].orgid)
+          this.copied = true
+          var self = this
+            setTimeout(function(){
+                self.copied = false;
+            }, 1000);
         },
         //before animation
         beforeEnter: function(el) {

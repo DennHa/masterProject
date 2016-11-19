@@ -140,6 +140,7 @@ ol, ul {
 }
 
 input{
+
   color: $color-primary;
   border-radius: 5px;
   border-style: none;
@@ -150,9 +151,9 @@ input{
 }
 
 form{
-
   & > *{
     &:focus{
+
       background-color: $color-white;
       outline: none;
 

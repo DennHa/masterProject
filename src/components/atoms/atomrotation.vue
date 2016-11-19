@@ -38,7 +38,9 @@
             </form>
         </div>
         <div class="subMenu">
-          <div class="subMenu__copied" v-show="copied">copied</div>
+          <transition name="fade">
+            <div class="subMenu__copied" v-show="copied">copied</div>
+          </transition>
           <div v-bind:id="value[id].atomscaleid + value[id].name" v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
 
         </div>
@@ -191,6 +193,11 @@ export default {
     methods: {
       copyThis(){
           var clipboard = new Clipboard('#' + this.value[this.id].atomscaleid + this.value[this.id].name)
+          this.copied = true
+          var self = this
+            setTimeout(function(){
+                self.copied = false;
+            }, 1000);
         },
 
         //before animation
