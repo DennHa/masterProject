@@ -212,8 +212,8 @@ export default {
             el.style.height = this.atomCollection[this.firstSelectedscaleId].heightstart * this.value[this.id].viewPortScaleY + "px",
             el.style.transform = "rotateX("+ this.atomCollection[this.firstSelectedRotationId].rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.atomCollection[this.firstSelectedRotationId].rotationystart  +"deg)",
-            el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)",
-            el.style.opacity = 0, //gegen das flackern
+            el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)"
+            if(this.atomCollection[this.firstSelectedTranslateId].translate || this.atomCollection[this.secondSelectedTranslateId].translate ){el.style.opacity = 0} //gegen das flackern
             Velocity(el, {
                 opacity: this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
                 rotateX: this.atomCollection[this.firstSelectedRotationId].rotationxstart,
@@ -276,8 +276,8 @@ export default {
                 }
             })
             Velocity(el, {
-              translateX: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 180 *  this.value[this.id].viewPortScaleX + "px",
-              translateY: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 320 *  this.value[this.id].viewPortScaleX + "px"
+              translateX: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
+              translateY: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleX + "px"
             }, {
               delay: 2000 + +this.firstSelected.translateDelay +
                +this.value[this.id].firstDelay,
@@ -351,8 +351,8 @@ export default {
               }
               if (this.secondSelectedTranslateId >= 1){
                 Velocity(el, {
-                  translateX: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 180 *  this.value[this.id].viewPortScaleX + "px",
-                  translateY: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY + "px" - 320 *  this.value[this.id].viewPortScaleX + "px"
+                  translateX: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
+                  translateY: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleX + "px"
                 }, {
                   delay: 2000 + +this.secondSelected.translateDelay +
                    +this.value[this.id].firstDelay,

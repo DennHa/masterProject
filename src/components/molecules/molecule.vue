@@ -22,7 +22,7 @@
         </select>
         <span class="connectedIt">&</span>
         <select  class="atom__kind" v-model="value[id].translateId">
-           <option v-if="atom.translateYfinal >= 0" v-for="atom in atoms" :value="atom.atomid">
+           <option v-if="atom.translate >= 0" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
            </option>
         </select>
@@ -213,8 +213,9 @@ export default {
             el.style.height = +this.scaleSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
             el.style.transform = "rotateX("+ this.rotationSelected.rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.rotationSelected.rotationystart  +"deg)",
-            el.style.transform = "rotateZ("+ this.rotationSelected.rotationzstart  +"deg)",
-            el.style.opacity = 0, //gegen das flackern
+            el.style.transform = "rotateZ("+ this.rotationSelected.rotationzstart  +"deg)"
+            if(this.translateSelected.translate){el.style.opacity = 0}
+
             Velocity(el, {
                 opacity: this.opacitySelected.opacitystart / 100,
                 width: +this.scaleSelected.widthstart * this.value[this.id].viewPortScaleX + "px",
@@ -237,7 +238,7 @@ export default {
         enter: function(el, done) {
             var vm = this
 
-            console.log(+this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleY )
+
             // console.log(test))
             Velocity(el, {
               width: +this.scaleSelected.widthfinal * this.value[this.id].viewPortScaleX + "px",
@@ -280,11 +281,8 @@ export default {
             })
 
               Velocity(el, {
-
-                // let test = +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleY
-                // console.log(test)
-                translateX: +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleX + "px",
-                translateY: +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleY  + "px"
+                translateX:  +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
+                translateY: +this.translateSelected.translateYfinal *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleY + "px"
               }, {
                   delay: 2000 + +this.value[this.id].translateDelay,
                   easing: this.translateSelected.spacing,

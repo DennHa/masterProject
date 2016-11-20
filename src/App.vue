@@ -243,7 +243,7 @@ export default {
                 widthfinal: 50,
                 heightfinal: 50,
                 translate: false,
-                translateYfinal: 0,
+                //translateYfinal: null,
                 atomid: 0,
                 id: 0,
                 viewPortScaleX: 0.46875,
