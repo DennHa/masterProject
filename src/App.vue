@@ -125,7 +125,9 @@
             </div>
         </div>
     </section>
-
+    <section class="global">
+      test
+    </section>
 </section>
 </template>
 
