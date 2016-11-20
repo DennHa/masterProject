@@ -24,7 +24,7 @@
           <div class="anchor">
               <h3>best practice</h3>
           </div>
-          <div class="bestpractice">
+          <div class="bestpractices">
               <div class="bestpractice_catOne">
                   <div>
                       <!-- <h2>Organism</h2> -->
@@ -125,6 +125,7 @@
             </div>
         </div>
     </section>
+
 </section>
 </template>
 
@@ -310,9 +311,11 @@ export default {
               name: "FadeOut",
               id: 0,
               bestid: 1,
-              firstOrganism: 0,
-              secondOrganism: 0,
-              thirdOrganism: 0,
+              firstElement: 0,
+              secondElement: 0,
+              thirdElement: 0,
+              firstElementDelay: 0,
+              secondElementDelay: 0,
               viewPortScaleX: 0.78125,
               viewPortScaleY: 0.78125
             }],

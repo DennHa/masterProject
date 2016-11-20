@@ -19,18 +19,13 @@
              {{ molecule.name }}
            </option>
         </select>
-        <span class="connectedIt">+</span>
-        <select  class="organism__kind" v-model="value[id].secondMoleculeId">
+        <span class="connectedIt" v-if="value[id].firstMoleculeId >= 1">+</span>
+        <select  class="organism__kind" v-model="value[id].secondMoleculeId" v-if="value[id].firstMoleculeId >= 1">
            <option v-for="molecule in moleculeCollection" :value="molecule.molid">
              {{ molecule.name }}
            </option>
         </select>
-        <span class="connectedIt">+</span>
-        <select  class="organism__kind">
-           <option>
-             -&nbsp;  &nbsp; &nbsp;  &nbsp;
-           </option>
-        </select>
+
     </div>
     <span class="advice">Your first selected molecule's final values need to match your second selected molecule's start values </span>
 
