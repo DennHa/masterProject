@@ -113,7 +113,11 @@ export default {
         secondSelectedMoleculeId(){
           return this.firstSelected.secondMoleculeId
         },
+          //
 
+        firstSelectedTranslateId(){
+            return this.moleculeCollection[this.firstSelectedMoleculeId].translateId
+          },
         firstSelectedscaleId() {
           return this.moleculeCollection[this.firstSelectedMoleculeId].scaleId
         },
@@ -132,7 +136,11 @@ export default {
         },
         secondSelectedOpacityId() {
           return this.moleculeCollection[this.secondSelectedMoleculeId].opacityId
+        },
+        secondSelectedTranslateId(){
+          return this.moleculeCollection[this.secondSelectedMoleculeId].translateId
         }
+
 
     },
     methods: {
@@ -151,12 +159,18 @@ export default {
             el.style.height = this.atomCollection[this.firstSelectedscaleId].heightstart * this.value[this.id].viewPortScaleY + "px",
             el.style.transform = "rotateX("+ this.atomCollection[this.firstSelectedRotationId].rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.atomCollection[this.firstSelectedRotationId].rotationystart  +"deg)",
-            el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)",
-            el.style.opacity = this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
+            el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)"
+            if(this.atomCollection[this.firstSelectedTranslateId].translate || this.atomCollection[this.secondSelectedTranslateId].translate ){ el.style.opacity = 0}
+
             Velocity(el, {
+                width: this.atomCollection[this.firstSelectedscaleId].widthstart * this.value[this.id].viewPortScaleX + "px",
+                height: this.atomCollection[this.firstSelectedscaleId].heightstart * this.value[this.id].viewPortScaleY + "px",
+                opacity: this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
                 rotateX: this.atomCollection[this.firstSelectedRotationId].rotationxstart,
                 rotateY: this.atomCollection[this.firstSelectedRotationId].rotationystart,
-                rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzstart
+                rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzstart,
+                // translateX: [+this.atomCollection[this.firstSelectedTranslateId].translateXstart   *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px", +this.atomCollection[this.firstSelectedTranslateId].translateXstart   *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px"],
+                // translateY: [+this.atomCollection[this.firstSelectedTranslateId].translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleX + "px", +this.atomCollection[this.firstSelectedTranslateId].translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleX + "px"]
             }, {
                 duration: 0,
                 delay: "0",
@@ -209,6 +223,19 @@ export default {
                 complete: function() {
                    if (!vm.stop) vm.nukleolus = false
 
+                }
+            })
+            Velocity(el, {
+              translateX: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
+              translateY: this.atomCollection[this.firstSelectedTranslateId].translateYfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleX + "px"
+            }, {
+              delay: 2000 + +this.firstSelected.translateDelay +
+               +this.value[this.id].firstDelay,
+              easing: this.atomCollection[this.firstSelectedTranslateId].spacing,
+              queue: false,
+              duration: this.atomCollection[this.firstSelectedTranslateId].timing,
+              complete: function() {
+                 if (!vm.stop) vm.nukleolus = false
                 }
             })
 
@@ -274,6 +301,21 @@ export default {
                     }
                 })
               }
+              // if (this.secondSelectedTranslateId >= 1){
+              //   Velocity(el, {
+              //     translateX: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
+              //     translateY: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleX + "px"
+              //   }, {
+              //     delay: 2000 + +this.secondSelected.translateDelay +
+              //      +this.value[this.id].firstDelay,
+              //     easing: this.atomCollection[this.secondSelectedTranslateId].spacing,
+              //     queue: false,
+              //     duration: this.atomCollection[this.secondSelectedTranslateId].timing,
+              //     complete: function() {
+              //        if (!vm.stop) vm.nukleolus = false
+              //       }
+              //   })
+              // }
           } else{
             Velocity(el, {
                 backgroundColor: '#ffffff',

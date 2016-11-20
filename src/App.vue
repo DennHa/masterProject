@@ -1,39 +1,28 @@
 <template>
 <section class="app">
-
-    <nav class="menu" data-gumshoe >
-
-
-            <a class="menu__principles">
-                <img src="./assets/principles.svg" alt="" />
-            </a>
-
-
-            <a class="menu__bestpractices" data-scroll href="#anchor__bestpractice">
-                <img src="./assets/bestpractices.svg" alt="" />
-            </a>
-
-
-            <a class="menu__organisms" data-scroll href="#anchor__organism">
-                <img src="./assets/organisms.svg" alt="" />
-            </a>
-
-
-            <a class="menu__molecules" data-scroll href="#anchor__molecule">
-                <img src="./assets/molecules.svg" alt="" />
-            </a>
-
-
-            <a class="menu__atoms" data-scroll href="#anchor__atom">
-                <img src="./assets/atoms.svg" alt="" />
-            </a>
-
-
-    </nav>
+    <span class="menu__wrapper">
+      <nav class="menu" data-gumshoe >
+              <a class="menu__principles">
+                  <img src="./assets/principles.svg" alt="" />
+              </a>
+              <a class="menu__bestpractices" data-scroll href="#anchor__bestpractice">
+                  <img src="./assets/bestpractices.svg" alt="" />
+              </a>
+              <a class="menu__organisms" data-scroll href="#anchor__organism">
+                  <img src="./assets/organisms.svg" alt="" />
+              </a>
+              <a class="menu__molecules" data-scroll href="#anchor__molecule">
+                  <img src="./assets/molecules.svg" alt="" />
+              </a>
+              <a class="menu__atoms" data-scroll href="#anchor__atom">
+                  <img src="./assets/atoms.svg" alt="" />
+              </a>
+      </nav>
+    </span>
     <section class="universe">
       <div class="bestpractices__wrapper" id="anchor__bestpractice">
           <div class="anchor">
-              <h3>organisms</h3>
+              <h3>best practice</h3>
           </div>
           <div class="bestpractice">
               <div class="bestpractice_catOne">
@@ -152,6 +141,7 @@ import atomtranslate from './components/atoms/atomtranslate.vue'
 let currentIdscale = 0
 let currentIdRotation = 0
 let currentIdOpacity = 0
+let currentIdTranslate = 0
 
 
 export default {
@@ -167,7 +157,7 @@ export default {
     },
     data() {
         return {
-            atomId: 4, //start bei 2 weil atomscale undatomtranslate und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
+            atomId: 4, //start bei 2 weil atomscale und atomtranslate und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
             viewportX: 360,
             viewportY: 640,
             atomViewportX: 168.75,
@@ -198,10 +188,10 @@ export default {
                 timing: 250,
                 spacing: "easeOutSine",
                 translate: true,
-                translateXstart: 50,
-                translateXfinal: 200,
-                translateYstart: 50,
-                translateYfinal: 200,
+                translateXstart: 0,
+                translateXfinal: 360,
+                translateYstart: 0,
+                translateYfinal: 640,
                 atomid: 4,
                 viewPortScaleX: 0.46875,
                 viewPortScaleY: 0.46875
@@ -427,9 +417,9 @@ export default {
         },
         addatomtranslate() {
             this.atomId++,
-                currentIdscale++,
+                currentIdTranslate++,
                 this.atomTranslate.push({
-                    id: currentIdscale,
+                    id: currentIdTranslate,
                     name: this.randomElements[Math.floor((Math.random() * 11) + 1)] + "Translate",
                     timing: 250,
                     spacing: "easeOutSine",

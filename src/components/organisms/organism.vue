@@ -21,7 +21,7 @@
         </select>
         <span class="connectedIt">+</span>
         <select  class="organism__kind" v-model="value[id].secondMoleculeId">
-           <option  v-for="molecule in moleculeCollection" :value="molecule.molid">
+           <option v-for="molecule in moleculeCollection" :value="molecule.molid">
              {{ molecule.name }}
            </option>
         </select>
@@ -32,11 +32,12 @@
            </option>
         </select>
     </div>
+    <span class="advice">Your first selected molecule's final values need to match your second selected molecule's start values </span>
 
 
         <div class="organism__timing">
 
-          <div class="organism__scaleDelay" v-if="this.firstSelectedscaleId >= 1 || this.firstSelectedRotationId >= 1 || this.firstSelectedOpacityId >= 1 || this.firstSelectedTranslaId >= 1">
+          <div class="organism__scaleDelay" v-if="this.firstSelectedscaleId >= 1 || this.firstSelectedRotationId >= 1 || this.firstSelectedOpacityId >= 1 || this.firstSelectedTranslateId >= 1">
             <h3>first delay {{value[id].firstDelay}}</h3>
             <input type="range" v-model="value[id].firstDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
@@ -215,12 +216,14 @@ export default {
             el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)"
             if(this.atomCollection[this.firstSelectedTranslateId].translate || this.atomCollection[this.secondSelectedTranslateId].translate ){el.style.opacity = 0} //gegen das flackern
             Velocity(el, {
+                width: this.atomCollection[this.firstSelectedscaleId].widthstart * this.value[this.id].viewPortScaleX + "px",
+                height: this.atomCollection[this.firstSelectedscaleId].heightstart * this.value[this.id].viewPortScaleY + "px",
                 opacity: this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
                 rotateX: this.atomCollection[this.firstSelectedRotationId].rotationxstart,
                 rotateY: this.atomCollection[this.firstSelectedRotationId].rotationystart,
                 rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzstart,
-                translateX: +this.atomCollection[this.firstSelectedTranslateId].translateXstart   *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
-                translateY: +this.atomCollection[this.firstSelectedTranslateId].translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleX + "px"
+                translateX: +this.atomCollection[this.firstSelectedTranslateId].translateXstart    *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
+                translateY: +this.atomCollection[this.firstSelectedTranslateId].translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleY + "px"
             }, {
                 duration: 0,
                 delay: "0",
@@ -277,7 +280,7 @@ export default {
             })
             Velocity(el, {
               translateX: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
-              translateY: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleX + "px"
+              translateY: this.atomCollection[this.firstSelectedTranslateId].translateYfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleY + "px"
             }, {
               delay: 2000 + +this.firstSelected.translateDelay +
                +this.value[this.id].firstDelay,
@@ -352,13 +355,13 @@ export default {
               if (this.secondSelectedTranslateId >= 1){
                 Velocity(el, {
                   translateX: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
-                  translateY: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleX + "px"
+                  translateY: this.atomCollection[this.secondSelectedTranslateId].translateYfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleX + "px"
                 }, {
-                  delay: 2000 + +this.secondSelected.translateDelay +
-                   +this.value[this.id].firstDelay,
+                  delay: +this.secondSelected.translateDelay +
+                   +this.value[this.id].secondDelay,
                   easing: this.atomCollection[this.secondSelectedTranslateId].spacing,
-                  queue: false,
                   duration: this.atomCollection[this.secondSelectedTranslateId].timing,
+                  queue: false,
                   complete: function() {
                      if (!vm.stop) vm.nukleolus = false
                     }

@@ -28,10 +28,10 @@
 
             <h3>animation</h3>
             <form>
-              translateX(pt) <input name="width" v-model="value[id].translateXstart" type="number"> --> <input name="width" v-model="value[id].translateXfinal" type="number">
+              translateX(pt) <input name="width" v-model="value[id].translateXstart" type="number"> --> <input name="width" v-model="value[id].translateXfinal" type="number"> <span class="pms">{{pmsX}} p/ms </span>
             </form>
             <form>
-              translateY(pt) <input name="width" v-model="value[id].translateYstart" type="number"> --> <input name="width" v-model="value[id].translateYfinal" type="number">
+              translateY(pt) <input name="width" v-model="value[id].translateYstart" type="number"> --> <input name="width" v-model="value[id].translateYfinal" type="number"> <span class="pms">{{pmsY}} p/ms </span>
             </form>
         </div>
     </div>
@@ -178,6 +178,13 @@ export default {
         atomtranslateYfinal: function() {
             return  +this.value[this.atomtranslateid].translateYfinal * this.value[this.atomtranslateid].viewPortScaleY - 320 * this.value[this.atomtranslateid].viewPortScaleX
         },
+
+        pmsX(){
+          return Math.round(Math.abs(this.value[this.atomtranslateid].translateXfinal / this.atomDuration  - this.value[this.atomtranslateid].translateXstart / this.atomDuration) * 100) / 100
+        },
+        pmsY(){
+          return Math.round(Math.abs(this.value[this.atomtranslateid].translateYfinal / this.atomDuration  - this.value[this.atomtranslateid].translateYstart / this.atomDuration) * 100) / 100
+        }
 
 
     },

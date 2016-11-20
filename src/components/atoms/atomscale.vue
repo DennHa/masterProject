@@ -29,10 +29,10 @@
 
             <h3>animation</h3>
             <form>
-              width(pt)&nbsp; <input name="width" v-model="value[id].widthstart" type="number"> --> <input name="width" v-model="value[id].widthfinal" type="number">
+              width(pt)&nbsp; <input name="width" v-model="value[id].widthstart" type="number"> --> <input name="width" v-model="value[id].widthfinal" type="number"> <span class="pms">{{pmsWidth}} p/ms </span>
             </form>
             <form>
-              height(pt) <input name="width" v-model="value[id].heightstart" type="number"> --> <input name="width" v-model="value[id].heightfinal" type="number">
+              height(pt) <input name="width" v-model="value[id].heightstart" type="number"> --> <input name="width" v-model="value[id].heightfinal" type="number"> <span class="pms">{{pmsHeight}} p/ms </span>
             </form>
         </div>
     </div>
@@ -185,6 +185,13 @@ export default {
         },
         atomScaleYinPT(){
           return this.atomHeightStart * this.atomHeightFinal
+        },
+
+        pmsWidth(){
+          return Math.round(Math.abs(this.value[this.atomscaleid].widthfinal / this.atomDuration  - this.value[this.atomscaleid].widthstart / this.atomDuration) * 100) / 100
+        },
+        pmsHeight(){
+          return Math.round(Math.abs(this.value[this.atomscaleid].heightfinal / this.atomDuration  - this.value[this.atomscaleid].heightstart / this.atomDuration) * 100) / 100
         }
 
     },

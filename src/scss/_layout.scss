@@ -9,6 +9,10 @@
 }
 
 .menu{
+  &__wrapper{
+    overflow: visible;
+  }
+  background-color: $color-white;
   overflow: hidden;
   z-index: 90;
   position: fixed;
@@ -67,9 +71,34 @@
 .organisms__wrapper{
   //width: 100vw;
   //overflow-x: auto;
-  padding-bottom:25vh;
+  padding-top:10vh;
+  padding-bottom:13vh;
 }
 .organisms{
+  margin-left: $spacing-double;
+  display: flex;
+  align-items: flex-start;
+  flex-flow: nowrap;
+  min-height: 100vh;
+  //width: 200vw;
+  & > *{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: row;
+    flex-flow: wrap;
+    max-width: 1200px;
+  }
+}
+
+
+.molecules__wrapper{
+  //width: 100vw;
+  //overflow-x: auto;
+  padding-top:10vh;
+  padding-bottom:13vh;
+}
+.molecules{
   margin-left: $spacing-double;
   display: flex;
   align-items: flex-start;
@@ -86,32 +115,11 @@
   }
 }
 
-
-.molecules__wrapper{
-  //width: 100vw;
-  //overflow-x: auto;
-  padding-bottom:25vh;
-}
-.molecules{
-  margin-left: $spacing-double;
-  display: flex;
-  align-items: flex-start;
-  flex-flow: nowrap;
-  min-height: 100vh;
-  //width: 200vw;
-  & > *{
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    flex-flow: wrap;
-    max-width: 1000px;
-  }
-}
-
 .atoms__wrapper{
   //width: 100vw;
   //overflow-x: scroll;
+  padding-top:10vh;
+  padding-bottom:13vh;
 
 }
 .atoms{

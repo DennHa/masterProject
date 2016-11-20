@@ -318,9 +318,22 @@ margin: $spacing-standard;
   opacity: 0
 }
 
-.warning{
+.warning {
   text-align: center;
   color: $color-white;
   background-color: $color-warning;
   border-radius: 5px;
+}
+
+.advice{
+  font-size: $fontSize-half;
+
+  color: $color-grey;
+  //background-color: $color-white;
+  border-radius: 5px;
+}
+
+.pms{
+  color: $color-alpha;
+  font-size: $fontSize-third;
 }
