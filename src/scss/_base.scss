@@ -47,6 +47,7 @@ $mq-xxl: 114em;
 }
 
 body {
+  background-color: #fff;
   font-feature-settings: 'liga' 0;
   font-size: 100%;
   line-height: 1.6;
@@ -217,6 +218,16 @@ input[type=range]::-webkit-slider-thumb {
 
 }
 
+input[type=radio]{
+  width: 20px;
+}
+
+label{
+  color: $color-grey;
+  font-size: $fontSize-half;
+  padding-left: 0;
+  margin: 0;
+}
 /* All the same stuff for Firefox
 input[type=range]::-moz-range-thumb {
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;

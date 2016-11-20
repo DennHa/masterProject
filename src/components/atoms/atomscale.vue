@@ -68,7 +68,7 @@
 <script>
 export default {
     name: "atomscale",
-    props: ['value', 'atomscaleid'],
+    props: ['value', 'atomscaleid', 'globalDelay'],
     data() {
         return {
           show: false,
@@ -224,7 +224,7 @@ export default {
                 width: +this.atomWidthFinal + "px",
                 height: +this.atomHeightFinal + "px"
             }, {
-                delay: "2000",
+                delay: this.globalDelay,
                 easing: this.spacing,
                 duration: this.atomDuration,
                 complete: function() {
@@ -241,7 +241,7 @@ export default {
                 backgroundColor: '#ffffff',
             }, {
                 duration: 1,
-                delay: "2000",
+                delay: this.globalDelay,
                 complete: function() {
                     done()
                     vm.nukleolus = true

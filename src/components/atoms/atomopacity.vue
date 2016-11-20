@@ -24,7 +24,7 @@
             </form>
         </div>
 
-        <div class="atom__characteristics">
+        <div class="atom__characteristics", 'globalDelay'>
 
             <h3>animation</h3>
             <form>
@@ -62,7 +62,7 @@
 export default {
     name: "atomopcaity",
 
-    props: ['value', 'atomscaleid'],
+    props: ['value', 'atomscaleid', 'globalDelay'],
     data() {
         return {
             nukleolus: true,
@@ -191,7 +191,7 @@ export default {
             Velocity(el, {
                 opacity: this.atomOpacityFinal
             }, {
-                delay: "2000",
+                delay: this.globalDelay,
                 easing: this.spacing,
                 duration: this.atomDuration,
                 complete: function() {
@@ -209,7 +209,7 @@ export default {
                 backgroundColor: '#ffffff',
             }, {
                 duration: 1,
-                delay: "2000",
+                delay: this.globalDelay,
                 complete: function() {
                     done()
                     vm.nukleolus = true

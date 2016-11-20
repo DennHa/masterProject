@@ -30,7 +30,7 @@
                       <!-- <h2>Organism</h2> -->
                   </div>
                   <div class="" v-for="thisbestpractice in bestpractice">
-                      <bestpractice :bestpracticeid="thisbestpractice.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" :organism-collection="combineOrganismCollection" v-model="bestpractice">
+                      <bestpractice :bestpracticeid="thisbestpractice.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" :organism-collection="combineOrganismCollection" v-model="bestpractice" :global-delay="globalDelay">
                       </bestpractice>
                   </div>
                   <button type="button" name="button" @click="addBestPracticeCatOne" class="organisms__addOrganism">+</button>
@@ -47,7 +47,7 @@
                         <!-- <h2>Organism</h2> -->
                     </div>
                     <div class="molecules__categ1" v-for="thisorganism in organism">
-                        <organism :organismid="thisorganism.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" v-model="organism">
+                        <organism :organismid="thisorganism.id" :molecule-collection="combineMoleculeCollection" :atom-collection="combineAtomCollection" v-model="organism" :global-delay="globalDelay">
                         </organism>
                     </div>
                     <button type="button" name="button" @click="addOrganismCatOne" class="organisms__addOrganism">+</button>
@@ -65,7 +65,7 @@
                         <!-- <h2>Molecules</h2> -->
                     </div>
                     <div class="" v-for="thismolecule in molecule">
-                        <molecule :atom-collection="combineAtomCollection" v-model="molecule" :moleculeid="thismolecule.id">
+                        <molecule :atom-collection="combineAtomCollection" v-model="molecule" :moleculeid="thismolecule.id" :global-delay="globalDelay">
                         </molecule>
                     </div>
                     <button type="button" name="button" @click="addMoleculeCatOne" class="molecules__addMolecule">+</button>
@@ -85,7 +85,7 @@
                         <!-- <h2>scale</h2> -->
                     </div>
                     <div v-for="thisatomscale in atomscale">
-                        <atomscale v-model="atomscale" v-bind:atomscaleid="thisatomscale.id">
+                        <atomscale v-model="atomscale" v-bind:atomscaleid="thisatomscale.id" :global-delay="globalDelay">
                         </atomscale>
                     </div>
                     <button type="button" name="button" @click="addatomscale" class="atoms__addAtom">+</button>
@@ -95,7 +95,7 @@
                         <!-- <h2>translate</h2> -->
                     </div>
                     <div v-for="atomtranslate in atomTranslate">
-                        <atomtranslate v-model="atomTranslate" v-bind:atomtranslateid="atomtranslate.id">
+                        <atomtranslate v-model="atomTranslate" v-bind:atomtranslateid="atomtranslate.id" :global-delay="globalDelay">
                         </atomtranslate>
                     </div>
                     <button type="button" name="button" @click="addatomtranslate" class="atoms__addAtom">+</button>
@@ -106,7 +106,7 @@
                         <!-- <h2>Rotation</h2> -->
                     </div>
                     <div v-for="atomrotation in atomRotation">
-                        <atomrotation v-model="atomRotation" v-bind:atomscaleid="atomrotation.id">
+                        <atomrotation v-model="atomRotation" :global-delay="globalDelay" v-bind:atomscaleid="atomrotation.id">
                         </atomrotation>
                     </div>
                     <button type="button" name="button" @click="addatomrotation" class="atoms__addAtom">+</button>
@@ -117,7 +117,7 @@
                         <!-- <h2>Opacity</h2> -->
                     </div>
                     <div v-for="atomopacity in atomOpacity">
-                        <atomopacity v-model="atomOpacity" v-bind:atomscaleid="atomopacity.id">
+                        <atomopacity v-model="atomOpacity" :global-delay="globalDelay" v-bind:atomscaleid="atomopacity.id">
                         </atomopacity>
                     </div>
                     <button type="button" name="button" @click="addatomopacity" class="atoms__addAtom">+</button>
@@ -126,7 +126,9 @@
         </div>
     </section>
     <section class="global">
-      test
+      <form class="" action="" method="post">
+      <span>globalDelay(ms)</span>  <input  name="name" value="" v-model="globalDelay" type="number">
+      </form>
     </section>
 </section>
 </template>
@@ -160,6 +162,7 @@ export default {
     },
     data() {
         return {
+          globalDelay: 2000,
             atomId: 4, //start bei 2 weil atomscale und atomtranslate und atomRotation und atomOpacity und atomNull für den prototypen schon gesetzt sind
             viewportX: 360,
             viewportY: 640,
@@ -308,11 +311,30 @@ export default {
                 viewPortScaleX: 0.78125,
                 viewPortScaleY: 0.78125
             }],
-
+            //
+            bestpracticeId: 0,
+            bestid: 1,
+            bestpracticeCollection:[],
             bestpractice:[{
-              name: "FadeOut",
+              name: "TreeBestPractice",
+              autoplay: false,
+              click: false,
               id: 0,
               bestid: 1,
+              firstElement: 0,
+              secondElement: 0,
+              thirdElement: 0,
+              firstElementDelay: 0,
+              secondElementDelay: 0,
+              viewPortScaleX: 0.78125,
+              viewPortScaleY: 0.78125
+            }],
+            bestpracticeNull:[{
+              name: "-",
+              autoplay: false,
+              click: false,
+              id: 0,
+              bestid: 0,
               firstElement: 0,
               secondElement: 0,
               thirdElement: 0,
@@ -326,6 +348,7 @@ export default {
             randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium', 'Zinc', 'Krypton', 'Strontium', 'Niobium', 'Selenium'],
             randomMolecules: ['Acetone', 'Chromium ', 'Fluorite', 'Hexane', 'Jadeite', 'Niter', 'Picene', 'Tamoxifen', 'Topaz', 'Water', 'Zircon', 'Vanillin'],
             randomOrganisms: ['Cupulata', 'Mucorina', 'Astoma', 'Sporoza', 'Floridea', 'Diatomea', 'Bangialea', 'Fuciodea', 'Fungi', 'Exosporea', 'Heliozoa', 'Nuda'],
+            randomBestpractice: ['Bee', 'Wasp', 'Spider', 'Fish', 'Beetle', 'Moth', 'Monkey', 'Butterfly', 'Plant', 'Snail', 'Shrew', 'Ant'],
 
         }
     },
@@ -339,6 +362,9 @@ export default {
         },
         combineOrganismCollection() {
             return this.moleculeCollection.concat(this.organismNull, this.organism)
+        },
+        combineBestpracticeCollection() {
+            return this.bestpracticeCollection.concat(this.bestpracticeNull, this.bestpractice)
         },
         atomViewPortScaleX() {
             return this.atomViewportX / this.viewportX
@@ -362,8 +388,21 @@ export default {
     },
     methods: {
       addBestPracticeCatOne() {
-
+        this.bestpracticeId++,
+            this.bestid++,
               this.bestpractice.push({
+                name: this.randomBestpractice[Math.floor((Math.random() * 11) + 1)] + "Best",
+                autoplay: false,
+                click: false,
+                id: this.bestpracticeId,
+                bestid: this.bestid,
+                firstElement: 0,
+                secondElement: 0,
+                thirdElement: 0,
+                firstElementDelay: 0,
+                secondElementDelay: 0,
+                viewPortScaleX: 0.78125,
+                viewPortScaleY: 0.78125
               })
       },
         addOrganismCatOne() {

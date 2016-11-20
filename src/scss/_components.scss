@@ -24,6 +24,21 @@
         height: 500px;
         overflow: hidden;
     }
+    &__viewerExample {
+        position: relative;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-alpha;
+        width: 281.25px;
+        height: 500px;
+        overflow: hidden;
+
+        img{
+          position: absolute;
+        }
+    }
 
     &__nukleolus {
         background-color: $color-primary;
@@ -36,16 +51,9 @@
       width: 50px;
     }
     &__bestpracticeWrapper{
-
-      position: absolute;
-
-    }
-    &__bestpracticeWrapperSecond{
-        position: absolute;
-    }
-    &__bestpracticeWrapperThird{
       position: absolute;
     }
+
     &__properties {
         display: flex;
         justify-content: flex-start;
@@ -202,7 +210,7 @@ margin: $spacing-standard;
   z-index: -100;
   //display: none;
 }
-.subMenu{
+.subMenu ,.subMenuSwap {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -226,7 +234,6 @@ margin: $spacing-standard;
     &:hover{
       background-image: url(./assets/copyCodeHover.svg);
     }
-
   }
 
   &__copied{
@@ -234,8 +241,23 @@ margin: $spacing-standard;
     background-image: none !important;
     font-size: $fontSize-half;
     color: $color-secondary;
+  }
+}
 
+.subMenuSwap{
+  & > *{
+    &:last-child{
+      width: 25px;
+      height: 25px;
+      background-image: url(./assets/drop.svg);
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 25px 25px;
+    }
 
+    &:hover{
+      background-image: url(./assets/live.svg);
+    }
   }
 }
 .active{
@@ -279,4 +301,38 @@ margin: $spacing-standard;
 .pms{
   color: $color-alpha;
   font-size: $fontSize-third;
+}
+
+.global{
+  opacity: 0.1;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-flow: nowrap;
+  margin: $spacing-half;
+  padding: $spacing-half;
+  width: auto;
+  height: auto;
+  background-color: $color-background;
+  border-radius: 5px;
+  box-shadow: 0 10px 24px 0 rgba(184,184,184,1);
+  transition: opacity 250ms;
+
+  &:hover{
+    opacity: 1;
+  }
+}
+
+.hitarea{
+  cursor: pointer;
+  position: absolute;
+  z-index: 200;
+  opacity: 0.5;
+  width: 20px;
+  height: 20px;
+  background-color: $color-secondary;
+
 }

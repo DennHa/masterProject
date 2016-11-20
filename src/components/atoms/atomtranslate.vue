@@ -65,7 +65,7 @@
 <script>
 export default {
     name: "atomtranslate",
-    props: ['value', 'atomtranslateid'],
+    props: ['value', 'atomtranslateid', 'globalDelay'],
     data() {
         return {
           show: false,
@@ -226,7 +226,7 @@ export default {
                 translateX: +this.atomtranslateXfinal + "px",
                 translateY: +this.atomtranslateYfinal + "px"
             }, {
-                delay: "2000",
+                delay: this.globalDelay,
                 easing: this.spacing,
                 duration: this.atomDuration,
                 complete: function() {
@@ -243,7 +243,7 @@ export default {
                 backgroundColor: '#ffffff',
             }, {
                 duration: 0,
-                delay: "2000",
+                delay: this.globalDelay,
                 complete: function() {
                     done()
                     vm.nukleolus = true

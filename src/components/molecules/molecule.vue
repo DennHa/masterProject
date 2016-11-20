@@ -125,7 +125,7 @@
 export default {
     name: "molecules",
 
-    props: ['value', 'atomCollection', 'molecule', 'moleculeid'],
+    props: ['value', 'atomCollection', 'molecule', 'moleculeid', 'globalDelay'],
     data() {
         return {
           copied: false,
@@ -245,7 +245,7 @@ export default {
               height: +this.scaleSelected.heightfinal * this.value[this.id].viewPortScaleY + "px"
 
             }, {
-                delay: 2000 + +this.value[this.id].scaleDelay,
+                delay: this.globalDelay + +this.value[this.id].scaleDelay,
                 easing: this.translateSelected.spacing,
                 duration: this.translateSelected.timing,
                 complete: function() {
@@ -258,7 +258,7 @@ export default {
               rotateY: this.rotationSelected.rotationyfinal + "deg",
               rotateZ: this.rotationSelected.rotationzfinal + "deg"
             }, {
-                delay: 2000 + +this.value[this.id].rotationDelay,
+                delay: this.globalDelay + +this.value[this.id].rotationDelay,
                 easing: this.rotationSelected.spacing,
                 duration: this.rotationSelected.timing,
                 queue: false,
@@ -270,7 +270,7 @@ export default {
             Velocity(el, {
               opacity: this.opacitySelected.opacityfinal / 100,
             }, {
-                delay: 2000 + +this.value[this.id].opacityDelay,
+                delay: this.globalDelay + +this.value[this.id].opacityDelay,
                 easing: this.opacitySelected.spacing,
                 duration: this.opacitySelected.timing,
                 queue: false,
@@ -284,7 +284,7 @@ export default {
                 translateX:  +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
                 translateY: +this.translateSelected.translateYfinal *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleY + "px"
               }, {
-                  delay: 2000 + +this.value[this.id].translateDelay,
+                  delay: this.globalDelay + +this.value[this.id].translateDelay,
                   easing: this.translateSelected.spacing,
                   duration: this.translateSelected.timing,
                   queue: false,
@@ -305,7 +305,7 @@ export default {
                 backgroundColor: 'transparent',
             }, {
                 duration: 0,
-                delay: "2000",
+                delay: this.globalDelay,
                 complete: function() {
                     done()
                     vm.nukleolus = true

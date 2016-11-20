@@ -132,7 +132,7 @@
 export default {
     name: "organism",
 
-    props: ['value', 'atomCollection', 'moleculeCollection', 'organism', 'organismid'],
+    props: ['value', 'atomCollection', 'moleculeCollection', 'organism', 'organismid', 'globalDelay'],
     data() {
         return {
           //
@@ -236,7 +236,7 @@ export default {
               width: this.atomCollection[this.firstSelectedscaleId].widthfinal * this.value[this.id].viewPortScaleX  + "px",
               height: this.atomCollection[this.firstSelectedscaleId].heightfinal * this.value[this.id].viewPortScaleY + "px",
             }, {
-                delay: 2000 + +this.firstSelected.scaleDelay +
+                delay: this.globalDelay + +this.firstSelected.scaleDelay +
                  +this.value[this.id].firstDelay,
                 easing: this.atomCollection[this.firstSelectedscaleId].spacing,
                 duration: this.atomCollection[this.firstSelectedscaleId].timing,
@@ -250,7 +250,7 @@ export default {
               rotateY: this.atomCollection[this.firstSelectedRotationId].rotationyfinal + "deg",
               rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzfinal + "deg",
             }, {
-                delay: 2000 + +this.firstSelected.rotationDelay +
+                delay: this.globalDelay + +this.firstSelected.rotationDelay +
                  +this.value[this.id].firstDelay,
                 easing: this.atomCollection[this.firstSelectedRotationId].spacing,
                 queue: false,
@@ -263,7 +263,7 @@ export default {
               opacity: this.atomCollection[this.firstSelectedOpacityId].opacityfinal / 100
 
             }, {
-                delay: 2000 + +this.firstSelected.opacityDelay +
+                delay: this.globalDelay + +this.firstSelected.opacityDelay +
                  +this.value[this.id].firstDelay,
                 easing: this.atomCollection[this.firstSelectedOpacityId].spacing,
                 queue: false,
@@ -277,7 +277,7 @@ export default {
               translateX: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
               translateY: this.atomCollection[this.firstSelectedTranslateId].translateYfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleY + "px"
             }, {
-              delay: 2000 + +this.firstSelected.translateDelay +
+              delay: this.globalDelay + +this.firstSelected.translateDelay +
                +this.value[this.id].firstDelay,
               easing: this.atomCollection[this.firstSelectedTranslateId].spacing,
               queue: false,
@@ -305,7 +305,7 @@ export default {
 
                       setTimeout(function(){
                         vm.nukleolus = true
-                        }, 2000);
+                      }, 1000);
                     }
                 })
               }
@@ -324,7 +324,7 @@ export default {
 
                       setTimeout(function(){
                         vm.nukleolus = true
-                        }, 2000);
+                      }, vm.globalDelay);
                     }
                 })
               }
@@ -342,7 +342,7 @@ export default {
 
                       setTimeout(function(){
                         vm.nukleolus = true
-                        }, 2000);
+                      }, vm.globalDelay);
 
                     }
                 })
@@ -358,7 +358,9 @@ export default {
                   duration: this.atomCollection[this.secondSelectedTranslateId].timing,
                   queue: false,
                   complete: function() {
-                     if (!vm.stop) vm.nukleolus = false
+                    setTimeout(function(){
+                      vm.nukleolus = true
+                    }, vm.globalDelay);
                     }
                 })
               }
@@ -368,7 +370,7 @@ export default {
                 backgroundColor: '#ffffff',
             }, {
                 duration: 1,
-                delay: "2000",
+                delay: this.globalDelay,
                 complete: function() {
 
                     vm.nukleolus = true

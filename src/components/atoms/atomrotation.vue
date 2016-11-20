@@ -24,7 +24,7 @@
             </form>
         </div>
 
-        <div class="atom__characteristics">
+        <div class="atom__characteristics", 'globalDelay'>
 
             <h3>animation</h3>
             <form>
@@ -71,7 +71,7 @@
 <script>
 export default {
     name: "atomrotation",
-    props: ['value', 'atomscaleid'],
+    props: ['value', 'atomscaleid', 'globalDelay'],
     data() {
         return {
             nukleolus: true,
@@ -229,7 +229,7 @@ export default {
                 rotateY: this.atomRotationYFinal,
                 rotateZ: this.atomRotationZFinal
             }, {
-                delay: "2000",
+                delay: this.globalDelay,
                 easing: this.spacing,
                 duration: this.atomDuration,
                 complete: function() {
@@ -247,7 +247,7 @@ export default {
                 backgroundColor: '#ffffff',
             }, {
                 duration: 1,
-                delay: "2000",
+                delay: this.globalDelay,
                 complete: function() {
                     done()
                     vm.nukleolus = true
