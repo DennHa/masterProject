@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="6px" height="10px" viewBox="0 0 6 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Pure-Atom-" transform="translate(-1089.000000, -355.000000)">
+            <g id="Rotation" transform="translate(650.000000, 45.000000)">
+                <g id="Atom-1-Copy" transform="translate(0.000000, 78.000000)">
+                    <g id="ic_content_copy_black_24px" transform="translate(436.000000, 231.000000)">
+                        <g id="Group">
+                            <polygon id="Shape" points="0 0 12 0 12 12 0 12"></polygon>
+                            <path d="M8.2,1.5 L3.8,1.5 C3.36,1.5 3,1.95 3,2.5 L3,9.5 C3,10.05 3.36,10.5 3.8,10.5 L8.2,10.5 C8.64,10.5 9,10.05 9,9.5 L9,2.5 C9,1.95 8.64,1.5 8.2,1.5 Z M8.2,9.5 L3.8,9.5 L3.8,2.5 L8.2,2.5 L8.2,9.5 Z" id="Shape" fill="#E9E9E9"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

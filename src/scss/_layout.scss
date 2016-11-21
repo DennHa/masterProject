@@ -9,8 +9,12 @@
 }
 
 .menu{
+  &__wrapper{
+    overflow: visible;
+  }
+  background-color: $color-white;
   overflow: hidden;
-  z-index: 90;
+  z-index: 900;
   position: fixed;
   width: 50px;
   height: 100vh;
@@ -64,71 +68,25 @@
 
 }
 
-.organisms__wrapper{
-  //width: 100vw;
-  //overflow-x: auto;
-  padding-bottom:25vh;
-}
-.organisms{
+.atoms, .molecules, .organisms, .bestpractices, .principles {
   margin-left: $spacing-double;
   display: flex;
   align-items: flex-start;
   flex-flow: nowrap;
   min-height: 100vh;
   //width: 200vw;
+  &__wrapper {
+    //width: 100vw;
+    //overflow-x: auto;
+    padding-top:10vh;
+    padding-bottom:13vh;
+  }
   & > *{
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: row;
     flex-flow: wrap;
-    max-width: 1100px;
+    max-width: 1200px;
   }
-}
-
-
-.molecules__wrapper{
-  //width: 100vw;
-  //overflow-x: auto;
-  padding-bottom:25vh;
-}
-.molecules{
-  margin-left: $spacing-double;
-  display: flex;
-  align-items: flex-start;
-  flex-flow: nowrap;
-  min-height: 100vh;
-  //width: 200vw;
-  & > *{
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    flex-flow: wrap;
-    max-width: 920px;
-  }
-}
-
-.atoms__wrapper{
-  //width: 100vw;
-  //overflow-x: scroll;
-
-}
-.atoms{
-  margin-left: $spacing-double;
-  display: flex;
-  align-items: flex-start;
-  flex-flow: nowrap;
-  min-height: 100vh;
-  width: 100vw;
-
-  & > *{
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    flex-flow: wrap;
-    max-width: 780px;
-  }
-
 }

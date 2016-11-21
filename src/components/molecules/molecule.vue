@@ -21,6 +21,12 @@
            </option>
         </select>
         <span class="connectedIt">&</span>
+        <select  class="atom__kind" v-model="value[id].translateId">
+           <option v-if="atom.translate >= 0" v-for="atom in atoms" :value="atom.atomid">
+             {{ atom.name }}
+           </option>
+        </select>
+        <span class="connectedIt">&</span>
         <select  class="atom__kind" v-model="value[id].rotationId">
            <option v-if="atom.rotationzfinal >= 0" v-for="atom in atoms" :value="atom.atomid">
              {{ atom.name }}
@@ -32,8 +38,9 @@
              {{ atom.name }}
            </option>
         </select>
-    </div>
 
+    </div>
+    <span class="warning" v-if="translateSelectedId >= 1 && rotationSelectedId >= 1">Combining translation & rotation doesn't work yet</span>
 
         <div class="molecule__timing">
 
@@ -49,11 +56,17 @@
             <h3>opacity delay {{value[id].opacityDelay}}</h3>
             <input  type="range" v-model="value[id].opacityDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
+          <div class="molecules__opacityDelay" v-if="value[id].translateId >= 1">
+            <h3>translate delay {{value[id].translateDelay}}</h3>
+            <input  type="range" v-model="value[id].translateDelay" min="0" max="1000" step="10" defaultValue="0">
+          </div>
 
 
         </div>
         <div class="subMenu">
-          <div class="subMenu__copied" v-show="copied">copied</div>
+          <transition name="fade">
+            <div class="subMenu__copied" v-show="copied">copied</div>
+          </transition>
           <div v-bind:id="value[id].name + value[id].molid " v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
 
         </div>
@@ -61,37 +74,46 @@
         <div v-bind:class="copyThisValue" class="copy">
           //css Animation Specs - {{value[id].name}}  <br>
           .{{value[id].name}} { <br>
-          &nbsp;  &nbsp;  animation: {{value[id].name}}_scale {{firstSelected.timing}}ms {{firstSelected.spacing}} {{value[id].scaleDelay}};<br>
-          &nbsp;  &nbsp;  animation: {{value[id].name}}_rotation {{secondSelected.timing}}ms {{secondSelected.spacing}} {{value[id].rotationDelay}};<br>
-          &nbsp;  &nbsp;  animation: {{value[id].name}}_opacity {{thirdSelected.timing}}ms {{thirdSelected.spacing}} {{value[id].opacityDelay}};<br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_scale {{scaleSelected.timing}}ms {{scaleSelected.spacing}} {{value[id].scaleDelay}};<br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_rotation {{rotationSelected.timing}}ms {{rotationSelected.spacing}} {{value[id].rotationDelay}};<br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_opacity {{opacitySelected.timing}}ms {{opacitySelected.spacing}} {{value[id].opacityDelay}};<br>
+          &nbsp;  &nbsp;  animation: {{value[id].name}}_translate {{opacitySelected.timing}}ms {{opacitySelected.spacing}} {{value[id].opacityDelay}};<br>
           &nbsp;  }<br>
           &nbsp;  <br>
           &nbsp;  @keyframes {{value[id].name}}_scale {<br>
           &nbsp;  &nbsp;  0% {<br>
-          &nbsp; &nbsp;  width: {{firstSelected.widthstart}}px; //in pixel!<br>
-          &nbsp; &nbsp;  height: {{firstSelected.heightstart}}px; //in pixel!<br>
+          &nbsp; &nbsp;  width: {{scaleSelected.widthstart}}px; //in pixel!<br>
+          &nbsp; &nbsp;  height: {{scaleSelected.heightstart}}px; //in pixel!<br>
           &nbsp;  }<br>
           &nbsp;  100% {<br>
-          &nbsp; &nbsp;  width: {{firstSelected.widthfinal}}px; //in pixel!<br>
-          &nbsp; &nbsp;  height: {{firstSelected.heightfinal}}px; //in pixel!<br>
+          &nbsp; &nbsp;  width: {{scaleSelected.widthfinal}}px; //in pixel!<br>
+          &nbsp; &nbsp;  height: {{scaleSelected.heightfinal}}px; //in pixel!<br>
           &nbsp;  }<br>
           &nbsp;  @keyframes {{value[id].name}}_rotation {<br>
           &nbsp;  &nbsp;  0% {<br>
-          &nbsp;  &nbsp;  transform: rotatX({{secondSelected.rotationxstart}});<br>
-          &nbsp;  &nbsp;  transform: rotatY({{secondSelected.rotationystart}});<br>
-          &nbsp;  &nbsp;  transform: rotatZ({{secondSelected.rotationzstart}});<br>
+          &nbsp;  &nbsp;  transform: rotatX({{rotationSelected.rotationxstart}});<br>
+          &nbsp;  &nbsp;  transform: rotatY({{rotationSelected.rotationystart}});<br>
+          &nbsp;  &nbsp;  transform: rotatZ({{rotationSelected.rotationzstart}});<br>
           &nbsp;  }<br>
           &nbsp;  100% {<br>
-          &nbsp;  &nbsp;  transform: rotatX({{secondSelected.rotationxfinal}});<br>
-          &nbsp;  &nbsp;  transform: rotatY({{secondSelected.rotationyfinal}});<br>
-          &nbsp; &nbsp;  transform: rotatZ({{secondSelected.rotationzfinal}});<br>
+          &nbsp;  &nbsp;  transform: rotatX({{rotationSelected.rotationxfinal}});<br>
+          &nbsp;  &nbsp;  transform: rotatY({{rotationSelected.rotationyfinal}});<br>
+          &nbsp; &nbsp;  transform: rotatZ({{rotationSelected.rotationzfinal}});<br>
           &nbsp;  }<br>
           &nbsp;  @keyframes {{value[id].name}}_opacity {<br>
           &nbsp;  &nbsp;  0% {<br>
-          &nbsp; &nbsp;  opacity: {{thirdSelected.opacitystart / 100}};<br>
+          &nbsp; &nbsp;  opacity: {{opacitySelected.opacitystart / 100}};<br>
           &nbsp;  }<br>
           &nbsp;  100% {<br>
-          &nbsp; &nbsp;  opacity: {{thirdSelected.opacityfinal / 100 }}; <br>
+          &nbsp; &nbsp;  opacity: {{opacitySelected.opacityfinal / 100 }}; <br>
+          &nbsp;  }<br>
+
+          &nbsp;  @keyframes {{value[id].name}}_translate {<br>
+          &nbsp;  &nbsp;  0% {<br>
+          &nbsp; &nbsp;  transform: translate({{translateSelected.translateXstart}}px  {{translateSelected.translateYstart}}px); //in pixel!<br>
+          &nbsp;  }<br>
+          &nbsp;  100% {<br>
+          &nbsp; &nbsp;  transform: translate({{translateSelected.translateXfinal}}px  {{translateSelected.translateYfinal}}px); //in pixel!<br>
           &nbsp;  }<br>
           }
         </div>
@@ -103,26 +125,19 @@
 export default {
     name: "molecules",
 
-    props: ['value', 'atomCollection', 'molecule', 'moleculeid'],
+    props: ['value', 'atomCollection', 'molecule', 'moleculeid', 'globalDelay'],
     data() {
         return {
           copied: false,
-          firstSelectedId: 0,
-          secondSelectedId: 0,
-          thirdSelectedId: 0,
+          scaleSelectedId: 0,
+          rotationSelectedId: 0,
+          opacitySelectedId: 0,
           fourthSelectedId: 0,
 
 
           //
           nukleolus: true,
           selected: "",
-
-
-          //selection
-          isSelectedFirst: false,
-          isSelectedSecond: false,
-          isSelectedThird: false,
-          isSelectedFourth: false,
         }
     },
     mounted: function() {
@@ -149,22 +164,36 @@ export default {
         })
       },
 
-      firstSelected(){
+      scaleSelected(){
         let d = this.value[this.id].scaleId
         return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
         this.atomCollection[d]
 
       },
-      secondSelected(){
+      rotationSelected(){
         let d = this.value[this.id].rotationId
         return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
         this.atomCollection[d]
       },
-      thirdSelected(){
+      opacitySelected(){
         let d = this.value[this.id].opacityId
         return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
         this.atomCollection[d]
       },
+      translateSelected(){
+        let d = this.value[this.id].translateId
+        return !d ? null : this.atomCollection.find(atom => atom.atomid === d),
+        this.atomCollection[d]
+      },
+
+      translateSelectedId(){
+        return this.translateSelected.atomid
+      },
+      rotationSelectedId(){
+        return this.rotationSelected.atomid
+      }
+
+      //atoms
 
 
     },
@@ -172,19 +201,30 @@ export default {
     methods: {
       copyThis(){
         var clipboard = new Clipboard('#' + this.value[this.id].name + this.value[this.id].molid)
+        this.copied = true
+        var self = this
+          setTimeout(function(){
+              self.copied = false;
+          }, 1000);
       },
         //before animation
         beforeEnter: function(el) {
-            el.style.width = this.firstSelected.widthstart * this.value[this.id].viewPortScaleX  + "px",
-            el.style.height = this.firstSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
-            el.style.transform = "rotateX("+ this.secondSelected.rotationxstart +"deg)",
-            el.style.transform = "rotateY("+ this.secondSelected.rotationystart  +"deg)",
-            el.style.transform = "rotateZ("+ this.secondSelected.rotationzstart  +"deg)",
-            el.style.opacity = this.thirdSelected.opacitystart / 100,
+            el.style.width = +this.scaleSelected.widthstart * this.value[this.id].viewPortScaleX + "px",
+            el.style.height = +this.scaleSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
+            el.style.transform = "rotateX("+ this.rotationSelected.rotationxstart +"deg)",
+            el.style.transform = "rotateY("+ this.rotationSelected.rotationystart  +"deg)",
+            el.style.transform = "rotateZ("+ this.rotationSelected.rotationzstart  +"deg)"
+            if(this.translateSelected.translate){el.style.opacity = 0}
+
             Velocity(el, {
-                rotateX: this.secondSelected.rotationxstart,
-                rotateY: this.secondSelected.rotationystart,
-                rotateZ: this.secondSelected.rotationzstart
+                opacity: this.opacitySelected.opacitystart / 100,
+                width: +this.scaleSelected.widthstart * this.value[this.id].viewPortScaleX + "px",
+                height: +this.scaleSelected.heightstart * this.value[this.id].viewPortScaleY + "px",
+                rotateX: this.rotationSelected.rotationxstart,
+                rotateY: this.rotationSelected.rotationystart,
+                rotateZ: this.rotationSelected.rotationzstart,
+                translateX: +this.translateSelected.translateXstart   *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
+                translateY: +this.translateSelected.translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleY + "px"
             }, {
                 duration: 0,
                 delay: "0",
@@ -197,28 +237,30 @@ export default {
         //animation enter
         enter: function(el, done) {
             var vm = this
+
+
+            // console.log(test))
             Velocity(el, {
-              width: +this.firstSelected.widthfinal * this.value[this.id].viewPortScaleX + "px",
-              height: +this.firstSelected.heightfinal * this.value[this.id].viewPortScaleY +   "px"
+              width: +this.scaleSelected.widthfinal * this.value[this.id].viewPortScaleX + "px",
+              height: +this.scaleSelected.heightfinal * this.value[this.id].viewPortScaleY + "px"
 
             }, {
-                delay: 2000 + +this.value[this.id].scaleDelay,
-                easing: this.firstSelected.spacing,
-                duration: this.firstSelected.timing,
+                delay: this.globalDelay + +this.value[this.id].scaleDelay,
+                easing: this.translateSelected.spacing,
+                duration: this.translateSelected.timing,
                 complete: function() {
                    done()
                    if (!vm.stop) vm.nukleolus = false
                 }
             })
             Velocity(el, {
-
-              rotateX: this.secondSelected.rotationxfinal + "deg",
-              rotateY: this.secondSelected.rotationyfinal + "deg",
-              rotateZ: this.secondSelected.rotationzfinal + "deg"
+              rotateX: this.rotationSelected.rotationxfinal + "deg",
+              rotateY: this.rotationSelected.rotationyfinal + "deg",
+              rotateZ: this.rotationSelected.rotationzfinal + "deg"
             }, {
-                delay: 2000 + +this.value[this.id].rotationDelay,
-                easing: this.secondSelected.spacing,
-                duration: this.secondSelected.timing,
+                delay: this.globalDelay + +this.value[this.id].rotationDelay,
+                easing: this.rotationSelected.spacing,
+                duration: this.rotationSelected.timing,
                 queue: false,
                 complete: function() {
                    done()
@@ -226,17 +268,33 @@ export default {
                 }
             })
             Velocity(el, {
-              opacity: this.thirdSelected.opacityfinal / 100,
+              opacity: this.opacitySelected.opacityfinal / 100,
             }, {
-                delay: 2000 + +this.value[this.id].opacityDelay,
-                easing: this.thirdSelected.spacing,
-                duration: this.thirdSelected.timing,
+                delay: this.globalDelay + +this.value[this.id].opacityDelay,
+                easing: this.opacitySelected.spacing,
+                duration: this.opacitySelected.timing,
                 queue: false,
                 complete: function() {
                    done()
                    if (!vm.stop) vm.nukleolus = false
                 }
             })
+
+              Velocity(el, {
+                translateX:  +this.translateSelected.translateXfinal *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
+                translateY: +this.translateSelected.translateYfinal *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleY + "px"
+              }, {
+                  delay: this.globalDelay + +this.value[this.id].translateDelay,
+                  easing: this.translateSelected.spacing,
+                  duration: this.translateSelected.timing,
+                  queue: false,
+                  complete: function() {
+                     done()
+                     if (!vm.stop) vm.nukleolus = false
+                  }
+              })
+
+
 
         },
 
@@ -244,10 +302,10 @@ export default {
         leave: function(el, done) {
             var vm = this
             Velocity(el, {
-                backgroundColor: '#ffffff',
+                backgroundColor: 'transparent',
             }, {
-                duration: 1,
-                delay: "2000",
+                duration: 0,
+                delay: this.globalDelay,
                 complete: function() {
                     done()
                     vm.nukleolus = true

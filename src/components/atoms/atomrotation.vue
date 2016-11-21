@@ -38,7 +38,9 @@
             </form>
         </div>
         <div class="subMenu">
-          <div class="subMenu__copied" v-show="copied">copied</div>
+          <transition name="fade">
+            <div class="subMenu__copied" v-show="copied">copied</div>
+          </transition>
           <div v-bind:id="value[id].atomscaleid + value[id].name" v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
 
         </div>
@@ -69,7 +71,7 @@
 <script>
 export default {
     name: "atomrotation",
-    props: ['value', 'atomscaleid'],
+    props: ['value', 'atomscaleid', 'globalDelay'],
     data() {
         return {
             nukleolus: true,
@@ -191,6 +193,11 @@ export default {
     methods: {
       copyThis(){
           var clipboard = new Clipboard('#' + this.value[this.id].atomscaleid + this.value[this.id].name)
+          this.copied = true
+          var self = this
+            setTimeout(function(){
+                self.copied = false;
+            }, 1000);
         },
 
         //before animation
@@ -222,7 +229,7 @@ export default {
                 rotateY: this.atomRotationYFinal,
                 rotateZ: this.atomRotationZFinal
             }, {
-                delay: "2000",
+                delay: this.globalDelay,
                 easing: this.spacing,
                 duration: this.atomDuration,
                 complete: function() {
@@ -240,7 +247,7 @@ export default {
                 backgroundColor: '#ffffff',
             }, {
                 duration: 1,
-                delay: "2000",
+                delay: this.globalDelay,
                 complete: function() {
                     done()
                     vm.nukleolus = true

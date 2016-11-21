@@ -19,36 +19,34 @@
              {{ molecule.name }}
            </option>
         </select>
-        <span class="connectedIt">+</span>
-        <select  class="organism__kind" v-model="value[id].secondMoleculeId">
-           <option  v-for="molecule in moleculeCollection" :value="molecule.molid">
+        <span class="connectedIt" v-if="value[id].firstMoleculeId >= 1">+</span>
+        <select  class="organism__kind" v-model="value[id].secondMoleculeId" v-if="value[id].firstMoleculeId >= 1">
+           <option v-for="molecule in moleculeCollection" :value="molecule.molid">
              {{ molecule.name }}
            </option>
         </select>
+
     </div>
+    <span class="advice">Your first selected molecule's final values need to match your second selected molecule's start values </span>
 
 
         <div class="organism__timing">
 
-          <div class="organism__scaleDelay" v-if="this.firstSelectedscaleId >= 1 || this.firstSelectedRotationId >= 1 || this.firstSelectedOpacityId >= 1">
+          <div class="organism__scaleDelay" v-if="this.firstSelectedscaleId >= 1 || this.firstSelectedRotationId >= 1 || this.firstSelectedOpacityId >= 1 || this.firstSelectedTranslateId >= 1">
             <h3>first delay {{value[id].firstDelay}}</h3>
             <input type="range" v-model="value[id].firstDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
         </div>
         <div class="organism__timing">
-          <div class="organism__rotationDelay" v-if="this.secondSelectedscaleId >= 1 || this.secondSelectedRotationId >= 1 || this.secondSelectedOpacityId >= 1">
+          <div class="organism__rotationDelay" v-if="this.secondSelectedscaleId >= 1 || this.secondSelectedRotationId >= 1 || this.secondSelectedOpacityId >= 1 || this.secondSelectedTranslateId >= 1">
             <h3>second delay {{value[id].secondDelay}}</h3>
             <input type="range" v-model="value[id].secondDelay" min="0" max="1000" step="10" defaultValue="0">
           </div>
         </div>
-        <div class="organism__timing">
-          <div class="organism__opacityDelay" v-if="this.thirdSelectedscaleId >= 1 || this.thirdSelectedRotationId >= 1 || this.thirdSelectedOpacityId >= 1">
-            <h3>third delay {{value[id].thirdDelay}}</h3>
-            <input  type="range" v-model="value[id].thirdDelay" min="0" max="1000" step="10" defaultValue="0">
-          </div>
-        </div>
         <div class="subMenu">
-              <div class="subMenu__copied" v-show="copied">copied</div>
+          <transition name="fade">
+            <div class="subMenu__copied" v-show="copied">copied</div>
+          </transition>
               <div v-bind:id="value[id].name + value[id].orgid " v-on:click="copyThis" v-bind:data-clipboard-target="'.' + copyThisValue"></div>
 
             </div>
@@ -134,7 +132,7 @@
 export default {
     name: "organism",
 
-    props: ['value', 'atomCollection', 'moleculeCollection', 'organism', 'organismid'],
+    props: ['value', 'atomCollection', 'moleculeCollection', 'organism', 'organismid', 'globalDelay'],
     data() {
         return {
           //
@@ -166,11 +164,7 @@ export default {
         return !d ? null : this.moleculeCollection.find(molecule => molecule.molid === d),
         this.moleculeCollection[d]
       },
-      thirdSelected(){
-        let d = this.value[this.id].thirdMoleculeId
-        return !d ? null : this.moleculeCollection.find(molecule => molecule.molid === d),
-        this.moleculeCollection[d]
-      },
+
 
       firstSelectedscaleId(){
         return this.firstSelected.scaleId
@@ -181,6 +175,9 @@ export default {
       firstSelectedOpacityId(){
         return this.firstSelected.opacityId
       },
+      firstSelectedTranslateId(){
+        return this.firstSelected.translateId
+      },
       secondSelectedscaleId(){
         return this.secondSelected.scaleId
       },
@@ -190,20 +187,20 @@ export default {
       secondSelectedOpacityId(){
         return this.secondSelected.opacityId
       },
-      thirdSelectedscaleId(){
-        return this.thirdSelected.scaleId
-      },
-      thirdSelectedRotationId(){
-        return this.thirdSelected.rotationId
-      },
-      thirdSelectedOpacityId(){
-        return this.thirdSelected.opacityId
+      secondSelectedTranslateId(){
+        return this.secondSelected.translateId
       }
+
 
     },
     methods: {
         copyThis(){
           var clipboard = new Clipboard('#' + this.value[this.id].name + this.value[this.id].orgid)
+          this.copied = true
+          var self = this
+            setTimeout(function(){
+                self.copied = false;
+            }, 1000);
         },
         //before animation
         beforeEnter: function(el) {
@@ -211,12 +208,17 @@ export default {
             el.style.height = this.atomCollection[this.firstSelectedscaleId].heightstart * this.value[this.id].viewPortScaleY + "px",
             el.style.transform = "rotateX("+ this.atomCollection[this.firstSelectedRotationId].rotationxstart +"deg)",
             el.style.transform = "rotateY("+ this.atomCollection[this.firstSelectedRotationId].rotationystart  +"deg)",
-            el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)",
-            el.style.opacity = this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
+            el.style.transform = "rotateZ("+ this.atomCollection[this.firstSelectedRotationId].rotationzstart  +"deg)"
+            if(this.atomCollection[this.firstSelectedTranslateId].translate || this.atomCollection[this.secondSelectedTranslateId].translate ){el.style.opacity = 0} //gegen das flackern
             Velocity(el, {
+                width: this.atomCollection[this.firstSelectedscaleId].widthstart * this.value[this.id].viewPortScaleX + "px",
+                height: this.atomCollection[this.firstSelectedscaleId].heightstart * this.value[this.id].viewPortScaleY + "px",
+                opacity: this.atomCollection[this.firstSelectedOpacityId].opacitystart / 100,
                 rotateX: this.atomCollection[this.firstSelectedRotationId].rotationxstart,
                 rotateY: this.atomCollection[this.firstSelectedRotationId].rotationystart,
-                rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzstart
+                rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzstart,
+                translateX: +this.atomCollection[this.firstSelectedTranslateId].translateXstart    *  this.value[this.id].viewPortScaleX - 180 *  this.value[this.id].viewPortScaleX + "px",
+                translateY: +this.atomCollection[this.firstSelectedTranslateId].translateYstart *  this.value[this.id].viewPortScaleY - 320 *  this.value[this.id].viewPortScaleY + "px"
             }, {
                 duration: 0,
                 delay: "0",
@@ -234,7 +236,7 @@ export default {
               width: this.atomCollection[this.firstSelectedscaleId].widthfinal * this.value[this.id].viewPortScaleX  + "px",
               height: this.atomCollection[this.firstSelectedscaleId].heightfinal * this.value[this.id].viewPortScaleY + "px",
             }, {
-                delay: 2000 + +this.firstSelected.scaleDelay +
+                delay: this.globalDelay + +this.firstSelected.scaleDelay +
                  +this.value[this.id].firstDelay,
                 easing: this.atomCollection[this.firstSelectedscaleId].spacing,
                 duration: this.atomCollection[this.firstSelectedscaleId].timing,
@@ -248,7 +250,7 @@ export default {
               rotateY: this.atomCollection[this.firstSelectedRotationId].rotationyfinal + "deg",
               rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzfinal + "deg",
             }, {
-                delay: 2000 + +this.firstSelected.rotationDelay +
+                delay: this.globalDelay + +this.firstSelected.rotationDelay +
                  +this.value[this.id].firstDelay,
                 easing: this.atomCollection[this.firstSelectedRotationId].spacing,
                 queue: false,
@@ -261,7 +263,7 @@ export default {
               opacity: this.atomCollection[this.firstSelectedOpacityId].opacityfinal / 100
 
             }, {
-                delay: 2000 + +this.firstSelected.opacityDelay +
+                delay: this.globalDelay + +this.firstSelected.opacityDelay +
                  +this.value[this.id].firstDelay,
                 easing: this.atomCollection[this.firstSelectedOpacityId].spacing,
                 queue: false,
@@ -269,6 +271,19 @@ export default {
                 complete: function() {
                    if (!vm.stop) vm.nukleolus = false
 
+                }
+            })
+            Velocity(el, {
+              translateX: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
+              translateY: this.atomCollection[this.firstSelectedTranslateId].translateYfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleY + "px"
+            }, {
+              delay: this.globalDelay + +this.firstSelected.translateDelay +
+               +this.value[this.id].firstDelay,
+              easing: this.atomCollection[this.firstSelectedTranslateId].spacing,
+              queue: false,
+              duration: this.atomCollection[this.firstSelectedTranslateId].timing,
+              complete: function() {
+                 if (!vm.stop) vm.nukleolus = false
                 }
             })
 
@@ -290,7 +305,7 @@ export default {
 
                       setTimeout(function(){
                         vm.nukleolus = true
-                        }, 2000);
+                      }, 1000);
                     }
                 })
               }
@@ -309,7 +324,7 @@ export default {
 
                       setTimeout(function(){
                         vm.nukleolus = true
-                        }, 2000);
+                      }, vm.globalDelay);
                     }
                 })
               }
@@ -327,17 +342,35 @@ export default {
 
                       setTimeout(function(){
                         vm.nukleolus = true
-                        }, 2000);
+                      }, vm.globalDelay);
 
                     }
                 })
               }
+              if (this.secondSelectedTranslateId >= 1){
+                Velocity(el, {
+                  translateX: this.atomCollection[this.secondSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
+                  translateY: this.atomCollection[this.secondSelectedTranslateId].translateYfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleX + "px"
+                }, {
+                  delay: +this.secondSelected.translateDelay +
+                   +this.value[this.id].secondDelay,
+                  easing: this.atomCollection[this.secondSelectedTranslateId].spacing,
+                  duration: this.atomCollection[this.secondSelectedTranslateId].timing,
+                  queue: false,
+                  complete: function() {
+                    setTimeout(function(){
+                      vm.nukleolus = true
+                    }, vm.globalDelay);
+                    }
+                })
+              }
+
           } else{
             Velocity(el, {
                 backgroundColor: '#ffffff',
             }, {
                 duration: 1,
-                delay: "2000",
+                delay: this.globalDelay,
                 complete: function() {
 
                     vm.nukleolus = true
