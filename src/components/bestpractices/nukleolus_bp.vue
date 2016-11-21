@@ -1,8 +1,12 @@
 <template name="nukleolus">
+
   <div class="molecule__bestpracticeWrapper">
-      <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
+      <transition v-on:before-enter="beforeEnter" v-on:enter="enterHook" v-on:leave="leave" v-on v-bind:css="false" >
           <div class="molecule__nukleolus" v-if="nukleolus"></div>
       </transition>
+
+
+
   </div>
 </template>
 <script>
@@ -10,11 +14,13 @@ export default {
     name: "nukleolus",
 
 
-    props: ['value', 'atomCollection', 'moleculeCollection', 'bestpractice', 'nukleolusid', 'organismCollection', 'firstElementSelected', 'secondElementSelected', 'element', 'thisDelay', 'globalDelay', 'interaction'],
+    props: ['value', 'atomCollection', 'moleculeCollection', 'bestpractice', 'nukleolusid', 'organismCollection', 'firstElementSelected', 'secondElementSelected', 'element', 'thisDelay', 'globalDelay', 'interaction', 'interacted'],
     data() {
         return {
             nukleolus: true,
             selected: "",
+            interactionDelay: 2000,
+            interactionStateReset: 0
 
         }
     },
@@ -23,17 +29,21 @@ export default {
 
     },
     computed: {
+        interactionState(){
+            return this.interacted + this.interactionStateReset
+        },
         id() {
             return 0
         },
         stop(){
           if (this.interaction == "auto") {
-
-            return ""
-
+            this.interactionDelay = this.globalDelay
+            return false
           }
           else{
-            "stop"
+            this.interactionDelay = 0
+            return true
+
           }
         },
         firstElementSelected() {
@@ -92,9 +102,27 @@ export default {
         },
         secondSelectedTranslateId(){
           return this.moleculeCollection[this.secondSelectedMoleculeId].translateId
-        }
+        },
+
     },
     methods: {
+
+        enterHook(el){
+           if(this.stop){
+             if (this.interactionState == 0) {
+               return this.beforeEnter(el)
+
+             }
+             else {
+               return  this.enter(el)
+             }
+            }
+            else {
+              return this.enter(el)
+            }
+
+        },
+
 
         //before animation
         beforeEnter: function(el) {
@@ -123,7 +151,7 @@ export default {
                 duration: 0,
                 delay: "0",
                 queue: false,
-                complete(){
+                completed(){
                   vm.nukleolus = false
                 }
             })
@@ -137,13 +165,15 @@ export default {
               width: this.atomCollection[this.firstSelectedscaleId].widthfinal * this.value[this.id].viewPortScaleX  + "px",
               height: this.atomCollection[this.firstSelectedscaleId].heightfinal * this.value[this.id].viewPortScaleY + "px",
             }, {
-                delay: this.globalDelay + +this.moleculeCollection[this.firstSelectedMoleculeId].scaleDelay +
+                delay: this.interactionDelay + +this.moleculeCollection[this.firstSelectedMoleculeId].scaleDelay +
                  this.organismCollection[this.firstElementSelectedId].firstDelay + +this.thisDelay,
                 easing: this.atomCollection[this.firstSelectedscaleId].spacing,
                 duration: this.atomCollection[this.firstSelectedscaleId].timing,
 
                 complete: function() {
-                    if (!vm.stop) vm.nukleolus = false
+                  if (vm.interactionState % 2 ){
+                  vm.interactionStateReset --}
+                  vm.nukleolus = false
                 }
             })
 
@@ -152,42 +182,48 @@ export default {
               rotateY: this.atomCollection[this.firstSelectedRotationId].rotationyfinal + "deg",
               rotateZ: this.atomCollection[this.firstSelectedRotationId].rotationzfinal + "deg",
             }, {
-                delay: this.globalDelay + +this.moleculeCollection[this.firstSelectedMoleculeId].rotationDelay +
+                delay: this.interactionDelay + +this.moleculeCollection[this.firstSelectedMoleculeId].rotationDelay +
                  this.organismCollection[this.firstElementSelectedId].firstDelay,
                 easing: this.atomCollection[this.firstSelectedRotationId].spacing,
                 queue: false,
                 duration: this.atomCollection[this.firstSelectedRotationId].timing,
 
                 complete: function() {
-                    if (!vm.stop) vm.nukleolus = false
+                  if (vm.interactionState % 2){
+                  vm.interactionStateReset --}
+                    vm.nukleolus = false
                 }
             })
             Velocity(el, {
               opacity: this.atomCollection[this.firstSelectedOpacityId].opacityfinal / 100
 
             }, {
-                delay: this.globalDelay + +this.moleculeCollection[this.firstSelectedMoleculeId].opacityDelay +
+                delay: this.interactionDelay + +this.moleculeCollection[this.firstSelectedMoleculeId].opacityDelay +
                  this.organismCollection[this.firstElementSelectedId].firstDelay + +this.thisDelay,
                 easing: this.atomCollection[this.firstSelectedOpacityId].spacing,
                 queue: false,
                 duration: this.atomCollection[this.firstSelectedOpacityId].timing,
 
                 complete: function() {
-                    if (!vm.stop) vm.nukleolus = false
+                  if (vm.interactionState % 2){
+                  vm.interactionStateReset --}
+                    vm.nukleolus = false
                 }
             })
             Velocity(el, {
               translateX: this.atomCollection[this.firstSelectedTranslateId].translateXfinal *  this.value[this.id].viewPortScaleY  - 180 *  this.value[this.id].viewPortScaleX + "px",
               translateY: this.atomCollection[this.firstSelectedTranslateId].translateYfinal *  this.value[this.id].viewPortScaleY  - 320 *  this.value[this.id].viewPortScaleY + "px"
             }, {
-              delay: this.globalDelay + +this.moleculeCollection[this.firstSelectedMoleculeId].translateDelay +
+              delay: this.interactionDelay + +this.moleculeCollection[this.firstSelectedMoleculeId].translateDelay +
                this.organismCollection[this.firstElementSelectedId].firstDelay + +this.thisDelay,
               easing: this.atomCollection[this.firstSelectedTranslateId].spacing,
               queue: false,
               duration: this.atomCollection[this.firstSelectedTranslateId].timing,
 
               complete: function() {
-                  if (!vm.stop) vm.nukleolus = false
+                if (vm.interactionState % 2){
+                vm.interactionStateReset --}
+                vm.nukleolus = false
                 }
             })
 
@@ -275,11 +311,8 @@ export default {
                 backgroundColor: '#ffffff',
             }, {
                 duration: 1,
-                delay: this.globalDelay,
+                delay: this.interactionDelay,
                 complete: function() {
-                  if (this.stop) {
-                    vm.nukleolus = false
-                  }
                     vm.nukleolus = true
                 }
             })

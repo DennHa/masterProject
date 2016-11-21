@@ -44,6 +44,8 @@
         background-color: $color-primary;
         height: 50px;
         width: 50px;
+        
+
     }
     &__nukleolusSecond{
       background-color: $color-primary;
@@ -104,6 +106,13 @@
             background-color: transparent;
             width: 100%;
         }
+    }
+    &__timing{
+      border-radius: 5px;
+      background-color:transparent;
+      margin: $spacing-third 0;
+      z-index: 2;
+      width: 100%;
     }
 
     &__viewer {

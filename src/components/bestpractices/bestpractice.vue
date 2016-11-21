@@ -1,18 +1,18 @@
 <template name="bestpractice">
 <div class="bestpractice__bond">
-    <div class="bestpractice__viewerExample" v-if="showLive">
+    <div class="bestpractice__viewerExample" v-if="!showLive">
         <h3>Drop File Here</h3>
         <img src="../../assets/ps4.gif" alt="" v-if="value[id].id == 0" />
     </div>
-    <div class="bestpractice__viewer" v-if="!showLive">
+    <div class="bestpractice__viewer" v-if="showLive">
 
-        <div class="hitarea" v-on:click="touchIt" v-bind:style="{width: hitareaWidth + 'px', height: hitareaHeight + 'px', top: hitareaYpos + 'px', left: hitareaXpos + 'px', opacity: hitareaOpacity }"  ></div>
+        <div class="hitarea" v-on:click="touchIt++" v-bind:style="{width: hitareaWidth + 'px', height: hitareaHeight + 'px', top: hitareaYpos + 'px', left: hitareaXpos + 'px', opacity: hitareaOpacity }"  v-if="chooseInteraction == 'touch'"></div>
 
-        <nukleolus :molecule-collection="moleculeCollection" :atom-collection="atomCollection" :organism-collection="organismCollection" element="0" v-model="value" :this-delay="value[id].firstElementDelay" :global-delay="globalDelay" :interaction="interaction">
+        <nukleolus :molecule-collection="moleculeCollection" :atom-collection="atomCollection" :organism-collection="organismCollection" element="0" v-model="value" :this-delay="value[id].firstElementDelay" :global-delay="globalDelay" :interaction="interaction" :interacted="touchIt">
         </nukleolus>
-        <nukleolus :molecule-collection="moleculeCollection" :atom-collection="atomCollection" :organism-collection="organismCollection" element="1" v-model="value" v-if="value[id].secondElement >= 1" :this-delay="value[id].secondElementDelay" :global-delay="globalDelay" :interaction="interaction">
+        <nukleolus :molecule-collection="moleculeCollection" :atom-collection="atomCollection" :organism-collection="organismCollection" element="1" v-model="value" v-if="value[id].secondElement >= 1" :this-delay="value[id].secondElementDelay" :global-delay="globalDelay" :interaction="interaction" :interacted="touchIt" >
         </nukleolus>
-        <nukleolus :molecule-collection="moleculeCollection" :atom-collection="atomCollection" :organism-collection="organismCollection" element="2" v-model="value" v-if="value[id].thirdElement >= 1" :this-delay="value[id].thirdElementDelay" :global-delay="globalDelay" :interaction="interaction">
+        <nukleolus :molecule-collection="moleculeCollection" :atom-collection="atomCollection" :organism-collection="organismCollection" element="2" v-model="value" v-if="value[id].thirdElement >= 1" :this-delay="value[id].thirdElementDelay" :global-delay="globalDelay" :interaction="interaction" :interacted="touchIt" >
         </nukleolus>
 
     </div>
@@ -22,12 +22,22 @@
             <input name="name" class="atom__name" v-model="value[id].name">
         </form>
         <div>
-            <select class="bestpractice__kind" v-model="value[id].firstElement">
+
+            <select class="bestpractice__kind" v-model="chooseInteraction" >
+             <option>
+               autoplay
+             </option>
+             <option>
+               touch
+             </option>
+          </select>
+          <span class="connectedIt">-></span>
+        <select class="bestpractice__kind" v-model="value[id].firstElement">
            <option v-for="element in organismCollection" :value="element.orgid">
              {{ element.name }}
            </option>
         </select>
-            <span class="connectedIt" v-if="value[id].firstElement >= 1">&</span>
+        <span class="connectedIt" v-if="value[id].firstElement >= 1">&</span>
             <select class="bestpractice__kind" v-model="value[id].secondElement" v-if="value[id].firstElement >= 1">
            <option  v-for="element in organismCollection" :value="element.orgid">
              {{ element.name }}
@@ -57,7 +67,7 @@
                 <input type="range" v-model="value[id].secondElementDelay" min="0" max="1000" step="10" defaultValue="0">
             </div>
         </div>
-        <div class="">
+        <!-- <div class="">
 
           <input type="radio" id="auto" value="auto" v-model="interaction">
           <label for="one">auto play</label>
@@ -67,8 +77,9 @@
         <div class="">
           <input type="radio" id="touch" value="touch" v-model="interaction">
           <label for="two">touch</label>
-        </div>
-        <div class="hitareaProperties">
+        </div> -->
+        <div class="hitareaProperties" v-if="chooseInteraction == 'touch' && showLive">
+          <span class="warning" >Inputs aren't supported yte</span>
           <form>
             <input type="number" name="name" value="" v-model="hitareaWidth"><label for="two"> hitarea width</label><br>
             <input type="number" name="name" value="" v-model="hitareaHeight"><label for="two"> hitarea height</label><br>
@@ -77,7 +88,6 @@
             <input type="checkbox" name="name" value="" v-model="hideHitarea"><label for="two"> hide hitarea</label>
           </form>
         </div>
-
     </div>
     <div class="subMenuSwap">
         <div v-on:click="showLive = !showLive"></div>
@@ -110,9 +120,15 @@ export default {
             hitareaHeight: 50,
             hitareaXpos: 0,
             hitareaYpos: 0,
-            hideHitarea: false
+            hideHitarea: false,
+            interacted: false,
+            touchIt: 1,
+            chooseInteraction: "autoplay"
 
         }
+    },
+    mounted(){
+      touchIt: 1
     },
     computed: {
         id() {
@@ -128,9 +144,6 @@ export default {
     },
     methods: {
 
-        touchIt(){
-          console.log("hey")
-        }
     }
 
 }
