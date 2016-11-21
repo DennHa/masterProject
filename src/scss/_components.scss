@@ -85,7 +85,7 @@
 }
 .showcase{
   &__bond{
-    margin: 0 $spacing-double;
+    margin: 0 $spacing-standard;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -335,10 +335,10 @@ margin: $spacing-standard;
       box-shadow: none;
       border-radius: 0;
       min-height: 500px;
-      min-width: 1600px;
+      min-width: 1400px;
   }
   &__properties{
-    width: 50%;
+    width: 60%;
 
   }
 
@@ -433,4 +433,10 @@ margin: $spacing-standard;
   height: 20px;
   background-color: $color-secondary;
 
+}
+
+.showExample{
+  position: absolute;
+  z-index: 800;
+  right: 270px;
 }

@@ -55,7 +55,7 @@
 export default {
     name: "showcase",
 
-    props: ['', 'atomcollection', 'showcase', 'thismoleculeid', 'globalDelay'],
+    props: ['value', 'atomcollection', 'showcase', 'thismoleculeid', 'globalDelay'],
     data() {
         return {
           scaleIt: 0,
@@ -85,7 +85,6 @@ export default {
       this.nukleolus = false
     },
     computed: {
-
       id(){
         return 0  //weil wir "-" als erstes molekül haben
       },

@@ -8,7 +8,12 @@
               <div v-on:click="editText = !editText"></div>
           </div>
         </div>
-        <showcase :atomcollection="atomCollection" :showcase="showcase"  :thismoleculeid="principleid" :global-delay="globalDelay" v-if="editText || molecule[0].scaleId || molecule[0].translateId || molecule[0].rotateId || molecule[0].opacityId"></showcase>
+        <div class="showExample" v-if="editText">
+          <label for="example">show Example</label>
+          <input type="checkbox" id="example" value="example" style="z-index: 201" v-model="showIt">
+        </div>
+        <showcase :atomcollection="atomCollection" :showcase="showcase"  :thismoleculeid="principleid" :global-delay="globalDelay" v-if="editText || showIt == true"></showcase>
+
     </div>
 </template>
 <script>
@@ -24,6 +29,7 @@ export default {
     props: ['value', 'principleid', 'molecule','moleculeid', 'globalDelay', "atomCollection"],
     data() {
         return {
+          showIt: false,
           editText: false
         }
     },
