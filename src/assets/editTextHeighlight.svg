@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_line_weight_black_24px</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0 15 0 15 15 0 15"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Pure-Atom-" transform="translate(-1051.000000, -357.000000)">
+            <g id="ic_line_weight_black_24px" transform="translate(1050.000000, 353.000000)">
+                <g id="Clipped">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="a"></g>
+                    <path d="M1.875,11 L13.125,11 L13.125,9.75 L1.875,9.75 L1.875,11 Z M1.875,8.5 L13.125,8.5 L13.125,7.25 L1.875,7.25 L1.875,8.5 Z M1.875,4.75 L1.875,6 L9.375,6 L9.375,4.75 L1.875,4.75 Z" id="Shape" fill="#FFC400" mask="url(#mask-2)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

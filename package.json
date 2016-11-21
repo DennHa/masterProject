@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "clipboard": "^1.5.15",
+    "marked": "^0.3.6",
     "vue": "^2.0.1",
     "vue-multiselect": "^1.1.4",
     "vue-scrollspy": "^0.1.3"

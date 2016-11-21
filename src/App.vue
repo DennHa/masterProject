@@ -2,8 +2,8 @@
 <section class="app">
     <span class="menu__wrapper">
       <nav class="menu" data-gumshoe >
-              <a class="menu__principles">
-                  <img src="./assets/principles.svg" alt="" />
+              <a class="menu__principles" data-scroll href="#anchor__principle">
+                  <img src="./assets/principles.svg" alt=""  />
               </a>
               <a class="menu__bestpractices" data-scroll href="#anchor__bestpractice">
                   <img src="./assets/bestpractices.svg" alt="" />
@@ -20,9 +20,26 @@
       </nav>
     </span>
     <section class="universe">
+      <div class="principles__wrapper" id="anchor__principle">
+          <div class="anchor">
+              <h3>principle</h3>
+          </div>
+          <div class="principles">
+              <div class="principle_catOne">
+                  <div>
+                      <!-- <h2>Organism</h2> -->
+                  </div>
+                  <div class="" v-for="thisprinciple in principle">
+                      <principle v-model="principle" :principleid="thisprinciple.id" :atom-collection="combineAtomCollection" v-bind:molecule="molecule"   :global-delay="globalDelay">
+                      </principle>
+                  </div>
+                  <button type="button" name="button" @click="addPrincipleCatOne" class="principles__addPrinciple">+</button>
+              </div>
+          </div>
+      </div>
       <div class="bestpractices__wrapper" id="anchor__bestpractice">
           <div class="anchor">
-              <h3>best practice</h3>
+              <h3>bestpractice</h3>
           </div>
           <div class="bestpractices">
               <div class="bestpractice_catOne">
@@ -141,6 +158,7 @@ import atomscale from './components/atoms/atomscale.vue'
 import atomrotation from './components/atoms/atomrotation.vue'
 import atomopacity from './components/atoms/atomopacity.vue'
 import atomtranslate from './components/atoms/atomtranslate.vue'
+import principle from './components/principles/principle.vue'
 
 //let atomId = 1
 let currentIdscale = 0
@@ -158,7 +176,8 @@ export default {
         atomopacity,
         molecule,
         organism,
-        bestpractice
+        bestpractice,
+        principle
     },
     data() {
         return {
@@ -343,6 +362,13 @@ export default {
               viewPortScaleX: 0.78125,
               viewPortScaleY: 0.78125
             }],
+            principleId: 0,
+            principle:[{
+              id: 0,
+              name: "Flying",
+              text: ""
+
+            }],
 
             //
             randomElements: ['Hydrogen', 'Helium', 'Lithium', 'Beryllium', 'Boron', 'Carbon', 'Nitrogen', 'Oxygen', 'Fluorine', 'Neon', 'Sodium', 'Magnesium', 'Zinc', 'Krypton', 'Strontium', 'Niobium', 'Selenium'],
@@ -387,6 +413,14 @@ export default {
 
     },
     methods: {
+      addPrincipleCatOne() {
+        this.principleId ++
+              this.principle.push({
+                id: this.principleId,
+                name: "Flying",
+                text: ""
+              })
+      },
       addBestPracticeCatOne() {
         this.bestpracticeId++,
             this.bestid++,

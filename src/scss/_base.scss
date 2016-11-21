@@ -11,7 +11,7 @@ $color-alpha-light: rgba(250, 250, 250,0.5);
 
 $color-primary: #4A90E2;
 $color-secondary: #FFCA00;
-$color-black: #2A2E32;
+$color-black: #505050;
 $color-background: #FAFAFA;
 $color-inactive: #E9E9E9;
 $color-grey: #9B9B9B;
@@ -47,6 +47,7 @@ $mq-xxl: 114em;
 }
 
 body {
+  color: $color-black;
   background-color: #fff;
   font-feature-settings: 'liga' 0;
   font-size: 100%;
@@ -84,11 +85,13 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: $fontSize-standard;
+  color: $color-primary;
+  font-size: $fontSize-double;
 
 }
 h2{
   color: $color-primary;
+  font-size: $fontSize-standard;
 }
 h3{
   color: $color-grey;
@@ -98,7 +101,8 @@ h3{
 }
 
 p {
-  font-size: $fontSize-third;
+  color: $color-black;
+  font-size: $fontSize-standard;
   margin: 0 0 0.75em;
 }
 
@@ -250,3 +254,20 @@ input[type=range]::-ms-thumb {
   cursor: pointer;
 }
 */
+
+textarea{
+  color: $color-primary;
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+  appearance: none;
+  font-family: $font-normal;
+  background-color: $color-background;
+  border: none;
+  border-radius: 0px;
+  padding: $spacing-half;
+  margin-left: 0;
+  width: 100%;
+  height: 450px;
+  resize: none;
+outline: none;
+}

@@ -14,7 +14,7 @@
   }
   background-color: $color-white;
   overflow: hidden;
-  z-index: 90;
+  z-index: 900;
   position: fixed;
   width: 50px;
   height: 100vh;
@@ -68,7 +68,7 @@
 
 }
 
-.atoms, .molecules, .organisms, .bestpractices {
+.atoms, .molecules, .organisms, .bestpractices, .principles {
   margin-left: $spacing-double;
   display: flex;
   align-items: flex-start;
