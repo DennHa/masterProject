@@ -114,6 +114,7 @@
         box-shadow: 0 10px 24px 0 rgba(184,184,184,1);
     }
     &__name {
+        padding-left: $spacing-third;
         width: 100%;
         text-align: left;
         & > * {
@@ -165,12 +166,12 @@
 .organisms, .atoms, .molecules, .bestpractices .principles{
   &__addOrganism{
     cursor: pointer;
-    opacity: 0.25;
+    opacity: 0.55;
     width: 100%;
     height: 500px;
     background-color: $color-background;
     border: none;
-    color: $color-grey;
+    color: #000;
     font-size: 2em;
     &:active{
       border: none;
@@ -184,12 +185,12 @@
   &__addAtom{
     cursor: pointer;
     margin: 0 auto;
-    opacity: 0.25;
+    opacity: 0.55;
     width: 700px;
     height: 300px;
     background-color: $color-background;
     border: none;
-    color: $color-grey;
+    color: #000;
     font-size: 2em;
     &:active{
       border: none;
@@ -203,12 +204,12 @@
 .molecules{
   &__addMolecule{
     cursor: pointer;
-    opacity: 0.25;
+    opacity: 0.55;
     width: 1050px;
     height: 300px;
     background-color: $color-background;
     border: none;
-    color: $color-grey;
+    color: #000;
     font-size: 2em;
     &:active{
       border: none;
@@ -354,12 +355,12 @@ margin: $spacing-standard;
 .principles{
   &__addPrinciple{
     cursor: pointer;
-    opacity: 0.25;
+    opacity: 0.55;
     width: 700px;
     height: 200px;
     background-color: $color-background;
     border: none;
-    color: $color-grey;
+    color: #000;
     font-size: 2em;
     &:active{
       border: none;
