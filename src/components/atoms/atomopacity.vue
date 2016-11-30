@@ -24,7 +24,7 @@
             </form>
         </div>
 
-        <div class="atom__characteristics", 'globalDelay'>
+        <div class="atom__characteristics">
 
             <h3>animation</h3>
             <form>
